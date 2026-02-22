@@ -3,43 +3,255 @@ import pandas as pd
 import pdfplumber
 import os
 import sys
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
-# Making sure the app can find our nlp and models folders.
+# Structural Path Alignment
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nlp.clause_segmenter import segment_clauses
 from models.inference import risk_engine
 from config.settings import RISK_COLORS
 
-# --- PAGE CONFIG ---
-st.set_page_config(page_title="Legal AI - Contract Risk", layout="wide")
+# --- BRANDING & DESIGN TOKENS ---
+COLOR_BG = "#F1F5F9"
+COLOR_SURFACE = "#FFFFFF"
+COLOR_BLUE = "#1D4ED8" # Command Blue
+COLOR_PURPLE = "#7C3AED" # Autonomous Accent
+COLOR_RED = "#B91C1C" # Critical Risk
+COLOR_GREEN = "#15803D" # Secure Green
+COLOR_BORDER = "#CBD5E1"
+COLOR_TEXT = "#0F172A"
 
-# --- CUSTOM CSS ---
-st.markdown("""
+# --- PAGE CONFIG ---
+st.set_page_config(
+    page_title="Autonomous Legal Command Bridge",
+    page_icon="⚖️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# --- GLOBAL STYLES ---
+st.markdown(f"""
 <style>
-    .reportview-container { background: #f0f2f6; }
-    .main { padding: 2rem; }
+    .stApp {{ background-color: {COLOR_BG}; color: {COLOR_TEXT}; }}
+    .stMetric {{ background-color: {COLOR_SURFACE}; padding: 15px; border-radius: 8px; border: 1px solid {COLOR_BORDER}; }}
+    div[data-testid="stExpander"] {{ background-color: {COLOR_SURFACE}; border: 1px solid {COLOR_BORDER}; border-radius: 8px; }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 24px; }}
+    .stTabs [data-baseweb="tab"] {{ height: 50px; white-space: pre-wrap; }}
+    
+    /* Executive Badge Styles */
+    .pill {{
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+    }}
+    .pill-blue {{ background-color: #DBEAFE; color: {COLOR_BLUE}; }}
+    .pill-purple {{ background-color: #F3E8FF; color: {COLOR_PURPLE}; }}
+    .pill-green {{ background-color: #DCFCE7; color: {COLOR_GREEN}; }}
 </style>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR ---
-with st.sidebar:
-    st.title("⚖️ Legal Guard AI")
-    st.info("Milestone 1: Logic-based Risk Parser")
-    
-    st.markdown("---")
-    st.write("**How to use:**")
-    st.write("1. Upload a contract (PDF or TXT).")
-    st.write("2. Wait for the AI to 'read' the clauses.")
-    st.write("3. Review the risks flagged in red/green.")
-    
-    st.markdown("---")
-    uploaded_file = st.file_uploader("Upload Document", type=["pdf", "txt"])
+# --- COMPOSABLE UI LAYERS ---
 
-# --- MAIN PAGE ---
-st.title("🔍 Intelligent Contract Risk Dashboard")
-st.write("Acting as your digital paralegal, this tool scans legal text to find potential dangers.")
+def render_command_dock_sidebar():
+    """Redesign sidebar into layered operational zones."""
+    with st.sidebar:
+        st.markdown(f"<h2 style='color: {COLOR_BLUE};'>⚖️ Legal Guard AI</h2>", unsafe_allow_html=True)
+        st.markdown("<span class='pill pill-blue'>Autonomous Command Bridge Mode</span>", unsafe_allow_html=True)
+        
+        st.markdown("---")
+        st.subheader("📂 Contract Intake")
+        uploaded_file = st.file_uploader("Drop legal instrument here", type=["pdf", "txt"], label_visibility="collapsed")
+        
+        if uploaded_file:
+            st.success("Instrument Locked 🔒")
+        else:
+            st.info("Awaiting Input Data...")
 
+        st.markdown("---")
+        st.subheader("🧠 AI Engine Status")
+        col_s1, col_s2 = st.columns(2)
+        with col_s1:
+            st.caption("Classifier")
+            st.markdown("<span style='color: green;'>● ACTIVE</span>", unsafe_allow_html=True)
+        with col_s2:
+            st.caption("Agent Engine")
+            st.markdown("<span style='color: orange;'>○ STANDBY</span>", unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.subheader("🔄 Workflow Controls")
+        st.checkbox("Enable Agent Reasoning (Milestone-2)", disabled=True, help="Agentic workflows are currently in roadmap development.")
+        
+        return uploaded_file
+
+def render_bridge_header(file_present):
+    """Full-width strategic command banner."""
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        st.title("Autonomous Legal Command Bridge")
+        st.markdown("AI-Augmented Contract Intelligence Platform & Risk Monitoring Console")
+    with col2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if file_present:
+            st.markdown("<span class='pill pill-green'>Status: Analysis Ready</span>", unsafe_allow_html=True)
+        else:
+            st.markdown("<span class='pill pill-blue'>Status: System Ready</span>", unsafe_allow_html=True)
+        st.markdown("🔍 **Persona:** Paralegal Assistant")
+
+    st.caption("⚠️ Governance Protocol: AI assists legal professionals — human review required for all risk finalizations.")
+    st.markdown("---")
+
+def render_command_strip(df):
+    """Upgrade KPI ribbon into operational command indicators."""
+    st.subheader("Executive Command Summary")
+    c1, c2, c3, c4, c5 = st.columns(5)
+    
+    total = len(df)
+    critical = len(df[df['Risk Level'] == "High Risk"])
+    exposure = (critical / total) * 100 if total > 0 else 0
+    trust = df['Confidence'].mean() * 100 if total > 0 else 0
+    
+    c1.metric("Total Clauses", total)
+    c2.metric("Critical Alerts", critical, delta=f"{exposure:.1f}% Exposure", delta_color="inverse" if critical > 0 else "off")
+    c3.metric("Exposure Index", f"{exposure:.1f}%")
+    c4.metric("Trust Stability", f"{trust:.1f}%")
+    c5.metric("Agent Readiness", "Milestone 1", delta="M2 Pending")
+
+def render_risk_radar(df):
+    """Modular radar equivalent visualization for future agent update."""
+    st.subheader("Autonomous Risk Radar")
+    if not df.empty:
+        counts = df['Risk Level'].value_counts()
+        fig, ax = plt.subplots(figsize=(10, 3), facecolor=COLOR_BG)
+        sns.barplot(x=counts.values, y=counts.index, palette="magma", ax=ax, orient='h')
+        ax.set_facecolor(COLOR_BG)
+        ax.set_title("Clause Distribution by Strategic Risk Weight", color=COLOR_TEXT)
+        st.pyplot(fig)
+    else:
+        st.info("Radar initialized. Awaiting data parsing...")
+
+def render_agent_workflow_preview():
+    """Future-ready visual scaffolding for Milestone-2."""
+    st.markdown(f"<h3 style='color: {COLOR_PURPLE};'>🧠 Autonomous Reasoning Pipeline (Preview)</h3>", unsafe_allow_html=True)
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.markdown("#### Step 1\n**Risk Detection**")
+        st.success("● ACTIVE")
+    with c2:
+        st.markdown("#### Step 2\n**Legal Retrieval**")
+        st.warning("○ Coming Soon")
+    with c3:
+        st.markdown("#### Step 3\n**Reasoning Agent**")
+        st.info("⌛ Milestone-2")
+    with c4:
+        st.markdown("#### Step 4\n**Report Gen**")
+        st.info("⌛ Planned")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+def render_intelligence_hub(df):
+    """Enhanced analytics hub prepared for agent logic expansion."""
+    st.subheader("Intelligence Analytics Hub")
+    tab1, tab2, tab3, tab4 = st.tabs(["Risk Landscape", "Confidence Stability", "Keyword Intelligence", "Agent Insights (M2)"])
+    
+    with tab1:
+        if not df.empty:
+            st.bar_chart(df['Risk Level'].value_counts())
+        else:
+            st.write("Awaiting document parsing for landscape visualization.")
+            
+    with tab2:
+        if not df.empty:
+            st.line_chart(df['Confidence'])
+            st.caption("Temporal confidence stability across clause segments.")
+            
+    with tab3:
+        if not df.empty:
+            all_keywords = []
+            for kw in df['Keywords']:
+                all_keywords.extend(kw)
+            if all_keywords:
+                kw_counts = pd.Series(all_keywords).value_counts().head(10)
+                st.table(pd.DataFrame({"Trigger Word": kw_counts.index, "Frequency": kw_counts.values}))
+            else:
+                st.write("No trigger keywords detected.")
+                
+    with tab4:
+        st.info("Agentic insights will be available once the Reasoning Engine (Milestone-2) is activated.")
+
+def render_operational_review_panels(df):
+    """Renamed clause audit sections with enhanced UI elements."""
+    st.subheader("Operational Legal Review Panels")
+    st.caption("AI-identified triggers requiring tactical human oversight.")
+    
+    for i, row in df.iterrows():
+        label = row['Risk Level']
+        color = COLOR_RED if label == "High Risk" else COLOR_GREEN
+        icon = "🚨" if label == "High Risk" else "🛡️"
+        
+        with st.expander(f"{icon} {label.upper()} | CID-{1000+i} | Trust: {row['Confidence']:.1%}", expanded=(label == "High Risk")):
+            st.markdown(f"**Clause Content:**")
+            st.code(row['Clause'], language="text")
+            
+            # AI Tactical Insight
+            st.markdown(f"<div style='border-left: 4px solid {color}; padding-left: 15px; margin-top: 10px;'>", unsafe_allow_html=True)
+            if label == "High Risk":
+                st.markdown(f"**Tactical Insight:** High-priority exposure detected. Triggers suggest significant liability or restrictive governance.")
+                if row['Keywords']:
+                    st.write("**Specific Trigger Tags:**")
+                    st.write(" ".join([f"`{w}`" for w in row['Keywords']]))
+            else:
+                st.markdown("**Tactical Insight:** Standard operational language. Low immediate risk signature.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Confidence Meter
+            st.progress(float(row['Confidence']))
+
+def render_governance_console():
+    """Footer console for platform integrity and future governance."""
+    st.markdown("---")
+    st.subheader("Autonomous Governance Center")
+    t1, t2, t3 = st.tabs(["Model Foundations", "Performance Integrity", "Future Agent Governance"])
+    
+    with t1:
+        st.write("**Architecture:** Supervised Learning via Balanced Logistic Regression")
+        st.write("**NLP Core:** spaCy v3.x Pipeline")
+        
+    with t2:
+        st.write("**Model Accuracy Matrix**")
+        try:
+            st.image("artifacts/logistic_regression_matrix.png", width=600)
+            st.caption("Metrics verify model's Recall stability—essential for ensuring no critical risk is omitted.")
+        except:
+            st.error("Platform Health Check: Evaluation artifacts not found. Please sync local brain.")
+            
+    with t3:
+        st.info("Governance frameworks for Milestone-2 Agents (Human-in-the-loop, Auditability) are currently being drafted.")
+
+def render_bridge_empty_state():
+    """Onboarding interface for the command bridge."""
+    st.markdown("### Initialize Autonomous Legal Command Bridge")
+    st.write("Upload a contract in the Command Dock to initialize analysis and agentic mapping.")
+    
+    # Mock visual preview
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info("Step 1: Parse Document")
+    with col2:
+        st.info("Step 2: Map Autonomous Vectors")
+    
+    example_data = {
+        "Strategic Category": ["Liabilities", "Governance", "Operational"],
+        "Risk Signature": ["High", "Medium", "Neutral"],
+        "Agent Readiness": ["Detected", "Coming Soon", "Planned"]
+    }
+    st.table(example_data)
+
+# --- UTILITY: FILE PARSER ---
 def get_text_from_file(file):
     if file.type == "application/pdf":
         with pdfplumber.open(file) as pdf:
@@ -47,108 +259,53 @@ def get_text_from_file(file):
     else:
         return file.getvalue().decode("utf-8")
 
-if uploaded_file:
-    # 1. Processing
-    raw_text = get_text_from_file(uploaded_file)
-    clauses = segment_clauses(raw_text)
-    
-# --- 2. CONTRACT OVERVIEW PANEL ---
-    st.subheader("📊 Contract Risk Summary")
-    
-    results = []
-    for c in clauses:
-        label, conf, reasons = risk_engine.analyze_clause(c) # UPDATED: Now returns reasons
-        results.append({
-            "Clause": c, 
-            "Risk Level": label, 
-            "Confidence": conf,
-            "Keywords": reasons
-        })
-    
-    df_results = pd.DataFrame(results)
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Total Clauses Scanned", len(clauses))
-    with col2:
-        high_risk_count = len(df_results[df_results['Risk Level'] == "High Risk"])
-        st.metric("High Risk Flags 🚩", high_risk_count)
-    with col3:
-        avg_conf = df_results['Confidence'].mean()
-        st.metric("Model Trust Score", f"{avg_conf:.1%}")
+# --- MAIN EXECUTION FLOW ---
 
-    # --- 3. RISK ANALYTICS OVERVIEW ---
-    with st.expander("📈 Advanced Risk Analytics", expanded=False):
-        chart_col1, chart_col2 = st.columns(2)
-        with chart_col1:
-            st.write("**Risk Distribution**")
-            fig_bar = plt.figure(figsize=(6, 4))
-            sns.countplot(data=df_results, x='Risk Level', palette="magma", hue='Risk Level', legend=False)
-            st.pyplot(fig_bar)
+def main():
+    # 1. Sidebar / Command Dock
+    uploaded_file = render_command_dock_sidebar()
+    
+    # 2. Header
+    render_bridge_header(bool(uploaded_file))
+    
+    if uploaded_file:
+        # 3. Core Processing (Milestone-1 Engine)
+        with st.status("AI Command Bridge Processing...", expanded=True) as status:
+            raw_text = get_text_from_file(uploaded_file)
+            st.write("Segmenting Clauses...")
+            clauses = segment_clauses(raw_text)
             
-        with chart_col2:
-            st.write("**Probability Confidence**")
-            fig_conf = plt.figure(figsize=(6, 4))
-            sns.histplot(df_results['Confidence'], kde=True, color="purple")
-            st.pyplot(fig_conf)
-
-    st.markdown("---")
-
-    # --- 4. DETAILED CLAUSE ANALYSIS & EXPLAINABILITY ---
-    st.subheader("🔍 Clause-by-Clause AI Audit")
-    st.info("The AI provides a 'Mentor Note' for every clause, explaining the specific linguistic triggers it found.")
-    
-    for i, row in df_results.iterrows():
-        label = row['Risk Level']
-        color = RISK_COLORS.get(label, "gray")
-        icon = "🔴" if label == "High Risk" else "🟢"
+            st.write("Running Neural Analytics...")
+            results = []
+            for c in clauses:
+                label, conf, reasons = risk_engine.analyze_clause(c)
+                results.append({
+                    "Clause": c, 
+                    "Risk Level": label, 
+                    "Confidence": conf,
+                    "Keywords": reasons
+                })
+            df = pd.DataFrame(results)
+            status.update(label="Command Bridge Updated!", state="complete", expanded=False)
         
-        with st.expander(f"{icon} {label} ({row['Confidence']:.1%}) - Clause {i+1}"):
-            st.markdown(f"**Extracted Text:**")
-            st.code(row['Clause'], language="text")
+        st.toast("Command Bridge Updated")
+        
+        # 4. Content Rendering
+        render_command_strip(df)
+        
+        col_main, col_viz = st.columns([1.5, 1])
+        with col_main:
+            render_agent_workflow_preview()
+        with col_viz:
+            render_risk_radar(df)
             
-            # --- MODEL EXPLAINABILITY PANEL ---
-            if label == "High Risk":
-                st.warning(f"**AI Reasoning:** This clause was flagged as High Risk because it contains significant legal triggers.")
-                if row['Keywords']:
-                    st.write(f"**Key Danger Words Detected:**")
-                    st.write(", ".join([f"`{w}`" for w in row['Keywords']]))
-                st.markdown(f"> *\"This clause may be risky because it contains strong liability or obligation language associated with '{row['Keywords'][0] if row['Keywords'] else 'legal triggers'}'.\"*")
-            else:
-                st.success("**AI Reasoning:** This clause appears to be standard operational language with low legal liability.")
+        render_operational_review_panels(df)
+        render_intelligence_hub(df)
+        render_governance_console()
+        
+    else:
+        # 5. Empty State
+        render_bridge_empty_state()
 
-    st.markdown("---")
-
-    # --- 5. DATASET & TRAINING INSIGHTS ---
-    st.subheader("🧠 Model Explainability & Health")
-    insight_tab1, insight_tab2 = st.tabs(["AI Foundations", "Training Artifacts"])
-    
-    with insight_tab1:
-        st.write("**How this AI thinks:**")
-        st.write("- **Model**: Balanced Logistic Regression")
-        st.write("- **Linguistic Engine**: spaCy Lemmatization")
-        st.write("- **Feature Strategy**: TF-IDF (N-gram 1,2)")
-        st.markdown("""
-        > This project uses **Supervised Learning**. The AI was trained on a dataset called `legal_docs_modified.csv`, 
-        > learning the difference between standard business language and risky legal obligations.
-        """)
-
-    with insight_tab2:
-        try:
-            # We display the confusion matrix we generated during training!
-            st.write("**Model Accuracy Matrix (The Final Exam)**")
-            st.image("artifacts/logistic_regression_matrix.png", caption="Evaluation Heatmap: Precision vs Recall")
-        except:
-            st.write("Training artifacts not found. Please run `python3 models/train.py`.")
-
-else:
-    st.warning("Please upload a file in the sidebar to begin the analysis.")
-    
-    # Example table for beginner users
-    st.markdown("### 💡 What the AI looks for:")
-    example_data = {
-        "Clause Type": ["Termination", "Confidentiality", "Payment"],
-        "Risk Example": ["'Either party can end with 0 days notice'", "'All info is public'", "'Interest rate is 50%'"],
-        "Expected Risk": ["🔴 High", "🔴 High", "🟡 Medium"]
-    }
-    st.table(example_data)
+if __name__ == "__main__":
+    main()
