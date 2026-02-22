@@ -6,11 +6,11 @@
 
 ---
 
-## 📄 Platform Thesis
+## Platform Thesis
 
 The **Intelligent Contract Risk Analysis System** is a research-backed analytical workspace designed to automate the initial triage of legal instruments. By implementing a supervised learning pipeline, the system decomposes complex contracts into discrete provision segments, assesses potential liability risks, and extracts semantic triggers. This platform serves as a high-fidelity prototype for AI-assisted legal review, prioritizing explainable model assessments over "black-box" predictions.
 
-## 🔬 Methodology & Core Architecture
+## Methodology & Core Architecture
 
 The system follows a rigorous alignment between legal problem-solving and machine learning execution:
 
@@ -19,28 +19,28 @@ The system follows a rigorous alignment between legal problem-solving and machin
 3.  **Classification (Balanced Inference)**: A **Logistic Regression** model, optimized with balanced class weights, identifies provisions matching high-risk patterns.
 4.  **Explainability (Trigger Extraction)**: The system extracts local feature importance to display "Linguistic Triggers"—the specific words that most influenced the risk assessment.
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 - **Risk Analysis Workspace**: A dedicated review environment where high-severity segments are prioritized for manual oversight.
 - **Micro-Insight Generation**: Each assessment includes a structural summary of the detected pattern (e.g., "Elevated liability profile identified").
 - **Strategic Posture Radar**: High-level distribution analysis of risk patterns across the entire document corpus.
 - **Model Governance Center**: Transparent reporting of validation metrics (Heatmaps, Precision/Recall) to ensure analytical integrity.
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 - **Natural Language Processing**: `spaCy` (L3 Pipeline) for lemmatization and text normalization.
 - **Machine Learning**: `scikit-learn` (Logistic Regression & TF-IDF).
 - **Interface**: `Streamlit` (V7 Enterprise Architecture).
 - **Data Handling**: `pdfplumber` for high-precision legal text extraction.
 
-## 📊 Evaluation Metrics
+## Evaluation Metrics
 
 The system prioritizes **Recall** to ensure maximum sensitivity to potential risks:
 
 - **Baseline Accuracy**: ~94% (Validated on CUAD-inspired datasets)
 - **Primary Objective**: Minimizing False Negatives in critical legal disclosure.
 
-## ⚖️ Responsible AI Protocol
+## Responsible AI Protocol
 
 This system is an analytical aid designed for legal professionals. It highlights linguistic patterns associated with risk and is intended to complement, not replace, human professional judgment. All detections are categorized as "Model Assessments" requiring final validation by a qualified reviewer.
 
@@ -59,7 +59,7 @@ _Developed as a high-tier academic submission for intelligent legal-tech researc
   - **Recall**: Optimized to ensure critical clauses are flagged.
   - **F1-Score**: Weighted average showing robust performance across 20+ clause types.
 
-## 🧠 The Core Science Behind the AI
+## The Core Science Behind the AI
 
 This project isn't just a dashboard; it's a demonstration of fundamental AI/ML and NLP principles. Here's a look under the hood:
 
@@ -115,7 +115,7 @@ contract-risk-ai/
 └── requirements.txt         # Project dependencies
 ```
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the Repository
 
@@ -148,11 +148,11 @@ Launch the Streamlit interface locally:
 streamlit run app/streamlit_app.py
 ```
 
-## 🌐 Public Deployment
+## Public Deployment
 
 Live Demo: [Deployment Link Placeholder]
 
-## 📈 Exploratory Data Analysis (EDA)
+## Exploratory Data Analysis (EDA)
 
 Comprehensive analysis of the legal corpus is available in `analysis/eda.ipynb`. Key insights include:
 
@@ -160,13 +160,13 @@ Comprehensive analysis of the legal corpus is available in `analysis/eda.ipynb`.
 - **Keyword Prominence**: TF-IDF reveals high-weight terms like "Termination", "Salary", and "Liability".
 - **Structural Variation**: Large variance in clause length across different legal categories.
 
-## 🔮 Future Scope (Milestone 2 - Agentic AI)
+## Future Scope (Milestone 2 - Agentic AI)
 
 - **Retrieval-Augmented Generation (RAG)**: Connect clauses to external legal knowledge bases.
-- **Multi-Agent Negotiation**: Simulate document revisions between "Owner" and "Vendor" agents.
+  **Multi-Agent Negotiation**: Simulate document revisions between "Owner" and "Vendor" agents.
 - **Semantic Consistency**: Use LLMs to check if "Definitions" match their usage throughout the document.
 
-## ⚖️ Legal Disclaimer
+## Legal Disclaimer
 
 _This system is an AI research project intended for informational purposes only. It does not constitute legal advice. The classifications and risk scores are generated based on mathematical patterns in the training data and should be reviewed by a qualified legal professional._
 
