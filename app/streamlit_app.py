@@ -1,23 +1,26 @@
 import streamlit as st
-import pandas as pd
-import pdfplumber
 import os
 import sys
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
 
-# Structural Path Alignment
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# --- DEFENSIVE STARTUP (V7 CLOUD RECOVERY) ---
+# --- ABSOLUTE DEFENSIVE STARTUP (V7 CLOUD INTEGRITY) ---
+IMPORT_ERROR = None
 try:
+    import pandas as pd
+    import pdfplumber
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import numpy as np
+    
+    # Path Alignment
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
     from nlp.clause_segmenter import segment_clauses
     from models.inference import risk_engine
     from config.settings import RISK_COLORS, MODEL_PATH
-    IMPORT_ERROR = None
 except Exception as e:
     IMPORT_ERROR = str(e)
+    import traceback
+    IMPORT_ERROR += "\n" + traceback.format_exc()
 
 # --- DESIGN TOKENS (ULTRA ENTERPRISE V7) ---
 COLOR_BG = "#F8FAFC"
