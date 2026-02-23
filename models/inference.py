@@ -99,25 +99,32 @@ class ContractRiskAI:
     def get_explainability(self, features):
         """
         Extracts feature importance for local interpretability.
+        Works for both sparse (TF-IDF) and dense feature matrices.
         """
         try:
             if self.model is None or not hasattr(self.model, "coef_"):
                 return []
 
-            # Vectorized feature extraction
-            weights = self.model.coef_[0]
-            feature_indices = features.indices
+            weights      = self.model.coef_[0]
             feature_names = self.vectorizer.get_feature_names_out()
-            
+
+            # Support both sparse matrices (hasattr .indices) and dense arrays
+            import scipy.sparse as sp
+            if sp.issparse(features):
+                feature_indices = features.indices
+            else:
+                feature_indices = np.nonzero(features)[1]
+
             reasons = []
             for idx in feature_indices:
-                weight = weights[idx]
-                if weight > 0: 
-                    reasons.append((weight, feature_names[idx]))
-            
+                if idx < len(weights):
+                    weight = weights[idx]
+                    if weight > 0:
+                        reasons.append((weight, feature_names[idx]))
+
             reasons.sort(key=lambda x: x[0], reverse=True)
-            return [word for weight, word in reasons[:5]]
-        except:
+            return [word for _, word in reasons[:5]]
+        except Exception:
             return []
 
 # Singleton instance for platform-wide access

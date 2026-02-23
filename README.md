@@ -172,4 +172,3 @@ _This system is an AI research project intended for informational purposes only.
 
 ---
 
-**Maintained by**: [Suvendu kumar Sahoo](https://github.com/suvendukungfu)
