@@ -13,7 +13,10 @@ try:
 except ImportError as e:
     print(f"Error importing ML modules: {e}")
 
+from flask_cors import CORS
+
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
+CORS(app)
 
 def get_text_from_file(file, filename):
     if filename.lower().endswith('.pdf'):
@@ -64,4 +67,4 @@ def analyze():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
