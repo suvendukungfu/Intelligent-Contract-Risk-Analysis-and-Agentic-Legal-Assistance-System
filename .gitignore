@@ -20,3 +20,4 @@ Thumbs.db
 # artifacts/classifier.pkl
 # artifacts/vectorizer.pkl
 # artifacts/*.png
+.vercel
