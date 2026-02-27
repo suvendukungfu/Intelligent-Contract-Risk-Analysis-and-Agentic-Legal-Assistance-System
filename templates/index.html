@@ -9,6 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
@@ -150,6 +151,21 @@
               <div class="kpi-value" id="kpiConfidence" style="color: #4ade80">
                 0%
               </div>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+                <p class="section-title">Risk Distribution</p>
+                <div class="chart-container">
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <p class="section-title">Confidence Trend</p>
+                <div class="chart-container">
+                    <canvas id="confidenceChart"></canvas>
+                </div>
             </div>
           </div>
 
