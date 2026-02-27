@@ -13,6 +13,17 @@ try:
     # Path Alignment
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+    import spacy
+    import subprocess
+    
+    # --- RUNTIME MODEL INJECTION ---
+    # Streamlit Cloud Python 3.13 / Nixpacks workaround
+    try:
+        spacy.load("en_core_web_sm")
+    except OSError:
+        print("Downloading en_core_web_sm at runtime...")
+        subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"], check=True)
+
     from nlp.clause_segmenter import segment_clauses
     from models.inference import risk_engine
 except Exception as e:
