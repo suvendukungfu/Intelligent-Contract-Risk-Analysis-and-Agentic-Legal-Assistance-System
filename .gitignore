@@ -21,3 +21,4 @@ Thumbs.db
 # artifacts/vectorizer.pkl
 # artifacts/*.png
 .vercel
+.venv_project/

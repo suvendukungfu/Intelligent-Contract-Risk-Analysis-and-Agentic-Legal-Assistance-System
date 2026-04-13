@@ -258,7 +258,6 @@ def render_risk_radar_panel(df):
         bar_colors = [COLOR_CRITICAL if x == "High Risk" else COLOR_LOW for x in counts.index]
 
         fig, ax = plt.subplots(figsize=(8, max(1.5, len(counts) * 0.65)), facecolor=COLOR_SURFACE)
-        fig.patch.set_facecolor(COLOR_SURFACE)
 
         bars = ax.barh(counts.index, counts.values, color=bar_colors, height=0.45)
         ax.set_facecolor(COLOR_SURFACE)
@@ -323,8 +322,7 @@ def render_intelligence_analytics(df):
         if not df.empty:
             counts = df['Risk Level'].value_counts()
             fig, ax = plt.subplots(figsize=(7, 3), facecolor=COLOR_SURFACE)
-            fig.patch.set_facecolor(COLOR_SURFACE)
-            bar_colors = [COLOR_CRITICAL if x == "High Risk" else COLOR_LOW for x in counts.index]
+            bar_colors = [COLOR_CRITICAL if x == \"High Risk\" else COLOR_LOW for x in counts.index]
             ax.bar(counts.index, counts.values, color=bar_colors, width=0.4)
             ax.set_facecolor(COLOR_SURFACE)
             ax.spines[:].set_color(COLOR_BORDER)
@@ -339,7 +337,6 @@ def render_intelligence_analytics(df):
     with tab2:
         if not df.empty:
             fig, ax = plt.subplots(figsize=(9, 3), facecolor=COLOR_SURFACE)
-            fig.patch.set_facecolor(COLOR_SURFACE)
             ax.plot(df.index, df['Confidence'], color=COLOR_PRIMARY, linewidth=1.5)
             ax.fill_between(df.index, df['Confidence'], alpha=0.12, color=COLOR_PRIMARY)
             ax.set_facecolor(COLOR_SURFACE)
