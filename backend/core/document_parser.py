@@ -6,15 +6,15 @@ Implements Requirements 1.1, 1.2, 1.3, 1.4, 1.5.
 import re
 import logging
 from pathlib import Path
-from typing import Union, BinaryIO
+from typing import Union, BinaryIO, Tuple
 import chardet
 import PyPDF2
 import pdfplumber
 from fastapi import UploadFile
 
-from backend.api.models import ParsedDocument
-from backend.core.exceptions import ParseError, FileTypeError
-from backend.core.config import get_settings
+from api.models import ParsedDocument
+from core.exceptions import ParseError, FileTypeError
+from core.config import get_settings
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -199,7 +199,7 @@ class DocumentParser:
                 f"password-protected, or in an unsupported format. Error: {str(e)}"
             )
     
-    def _extract_from_pdf_bytes(self, content: bytes, filename: str) -> tuple[str, int]:
+    def _extract_from_pdf_bytes(self, content: bytes, filename: str) -> Tuple[str, int]:
         """
         Extract text from PDF file bytes.
         
@@ -285,7 +285,7 @@ class DocumentParser:
                 f"An error occurred while extracting text from {filename}: {str(e)}"
             )
     
-    def _extract_from_txt_bytes(self, content: bytes, filename: str) -> tuple[str, int]:
+    def _extract_from_txt_bytes(self, content: bytes, filename: str) -> Tuple[str, int]:
         """
         Extract text from TXT file bytes with encoding detection.
         

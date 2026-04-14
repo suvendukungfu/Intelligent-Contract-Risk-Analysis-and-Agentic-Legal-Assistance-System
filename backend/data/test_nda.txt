@@ -1,0 +1,27 @@
+NON-DISCLOSURE AGREEMENT
+
+This Non-Disclosure Agreement ("Agreement") is entered into as of January 1, 2024, by and between Company A ("Disclosing Party") and Company B ("Receiving Party").
+
+1. Definition of Confidential Information
+For purposes of this Agreement, "Confidential Information" shall include all information or material that has or could have commercial value or other utility in the business in which Disclosing Party is engaged.
+
+2. Exclusions from Confidential Information
+Receiving Party's obligations under this Agreement do not extend to information that is: (a) publicly known at the time of disclosure or subsequently becomes publicly known through no fault of the Receiving Party; (b) discovered or created by the Receiving Party before disclosure by Disclosing Party.
+
+3. Obligations of Receiving Party
+Receiving Party shall hold and maintain the Confidential Information in strictest confidence for the sole and exclusive benefit of the Disclosing Party. Receiving Party shall not, without prior written approval of Disclosing Party, use for Receiving Party's own benefit, publish, copy, or otherwise disclose to others, or permit the use by others for their benefit or to the detriment of Disclosing Party, any Confidential Information.
+
+4. Time Periods
+The nondisclosure provisions of this Agreement shall survive the termination of this Agreement and Receiving Party's duty to hold Confidential Information in confidence shall remain in effect until the Confidential Information no longer qualifies as a trade secret or until Disclosing Party sends Receiving Party written notice releasing Receiving Party from this Agreement, whichever occurs first.
+
+5. No License
+Nothing contained in this Agreement shall be construed as granting or conferring any rights by license or otherwise in any Confidential Information.
+
+6. Indemnification
+Receiving Party agrees to indemnify and hold harmless Disclosing Party from any and all claims, losses, damages, liabilities, costs and expenses (including reasonable attorneys' fees) arising out of or resulting from any breach of this Agreement by Receiving Party or its representatives.
+
+7. Governing Law
+This Agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of laws principles.
+
+8. Entire Agreement
+This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements and understandings, whether written or oral, relating to such subject matter.

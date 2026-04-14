@@ -15,7 +15,7 @@ except ImportError:
     SPACY_AVAILABLE = False
     logging.warning("spaCy not available. Clause segmentation will use regex patterns only.")
 
-from backend.api.models import ParsedDocument, Clause
+from api.models import ParsedDocument, Clause
 
 logger = logging.getLogger(__name__)
 
