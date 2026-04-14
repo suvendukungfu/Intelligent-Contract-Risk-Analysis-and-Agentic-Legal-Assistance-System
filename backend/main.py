@@ -76,9 +76,9 @@ async def root():
     }
 
 
-# Import and include API routes (will be implemented in later tasks)
-# from api.routes import router as api_router
-# app.include_router(api_router, prefix="/api/v1")
+# Import and include API routes
+from api.routes import router as api_router
+app.include_router(api_router, prefix="/api/v1", tags=["analysis"])
 
 
 if __name__ == "__main__":
