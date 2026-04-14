@@ -17,6 +17,9 @@ scikit-learn==1.3.2
 sentence-transformers==2.2.2
 spacy==3.7.2
 numpy==1.24.3
+joblib==1.3.2
+matplotlib==3.8.2
+seaborn==0.13.0
 
 # Vector Store for RAG
 chromadb==0.4.18

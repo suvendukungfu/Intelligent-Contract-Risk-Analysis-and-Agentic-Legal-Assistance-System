@@ -1,0 +1,20 @@
+{"clause_text": "The employee agrees to unlimited overtime without additional compensation.", "risk_label": "high_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "Either party may terminate this agreement with 30 days written notice.", "risk_label": "low_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "The company shall not be liable for any indirect, incidental, or consequential damages.", "risk_label": "high_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "This agreement shall be governed by the laws of India.", "risk_label": "no_risk", "contract_type": "general", "jurisdiction": "India"}
+{"clause_text": "The contractor shall indemnify and hold harmless the company from all claims.", "risk_label": "medium_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "Payment shall be made within 30 days of invoice receipt.", "risk_label": "low_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "The employee waives all rights to sue the employer for any reason.", "risk_label": "high_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "Confidential information shall not be disclosed to third parties.", "risk_label": "low_risk", "contract_type": "nda", "jurisdiction": "India"}
+{"clause_text": "The company reserves the right to change terms at any time without notice.", "risk_label": "high_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "This contract is effective as of the date of signing.", "risk_label": "no_risk", "contract_type": "general", "jurisdiction": "India"}
+{"clause_text": "The employee agrees to a non-compete clause for 5 years after termination.", "risk_label": "high_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "The parties agree to resolve disputes through arbitration.", "risk_label": "medium_risk", "contract_type": "general", "jurisdiction": "India"}
+{"clause_text": "The contractor shall complete work within the agreed timeline.", "risk_label": "low_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "All intellectual property created shall belong to the company.", "risk_label": "medium_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "The company provides health insurance benefits to full-time employees.", "risk_label": "no_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "Late payments shall incur interest at 2% per month.", "risk_label": "medium_risk", "contract_type": "service", "jurisdiction": "India"}
+{"clause_text": "The employee is entitled to 15 days of paid leave per year.", "risk_label": "no_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "The company may terminate employment without cause or notice.", "risk_label": "high_risk", "contract_type": "employment", "jurisdiction": "India"}
+{"clause_text": "Confidentiality obligations survive termination of this agreement.", "risk_label": "low_risk", "contract_type": "nda", "jurisdiction": "India"}
+{"clause_text": "The contractor warrants that work will be free from defects.", "risk_label": "low_risk", "contract_type": "service", "jurisdiction": "India"}
