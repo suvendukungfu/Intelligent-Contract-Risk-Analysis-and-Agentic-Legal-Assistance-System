@@ -1,0 +1,22 @@
+Indian Contract Act, 1872 - Key Provisions
+
+Section 10: What agreements are contracts
+All agreements are contracts if they are made by the free consent of parties competent to contract, for a lawful consideration and with a lawful object, and are not hereby expressly declared to be void.
+
+Section 13: Consent defined
+Two or more persons are said to consent when they agree upon the same thing in the same sense.
+
+Section 14: Free consent defined
+Consent is said to be free when it is not caused by coercion, undue influence, fraud, misrepresentation, or mistake.
+
+Section 16: Undue influence defined
+A contract is said to be induced by undue influence where the relations subsisting between the parties are such that one of the parties is in a position to dominate the will of the other and uses that position to obtain an unfair advantage over the other.
+
+Section 23: What considerations and objects are lawful
+The consideration or object of an agreement is lawful, unless it is forbidden by law, or is of such a nature that, if permitted, it would defeat the provisions of any law, or is fraudulent, or involves or implies injury to the person or property of another, or the Court regards it as immoral, or opposed to public policy.
+
+Section 73: Compensation for loss or damage caused by breach of contract
+When a contract has been broken, the party who suffers by such breach is entitled to receive, from the party who has broken the contract, compensation for any loss or damage caused to him thereby, which naturally arose in the usual course of things from such breach, or which the parties knew, when they made the contract, to be likely to result from the breach of it.
+
+Section 74: Compensation for breach of contract where penalty stipulated for
+When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for.

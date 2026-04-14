@@ -1,0 +1,46 @@
+Contract Law Basics and Best Practices
+
+1. Essential Elements of a Valid Contract
+A valid contract requires: offer, acceptance, consideration, capacity to contract, free consent, lawful object, and certainty of terms. Without these elements, a contract may be void or voidable.
+
+2. Liability Clauses
+Unlimited liability clauses expose parties to significant financial risk. Best practice is to include liability caps that limit exposure to a reasonable amount, typically tied to the contract value or a fixed sum.
+
+3. Indemnification Provisions
+Indemnification clauses should be mutual and balanced. One-sided indemnification where only one party bears all risk is generally unfavorable and may be challenged in court.
+
+4. Termination Rights
+Contracts should include clear termination provisions specifying: notice periods, grounds for termination, and consequences of early termination. Lack of termination rights can trap parties in unfavorable agreements.
+
+5. Intellectual Property Rights
+IP clauses should clearly define ownership of work product, pre-existing IP, and derivative works. Ambiguous IP provisions often lead to disputes.
+
+6. Confidentiality and Non-Disclosure
+Confidentiality obligations should be reasonable in scope and duration. Overly broad confidentiality clauses may be unenforceable and can restrict legitimate business activities.
+
+7. Non-Compete Clauses
+Non-compete provisions must be reasonable in geographic scope, duration, and scope of restricted activities. Unreasonable non-competes are often struck down by courts as restraints on trade.
+
+8. Force Majeure
+Force majeure clauses excuse performance during extraordinary events. They should clearly define qualifying events and the obligations of parties during such events.
+
+9. Dispute Resolution
+Contracts should specify the mechanism for resolving disputes: litigation, arbitration, or mediation. Arbitration clauses should specify the rules, location, and number of arbitrators.
+
+10. Governing Law and Jurisdiction
+Choice of law and jurisdiction clauses determine which courts have authority and which laws apply. These should be carefully negotiated to avoid unfavorable forums.
+
+11. Amendment and Modification
+Contracts should require written amendments signed by both parties. Oral modifications can lead to disputes about what was actually agreed.
+
+12. Severability
+Severability clauses ensure that if one provision is found invalid, the rest of the contract remains enforceable.
+
+13. Entire Agreement
+Entire agreement clauses confirm that the written contract supersedes all prior negotiations and agreements, preventing claims based on pre-contract representations.
+
+14. Notice Provisions
+Notice clauses specify how parties must communicate important information. Failure to follow notice requirements can invalidate actions like termination.
+
+15. Assignment Rights
+Assignment clauses control whether parties can transfer their rights and obligations. Restrictions on assignment protect parties from dealing with unknown third parties.

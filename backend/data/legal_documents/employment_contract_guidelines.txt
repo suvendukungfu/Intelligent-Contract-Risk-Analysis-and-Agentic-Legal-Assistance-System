@@ -1,0 +1,46 @@
+Employment Contract Guidelines
+
+1. At-Will Employment vs. Fixed Term
+At-will employment allows either party to terminate without cause, while fixed-term contracts provide job security but limit flexibility. Clearly specify the employment type.
+
+2. Compensation and Benefits
+Compensation clauses should detail: base salary, bonuses, commission structure, benefits, and payment schedule. Ambiguity in compensation terms leads to disputes.
+
+3. Working Hours and Overtime
+Specify standard working hours and overtime policies. Unlimited overtime clauses without additional compensation may violate labor laws.
+
+4. Leave and Time Off
+Detail vacation days, sick leave, parental leave, and other time off. Ensure compliance with local labor laws regarding minimum leave entitlements.
+
+5. Probation Period
+Probation periods allow employers to assess fit before full commitment. Typical probation periods range from 3-6 months with clear evaluation criteria.
+
+6. Job Responsibilities
+Clearly define the role, responsibilities, and reporting structure. Vague job descriptions can lead to disputes about scope of work.
+
+7. Performance Reviews
+Specify the frequency and process for performance evaluations. Regular reviews help manage expectations and document performance issues.
+
+8. Termination Provisions
+Detail grounds for termination, notice periods, and severance obligations. Termination for cause should specify what constitutes cause.
+
+9. Non-Solicitation Clauses
+Non-solicitation provisions prevent employees from poaching clients or colleagues after leaving. These should be reasonable in scope and duration.
+
+10. Confidentiality Obligations
+Employees must protect confidential information during and after employment. Define what constitutes confidential information and the duration of obligations.
+
+11. Intellectual Property Assignment
+Work-for-hire clauses assign IP created during employment to the employer. Ensure exceptions for pre-existing IP and personal projects.
+
+12. Restrictive Covenants
+Non-compete and non-solicitation clauses must be reasonable. Courts scrutinize these provisions and may refuse to enforce overly broad restrictions.
+
+13. Dispute Resolution
+Specify whether employment disputes will be resolved through arbitration or litigation. Some jurisdictions limit mandatory arbitration for employment claims.
+
+14. Modification of Terms
+Employment terms should only be modified in writing with mutual consent. Unilateral changes to material terms may constitute constructive dismissal.
+
+15. Compliance with Labor Laws
+Employment contracts must comply with applicable labor laws, including minimum wage, working hours, discrimination protections, and safety requirements.
