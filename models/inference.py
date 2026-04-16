@@ -64,6 +64,9 @@ class ContractRiskAI:
         Returns (label, confidence, reasoning).
         """
         try:
+            if not isinstance(text, str):
+                raise ValueError(f"Input must be a string, received {type(text)}")
+
             if self.model is None or self.vectorizer is None:
                 self.load_model()
                 if self.model is None:
@@ -105,6 +108,7 @@ class ContractRiskAI:
             if self.model is None or not hasattr(self.model, "coef_"):
                 return []
 
+            # For binary classification (High vs Low), coef_ is usually (1, n_features)
             weights      = self.model.coef_[0]
             feature_names = self.vectorizer.get_feature_names_out()
 
@@ -119,11 +123,13 @@ class ContractRiskAI:
             for idx in feature_indices:
                 if idx < len(weights):
                     weight = weights[idx]
-                    if weight > 0:
-                        reasons.append((weight, feature_names[idx]))
+                    # Large positive weights for class 1 (High Risk)
+                    # We take the absolute value or just positive weights based on intent.
+                    # Here we take the top contributing features for the prediction.
+                    reasons.append((abs(weight), feature_names[idx]))
 
             reasons.sort(key=lambda x: x[0], reverse=True)
-            return [word for _, word in reasons[:5]]
+            return [word for _, word in reasons[:8]]
         except Exception:
             return []
 

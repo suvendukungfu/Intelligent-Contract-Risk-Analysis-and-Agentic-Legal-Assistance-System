@@ -20,6 +20,10 @@ except (ImportError, Exception):
 def _clean_raw(text: str) -> str:
     """Steps 1-3: lowercase, strip punctuation, collapse whitespace."""
     text = text.lower()
+    # Remove all non-ASCII characters (including emojis) and non-printable chars
+    # We do a rigorous filtering to remove NUL bytes and other non-printables
+    text = "".join(char for char in text if 32 <= ord(char) <= 126)
+    # Collapse any resulting weird whitespace or hidden chars
     text = text.translate(str.maketrans('', '', string.punctuation))
     text = re.sub(r'\s+', ' ', text).strip()
     return text

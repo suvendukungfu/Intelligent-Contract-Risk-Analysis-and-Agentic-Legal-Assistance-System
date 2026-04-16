@@ -15,7 +15,9 @@ def segment_clauses(text):
     
     # We use 'Regex' (Regular Expressions) which is like a super-powered CTRL+F search.
     # This pattern looks for common legal markers.
-    pattern = r'\n\s*\n|(?<=\n)(?=\d+\.\s|Article\s+[IVXLCDM\d]+|SECTION\s+\d+|[A-Z]\.\s)'
+    # Updated to handle mid-line Article/Section more robustly and catch them at line start.
+    # Added escape for period check to ensure split before numbers.
+    pattern = r'\n\s*\n|(?<=\n|\.)\s*(?=\d+\.\s|Article\s+[IVXLCDM\d]+|Section\s+\d+|[A-Z]\.\s)|^Article\s+[IVXLCDM\d]+|^Section\s+\d+|^[A-Z]\.\s'
     
     # Split the text based on where those markers appear.
     segments = re.split(pattern, text, flags=re.IGNORECASE)

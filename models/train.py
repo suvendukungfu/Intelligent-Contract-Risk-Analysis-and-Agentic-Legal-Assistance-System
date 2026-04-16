@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import precision_recall_fscore_support, confusion_matrix
 from nlp.preprocessing import preprocess_text, batch_preprocess_texts
 from nlp.feature_engineering import create_tfidf_features
@@ -64,7 +63,7 @@ def train_system():
     print("\n--- 📝 Phase 4: Model Benchmarking (The Final Exam) ---")
     
     results = []
-    models = [("Logistic Regression", lr_model), ("Decision Tree", dt_model)]
+    models = [("Logistic Regression", lr_model)] # Focus on primary brain
     
     for name, model in models:
         y_pred = model.predict(X_test)
@@ -79,6 +78,11 @@ def train_system():
             "F1-Score": f"{f:.2%}"
         })
         
+        # 🧪 Cross-validation to ensure consistency
+        from sklearn.model_selection import cross_val_score
+        cv_scores = cross_val_score(model, X, y, cv=5)
+        print(f"📊 {name} CV Mean Accuracy: {cv_scores.mean():.2%} (+/- {cv_scores.std()*2:.2%})")
+
         # 📊 NEW: Matrix Heatmap generation
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(6, 4))
@@ -91,6 +95,19 @@ def train_system():
         chart_path = os.path.join(ARTIFACTS_DIR, f"{name.lower().replace(' ', '_')}_matrix.png")
         plt.savefig(chart_path)
         plt.close()
+        
+        # Log metrics to a JSON for the UI to read
+        import json
+        metrics_log = {
+            "precision": p,
+            "recall": r,
+            "f1": f,
+            "cv_mean": cv_scores.mean(),
+            "cv_std": cv_scores.std()
+        }
+        with open(os.path.join(ARTIFACTS_DIR, "metrics.json"), "w") as f_json:
+            json.dump(metrics_log, f_json)
+        
         print(f"📉 Evaluation Matrix saved for {name}")
 
     # Display clean table
