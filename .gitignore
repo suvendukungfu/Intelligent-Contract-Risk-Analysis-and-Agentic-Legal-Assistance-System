@@ -16,9 +16,7 @@ ENV/
 ehthumbs.db
 Thumbs.db
 
-# Project artifacts (keeping small ones, ignoring local models if any)
-# artifacts/classifier.pkl
-# artifacts/vectorizer.pkl
-# artifacts/*.png
+# Project artifacts (generated during training)
+artifacts/
 .vercel
 .venv_project/
