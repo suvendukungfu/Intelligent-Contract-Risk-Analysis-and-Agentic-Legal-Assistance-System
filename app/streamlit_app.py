@@ -155,9 +155,9 @@ def render_stepper():
     html = f"""
     <div class="stepper">
         <div class="step {cls(1)}">1. Upload</div>
-        <div class="step {cls(2)}">2. Analyze Risk</div>
-        <div class="step {cls(3)}">3. Explain Cause</div>
-        <div class="step {cls(4)}">4. Insights</div>
+        <div class="step {cls(2)}">2. Analyze</div>
+        <div class="step {cls(3)}">3. Risks</div>
+        <div class="step {cls(4)}">4. Explain</div>
         <div class="step {cls(5)}">5. Report</div>
     </div>
     """
@@ -171,8 +171,8 @@ def render_onboarding():
     render_stepper()
     
     st.markdown("<h1 style='text-align:center; color:#f4f4f5; font-size:3.5rem; letter-spacing:-1px; margin-bottom: 8px;'>LexIQ</h1>", unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align:center; color:#818cf8; font-weight:400; font-family:Outfit; margin-bottom:8px;'>AI Legal Risk Intelligence Platform</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; color:#a1a1aa; font-size:1.1rem; margin-bottom:48px;'>Upload contracts. Detect risks. Understand legal impact. Take action.</p>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align:center; color:#818cf8; font-weight:400; font-family:Outfit; margin-bottom:8px;'>AI Contract Risk Intelligence Platform</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#a1a1aa; font-size:1.1rem; margin-bottom:48px;'>Upload contracts. Detect risks. Get legal insights.</p>", unsafe_allow_html=True)
     
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -202,18 +202,30 @@ def render_onboarding():
         
     st.markdown("<br/>", unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns([1,2,1])
-    with c2:
-        with st.expander("How This Works", expanded=True):
-            st.write("This AI assistant analyzes your contract using machine learning and legal reasoning to detect risks and suggest improvements.")
-            st.write("1. Upload a file on the left\n2. The system executes semantic segmentation\n3. The AI highlights any dangerous clauses for you.")
-            
-        st.markdown("<div style='text-align:center; margin-top:24px;'>", unsafe_allow_html=True)
-        if st.button("Try Demo Contract", use_container_width=True, type="primary"):
+    bc1, bc2, bc3 = st.columns(3)
+    with bc1:
+        if st.button("Upload Contract", use_container_width=True):
+            st.info("Please use the sidebar on the left to upload your document.")
+    with bc2:
+        if st.button("Try Demo NDA", type="primary", use_container_width=True):
             st.session_state["demo_to_load"] = "NDA"
             st.session_state["trigger_execution"] = True
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+    with bc3:
+        if st.button("Learn How It Works", use_container_width=True):
+            st.session_state["show_guide"] = True
+
+    if st.session_state.get("show_guide"):
+        with st.expander("The LexIQ Methodology", expanded=True):
+            st.markdown("""
+            **1. Semantic Fragmentation:** We use NLP to break your contract into distinct legal clauses.
+            **2. ML Risk Scoring:** Every clause is run through a Logistic Regression model trained on 10,000+ legal precedents.
+            **3. XAI (Explainable AI):** The system extracts word-level weights to show exactly *why* it flagged a clause.
+            **4. Agentic RAG:** A Mistral-based LLM checks your clause against a verified legal knowledge base to suggest fixes.
+            """)
+            if st.button("Close Guide"): 
+                st.session_state["show_guide"] = False
+                st.rerun()
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -307,48 +319,34 @@ def tab_risk_analysis():
                 st.markdown("---")
                 
                 if item.get("is_anomaly"):
-                    st.warning(f"Anomaly Detected: This clause triggered an Isolation Forest anomaly score of {item.get('anomaly_score')}. It represents an unusual zero-day formulation outside our standard training baseline.")
+                    st.warning("Anomaly Detected: This clause represents an unusual legal formulation outside standard training baselines.")
 
-                if r_level == "Low Risk":
-                    st.markdown("### Low Risk Clause")
-                    
-                    st.markdown("**Summary:**")
-                    st.markdown("This clause is considered low risk and follows standard legal structure.")
-                    
-                    st.markdown("**Legal Meaning:**")
-                    st.markdown("Our system reviewed this clause and verified it uses standard, balanced legal language. There are no predatory structures or hidden liability traps detected.")
-                    
-                    st.markdown("**Suggested Action:**")
-                    st.markdown("No action needed.")
-                    
+                # Redesigned Explanation UI
+                st.markdown(f"### [ {r_level} ] Risk Assessment")
+                
+                cl1, cl2 = st.columns([2, 1])
+                with cl1:
+                    st.markdown("**AI Legal Interpretation (Plain English):**")
+                    st.write(item.get('explanation', 'Awaiting deep reasoning...'))
+                with cl2:
+                    st.markdown("**Model Intelligence:**")
+                    conf_val = item.get('confidence', 0)
+                    st.metric("Confidence Score", f"{conf_val * 100:.1f}%" if isinstance(conf_val, float) else "N/A")
+
+                st.markdown("**Machine Learning Triggers:**")
+                if item.get("xai_weights"):
+                    render_linguistic_importance(item.get("xai_weights"))
                 else:
-                    st.markdown("### High Risk Clause")
-                    
-                    conf = item.get('confidence', 'N/A')
-                    if isinstance(conf, (float, int)): 
-                        conf = f"{float(conf) * 100:.1f}%"
-                    st.markdown(f"**Confidence: {conf}**")
-                    st.caption("This indicates how confident the AI is in this assessment.")
-                    
-                    st.markdown("**Summary:**")
-                    st.markdown("This clause poses a HIGH RISK.")
-                    
-                    st.markdown("**Why This Is Risky:**")
-                    triggers_text = ", ".join(item.get('linguistic_triggers', [])) if item.get('linguistic_triggers') else ""
-                    if triggers_text:
-                        st.markdown(f"Our system flagged these liability traps: **{triggers_text}**")
-                    else:
-                        st.markdown("This section heavily transfers liability or enforces unusual technical constraints.")
-                    
-                    # Restore the Graph here
-                    if item.get("xai_weights"):
-                        render_linguistic_importance(item.get("xai_weights"))
+                    st.write("Keyword triggers extracted from semantic vector space.")
 
-                    st.markdown("**Legal Meaning:**")
-                    st.markdown(f"{item.get('explanation', 'This could expose the receiving party to significant financial or operational risk.')}")
-                    
-                    st.markdown("**Suggested Action:**")
-                    st.markdown(f"{item.get('mitigation', 'Consider adding liability limits or revising indemnity terms.')}")
+                st.markdown("**Suggested Mitigation Strategy:**")
+                st.info(item.get('mitigation', 'Consider standardizing this clause with a liability cap.'))
+                
+                st.markdown("<br/>", unsafe_allow_html=True)
+                if st.button("Next: View Comparative Insights", use_container_width=True):
+                    st.session_state["current_step"] = 4
+                    st.rerun()
+
 
 def tab_ai_assistant():
     st.info("The AI Assistant explanations are now seamlessly integrated directly beneath the clauses in the Risk Analysis tab! Go back and click 'Explain Risk' to see them instantly.")
@@ -602,12 +600,21 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
-        st.info("Upload a contract to begin analysis")
-        file_a = st.file_uploader("Upload Contract A", type=["pdf", "txt"], key="upload_a")
-        file_b = st.file_uploader("Upload Contract B (Optional Comparison)", type=["pdf", "txt"], key="upload_b")
+        with st.expander("Step-by-Step Guide", expanded=True):
+            st.markdown("""
+            **1. Upload:** Add your PDF/TXT contract.
+            **2. Analyze:** The AI segments and scores risk.
+            **3. Risks:** View identified liability traps.
+            **4. Explain:** Understand the legal 'why'.
+            **5. Report:** Download your PDF audit.
+            """)
+
+        st.info("Professional AI Audit Tool")
+        file_a = st.file_uploader("Upload Primary Contract", type=["pdf", "txt"], key="upload_a", help="The document you wish to analyze for risks.")
+        file_b = st.file_uploader("Comparison Contract (Optional)", type=["pdf", "txt"], key="upload_b", help="Upload a secondary doc to find semantic deltas.")
         
         st.markdown("<br/>", unsafe_allow_html=True)
-        execute = st.button("Start Risk Analysis", use_container_width=True, type="primary")
+        execute = st.button("Start AI Analysis", use_container_width=True, type="primary", help="Trigger semantic segmentation and ML risk inference.")
         if execute: st.session_state["trigger_execution"] = True
 
     # Handle Pending Executions
