@@ -623,18 +623,33 @@ def main():
         
         if st.session_state["demo_to_load"]:
             t, n = load_demo_contract(st.session_state["demo_to_load"])
-            if t: process_document(t, n, "a")
+            if t: 
+                st.toast("Welcome to the LexIQ Guided Tour!", icon=None)
+                st.session_state["is_demo_mode"] = True
             st.session_state["demo_to_load"] = None
         else:
             if file_a: 
                 t = get_text_from_file(file_a)
                 if t: process_document(t, file_a.name, "a")
             else: 
-                st.toast("Please upload a contract or select a Demo file.")
+                st.toast("Notice: Please upload a contract or select a Demo file.")
             
             if file_b:
                 tb = get_text_from_file(file_b)
                 if tb: process_document(tb, file_b.name, "b")
+
+    # Demo Tour Highlighting
+    if st.session_state.get("is_demo_mode"):
+        step = st.session_state["current_step"]
+        if step == 2:
+            st.toast("Guide: Analyzing risks and clustering anomalies...", icon=None)
+        elif step == 3:
+            st.toast("Guide: Identified liability traps. Click 'Explain' for legal analysis.", icon=None)
+        elif step == 4:
+            st.toast("Guide: Comparative monitoring and confidence metrics.", icon=None)
+        elif step == 5:
+            st.toast("Guide: Final professional audit report generation.", icon=None)
+            st.session_state["is_demo_mode"] = False # End tour at report
 
     # Render Base Content
     if not st.session_state["agent_state_a"]:
