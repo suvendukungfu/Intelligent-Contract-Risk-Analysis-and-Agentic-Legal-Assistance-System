@@ -36,40 +36,49 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
     
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    html, body, [class*="css"] { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
     
-    /* OLED Slate Theme */
-    .stApp { background-color: #09090b; color: #a1a1aa; }
-    [data-testid="stSidebar"] { background-color: #000000; border-right: 1px solid #18181b; }
+    /* Deep Cyber-Indigo Atmosphere */
+    .stApp { background: linear-gradient(135deg, #09090b 0%, #0c0a20 100%); color: #a1a1aa; }
+    [data-testid="stSidebar"] { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px); border-right: 1px solid rgba(255, 255, 255, 0.05); }
     
     /* Strict Tab Styling */
-    .stTabs [data-baseweb="tab-list"] { background: transparent; border-bottom: 1px solid #27272a; padding: 0; gap: 32px; }
-    .stTabs [data-baseweb="tab"] { color: #52525b; font-weight: 500; padding: 12px 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; border: none !important; background: transparent !important; }
-    .stTabs [aria-selected="true"] { color: #f4f4f5 !important; border-bottom: 2px solid #f4f4f5 !important; }
+    .stTabs [data-baseweb="tab-list"] { background: transparent; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0; gap: 32px; }
+    .stTabs [data-baseweb="tab"] { color: #71717a; font-weight: 600; padding: 12px 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; border: none !important; background: transparent !important; }
+    .stTabs [aria-selected="true"] { color: #e0e7ff !important; border-bottom: 2px solid #818cf8 !important; text-shadow: 0 0 10px rgba(129, 140, 248, 0.5); }
     
-    /* Hard-edged Cards */
+    /* Glassmorphism Cards */
     .saas-card {
-        background: #09090b; border-radius: 0px; padding: 24px;
-        border: 1px solid #27272a; margin-bottom: 24px;
+        background: rgba(30, 30, 40, 0.4);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 20px; 
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05); 
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        margin-bottom: 24px;
     }
     
-    /* Metrics */
-    .metric-title { font-size: 0.75rem; color: #71717a; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
-    .metric-value { font-size: 2.25rem; color: #f4f4f5; font-weight: 400; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -1px; }
-    .metric-value.critical { color: #f87171; }
-    .metric-value.warning { color: #fbbf24; }
-    .metric-value.safe { color: #34d399; }
+    /* Glowing Metrics */
+    .metric-title { font-size: 0.75rem; color: #818cf8; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 12px; font-family: 'Outfit', sans-serif; }
+    .metric-value { font-size: 2.25rem; color: #f4f4f5; font-weight: 500; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -1px; text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+    .metric-value.critical { color: #f87171; text-shadow: 0 0 15px rgba(248, 113, 113, 0.4); }
+    .metric-value.warning { color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+    .metric-value.safe { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
     
-    /* Badges (Outline Only) */
-    .badge { padding: 4px 10px; border-radius: 2px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; font-family: 'JetBrains Mono', monospace; }
-    .badge-high { color: #f87171; border: 1px solid #f87171; }
-    .badge-low { color: #34d399; border: 1px solid #34d399; }
-    .kw-chip { color: #a1a1aa; border: 1px solid #3f3f46; padding: 3px 8px; border-radius: 0px; font-size: 0.65rem; margin: 2px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
+    /* Hollow Badges */
+    .badge { padding: 4px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; font-family: 'Outfit', sans-serif; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+    .badge-high { color: #fca5a5; border: 1px solid rgba(248, 113, 113, 0.5); background: rgba(248, 113, 113, 0.1); }
+    .badge-low { color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.5); background: rgba(52, 211, 153, 0.1); }
+    .kw-chip { color: #c7d2fe; border: 1px solid rgba(129, 140, 248, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; margin: 2px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; background: rgba(129, 140, 248, 0.05); }
     
-    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 12px; background: #000000; color: #52525b; font-size: 0.75rem; letter-spacing: 0.5px; border-top: 1px solid #18181b; z-index: 1000;}
+    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 12px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); color: #52525b; font-size: 0.75rem; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000;}
 </style>
 """, unsafe_allow_html=True)
 
