@@ -84,7 +84,7 @@ st.markdown("""
     .step { font-size: 0.8rem; text-transform: uppercase; font-family: 'Outfit'; font-weight: 600; color: #52525b; text-align: center; flex-grow: 1; position: relative; }
     .step.active { color: #818cf8; text-shadow: 0 0 8px rgba(129, 140, 248, 0.4); }
     .step.done { color: #34d399; }
-    .step:not(:last-child)::after { content: '➔'; position: absolute; right: -10px; color: #3f3f46; font-size: 0.9rem; }
+    .step:not(:last-child)::after { content: '>'; position: absolute; right: -10px; color: #3f3f46; font-size: 0.9rem; }
     
     .badge { padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; font-family: 'Outfit', sans-serif; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
     .badge-high { color: #fca5a5; border: 1px solid rgba(248, 113, 113, 0.5); background: rgba(248, 113, 113, 0.1); }
@@ -243,23 +243,6 @@ def render_executive_summary(stats, risks):
     </div>
     """, unsafe_allow_html=True)
 
-def render_xai_block(item):
-    xai_html = ""
-    if item.get("xai_weights"):
-        for word, weight in item.get("xai_weights").items():
-            w_pct = min(weight * 100, 100)
-            xai_html += f"""
-            <div style="display:flex; align-items:center; margin-bottom:8px;">
-                <div style="width:120px; color:#a1a1aa; font-size:0.8rem;">{word}</div>
-                <div style="flex-grow:1; background:rgba(255,255,255,0.05); height:4px; border-radius:2px; margin:0 12px; position:relative;">
-                    <div style="width:{w_pct}%; background:#f87171; height:100%; border-radius:2px; position:absolute; left:0;"></div>
-                </div>
-                <div style="font-size:0.8rem; color:#f87171; font-family:'JetBrains Mono';">+{weight:.2f}</div>
-            </div>
-            """
-        xai_html += "<div style='margin-bottom:24px;'></div>"
-    return xai_html
-
 
 def tab_risk_analysis():
     st.session_state["current_step"] = 2
@@ -273,10 +256,10 @@ def tab_risk_analysis():
 
     if not risks:
         st.success("No high-risk clauses found. This contract appears mathematically safe.")
-        st.info("Next Step → Generate full report (Export Tab)")
+        st.info("Next Step - Generate full report (Export Tab)")
         return
 
-    st.info("**Next Step →** Click on a clause below to understand the risk.")
+    st.info("Next Step - Click on a clause below to understand the risk.")
     
     for idx, item in enumerate(risks):
         r_level = item.get("risk_level")
@@ -303,45 +286,69 @@ def tab_risk_analysis():
                 st.session_state["selected_clause_idx"] = None
                 st.rerun()
                 
-            xai_html = render_xai_block(item)
-            anomaly_html = ""
-            if item.get("is_anomaly"):
-                anomaly_html = f"<div style='background:rgba(192, 132, 252, 0.1); border-left:4px solid #c084fc; padding:12px; border-radius:8px; margin-bottom:24px; color:#e9d5ff;'><b style='color:#d8b4fe;'>Anomaly Detected:</b> This clause triggered Isolation Forest anomaly scores (Score: {item.get('anomaly_score')}). It represents an unusual zero-day formulation outside our training baseline.</div>"
+            # Restore the XAI (Risk Word) graph logic natively
+            def render_linguistic_importance(xai_weights):
+                if not xai_weights: return
+                st.markdown("**Linguistic Trigger Importance:**")
+                for word, weight in xai_weights.items():
+                    w_pct = min(weight * 100, 100)
+                    st.markdown(f"""
+                    <div style="display:flex; align-items:center; margin-bottom:4px;">
+                        <div style="width:100px; color:#a1a1aa; font-size:0.75rem;">{word}</div>
+                        <div style="flex-grow:1; background:rgba(255,255,255,0.05); height:4px; border-radius:2px; margin:0 12px; position:relative;">
+                            <div style="width:{w_pct}%; background:#f87171; height:100%; border-radius:2px; position:absolute; left:0;"></div>
+                        </div>
+                        <div style="font-size:0.75rem; color:#f87171; font-family:'JetBrains Mono';">+{weight:.2f}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                st.markdown("<div style='margin-bottom:16px;'></div>", unsafe_allow_html=True)
 
-            if r_level == "Low Risk":
-                st.markdown(f"""
-                <div class="saas-card" style="margin-top: -12px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none; background: rgba(0,0,0,0.4);">
-                    {anomaly_html}
-                    <h5 style="color:#34d399; margin-bottom:12px;">Standard Clause Verified</h5>
-                    <p style="font-size:0.95rem; color:#a1a1aa; line-height:1.6; padding-left:16px; border-left:2px solid #34d399;">
-                        The AI engine reviewed this clause and verified it uses standard, balanced legal language. There are no predatory structures or hidden liability traps detected, so no further legal action is required.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.markdown(f"""
-                <div class="saas-card" style="margin-top: -12px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none; background: rgba(0,0,0,0.4);">
-                    {anomaly_html}
-                    <h5 style="color:#f4f4f5; margin-bottom:16px;">1. Why is this risky? (ML Analysis)</h5>
-                    <div style="margin-bottom:12px; font-size:0.9rem; color:#a1a1aa;">The algorithm flagged these terms strongly correlating to liability traps:</div>
-                    {xai_html}
+            with st.container():
+                st.markdown("---")
+                
+                if item.get("is_anomaly"):
+                    st.warning(f"Anomaly Detected: This clause triggered an Isolation Forest anomaly score of {item.get('anomaly_score')}. It represents an unusual zero-day formulation outside our standard training baseline.")
+
+                if r_level == "Low Risk":
+                    st.markdown("### Low Risk Clause")
                     
-                    <h5 style="color:#f4f4f5; margin-bottom:12px;">2. Legal Context (RAG Evidence)</h5>
-                    <p style="font-size:0.9rem; color:#c7d2fe; line-height:1.6; background:rgba(99, 102, 241, 0.05); padding:16px; border-radius:12px; margin-bottom:32px;">
-                        {item.get('legal_reference', '')}
-                    </p>
+                    st.markdown("**Summary:**")
+                    st.markdown("This clause is considered low risk and follows standard legal structure.")
                     
-                    <h5 style="color:#f4f4f5; margin-bottom:12px;">3. AI Reasoning & Reasoning</h5>
-                    <p style="font-size:0.95rem; color:#e4e4e7; line-height:1.6; border-left:2px solid #818cf8; padding-left:16px; margin-bottom:32px;">
-                        {item.get('explanation', '')}
-                    </p>
+                    st.markdown("**Legal Meaning:**")
+                    st.markdown("Our system reviewed this clause and verified it uses standard, balanced legal language. There are no predatory structures or hidden liability traps detected.")
                     
-                    <h5 style="color:#f4f4f5; margin-bottom:12px;">4. Suggested Fix</h5>
-                    <p style="font-size:0.95rem; color:#fca5a5; line-height:1.6; background:rgba(248, 113, 113, 0.05); padding:16px; border-radius:12px;">
-                        {item.get('mitigation', '')}
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
+                    st.markdown("**Suggested Action:**")
+                    st.markdown("No action needed.")
+                    
+                else:
+                    st.markdown("### High Risk Clause")
+                    
+                    conf = item.get('confidence', 'N/A')
+                    if isinstance(conf, (float, int)): 
+                        conf = f"{float(conf) * 100:.1f}%"
+                    st.markdown(f"**Confidence: {conf}**")
+                    st.caption("This indicates how confident the AI is in this assessment.")
+                    
+                    st.markdown("**Summary:**")
+                    st.markdown("This clause poses a HIGH RISK.")
+                    
+                    st.markdown("**Why This Is Risky:**")
+                    triggers_text = ", ".join(item.get('linguistic_triggers', [])) if item.get('linguistic_triggers') else ""
+                    if triggers_text:
+                        st.markdown(f"Our system flagged these liability traps: **{triggers_text}**")
+                    else:
+                        st.markdown("This section heavily transfers liability or enforces unusual technical constraints.")
+                    
+                    # Restore the Graph here
+                    if item.get("xai_weights"):
+                        render_linguistic_importance(item.get("xai_weights"))
+
+                    st.markdown("**Legal Meaning:**")
+                    st.markdown(f"{item.get('explanation', 'This could expose the receiving party to significant financial or operational risk.')}")
+                    
+                    st.markdown("**Suggested Action:**")
+                    st.markdown(f"{item.get('mitigation', 'Consider adding liability limits or revising indemnity terms.')}")
 
 def tab_ai_assistant():
     st.info("The AI Assistant explanations are now seamlessly integrated directly beneath the clauses in the Risk Analysis tab! Go back and click 'Explain Risk' to see them instantly.")
@@ -362,7 +369,7 @@ def tab_analytics():
     explanations = state.get("explanations", [])
     retrieval_data = state.get("retrieved_contexts", [])
     
-    st.markdown("### 📊 System Health & Overview (Executive Panel)")
+    st.markdown("### System Health and Overview (Executive Panel)")
     kc1, kc2, kc3, kc4 = st.columns(4)
     with kc1:
         st.markdown(f"<div class='saas-card'><h4>Overall Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{report_stats.get('risk_index', 0)}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>System risk classification</div></div>", unsafe_allow_html=True)
@@ -375,16 +382,16 @@ def tab_analytics():
 
     # Automated Alert System
     if avg_conf < 85.0:
-        st.warning("⚠️ **Warning: Low Average Confidence.** The ML Model is exhibiting low certainty for this document structure. Proceed with manual legal review.")
+        st.warning("Warning: Low Average Confidence. The ML Model is exhibiting low certainty for this document structure. Proceed with manual legal review.")
     if anomaly_count > 0:
-        st.error(f"🚨 **Alert: {anomaly_count} Anomalies Detected.** The Isolation Forest model flagged clauses severely disjointed from standard baseline patterns.")
+        st.error(f"Alert: {anomaly_count} Anomalies Detected. The Isolation Forest model flagged clauses severely disjointed from standard baseline patterns.")
     if abs(25 - (sum(len(str(r["clause"]).split()) for r in results) / max(len(results), 1))) > 20: 
-        st.info("📉 **Data Drift Notice:** The average clause length significantly deviates from the historical training distributions, potentially lowering accuracy.")
+        st.info("Data Drift Notice: The average clause length significantly deviates from the historical training distributions, potentially lowering accuracy.")
 
     st.markdown("---")
     
     # Filters
-    st.markdown("### 🎛️ Interactive Filters")
+    st.markdown("### Interactive Filters")
     fcol1, fcol2 = st.columns(2)
     with fcol1:
         selected_risks = st.multiselect("Filter by Risk Level", ["Low Risk", "Unknown", "High Risk"], default=["Low Risk", "Unknown", "High Risk"])
@@ -394,7 +401,7 @@ def tab_analytics():
     filtered_results = [r for r in results if r["risk_level"] in selected_risks and (r["confidence"] * 100) >= conf_min]
     
     st.markdown("---")
-    st.markdown("### 1️⃣ Model Evaluation Metrics (Baseline)")
+    st.markdown("### 1. Model Evaluation Metrics (Baseline)")
     st.info("Demonstrates the machine learning agent's standardized validation metrics from training.")
     mc1, mc2 = st.columns(2)
     with mc1: 
@@ -405,7 +412,7 @@ def tab_analytics():
         st.caption("Precision: How accurate the risk predictions are. Recall: How many risky clauses are correctly identified.")
 
     st.markdown("---")
-    st.markdown("### 2️⃣ Data Drift & Clause Analytics")
+    st.markdown("### 2. Data Drift & Clause Analytics")
     c1, c2 = st.columns(2)
     with c1: 
         st.plotly_chart(create_risk_distribution_chart(filtered_results), use_container_width=True)
@@ -415,12 +422,12 @@ def tab_analytics():
         st.caption("Data Drift: Compares current clause lengths against static baseline boundaries. Shifted geometry implies model instability.")
 
     st.markdown("---")
-    st.markdown("### 3️⃣ Real-time Confidence & Flow Analytics")
+    st.markdown("### 3. Real-time Confidence & Flow Analytics")
     st.plotly_chart(create_confidence_trend_chart(filtered_results), use_container_width=True)
     st.caption("Prediction Confidence Monitoring: Shows how confident the AI is across the chronological flow of the document. Spikes indicate clarity; dips indicate confusing terminology.")
 
     st.markdown("---")
-    st.markdown("### 4️⃣ Observability: RAG & LLM Extraction Health")
+    st.markdown("### 4. Observability: RAG & LLM Extraction Health")
     rc1, rc2 = st.columns(2)
     with rc1:
         st.plotly_chart(create_rag_observability_chart(retrieval_data), use_container_width=True)
@@ -430,7 +437,7 @@ def tab_analytics():
         st.caption("LLM Safety: Maps response token-length constraints to detect uncontrolled hallucinatory generations (long lengths) or truncation errors (short lengths).")
 
     st.markdown("---")
-    st.markdown("### 5️⃣ Explainability (XAI) & Anomaly Tracking")
+    st.markdown("### 5. Explainability (XAI) & Anomaly Tracking")
     x1, x2 = st.columns(2)
     with x1: 
         st.plotly_chart(create_feature_importance_chart(filtered_results), use_container_width=True)
@@ -497,13 +504,13 @@ def tab_export():
             st.markdown(f"""
             <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.05);">
                 <div style="color:#818cf8; font-weight:700; margin-bottom:8px; font-family:'Outfit';">Clause {idx+1} [ {risk.get('risk_level', 'Unknown')} ]</div>
-                <div style="font-size:0.9rem; color:#a1a1aa; font-style:italic; border-left:2px solid #3f3f46; padding-left:12px; margin-bottom:16px;">
+                <div style="font-size:0.9rem; color:#a1a1aa; font-style:italic; border-left:2px solid #3f3f3f; padding-left:12px; margin-bottom:16px;">
                     "{clean_clause}"
                 </div>
             """, unsafe_allow_html=True)
             
             if risk.get("risk_level") == "Low Risk":
-                 st.markdown("<p style='color:#34d399; font-size:0.9rem;'>✅ Verification passed. Standard language detected.</p>", unsafe_allow_html=True)
+                 st.markdown("<p style='color:#34d399; font-size:0.9rem;'>Verification passed. Standard language detected.</p>", unsafe_allow_html=True)
             else:
                  st.markdown(f"**Triggers Identified:** `{', '.join(risk.get('linguistic_triggers', []))}`")
                  st.markdown(f"**AI Reasoning:** {risk.get('explanation', 'N/A')}")
@@ -520,7 +527,7 @@ def tab_export():
             <p style="color:#71717a; font-size:0.9rem;">Presentation-ready PDF with risk scores and mitigations.</p>
         </div>""", unsafe_allow_html=True)
         pdf_bytes = generate_pdf_report(state.get("final_report", {}))
-        st.download_button("📥 Download PDF", pdf_bytes, file_name="LexIQ_Risk_Report.pdf", use_container_width=True, type="primary")
+        st.download_button("Download PDF", pdf_bytes, file_name="LexIQ_Risk_Report.pdf", use_container_width=True, type="primary")
         
     with c2:
         st.markdown("""<div class="saas-card" style="text-align:center;">
@@ -529,7 +536,7 @@ def tab_export():
             <p style="color:#71717a; font-size:0.9rem;">Raw machine-learning extraction output for developers.</p>
         </div>""", unsafe_allow_html=True)
         json_b = report_to_json_string(state.get("final_report", {})).encode("utf-8")
-        st.download_button("📥 Download JSON", json_b, file_name="LexIQ_Data.json", use_container_width=True)
+        st.download_button("Download JSON", json_b, file_name="LexIQ_Data.json", use_container_width=True)
 
 
 # ══════════════════════════════════════════════════════════════════
