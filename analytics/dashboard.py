@@ -197,3 +197,85 @@ def create_precision_recall_chart() -> go.Figure:
         margin=dict(l=20, r=20, t=40, b=20), showlegend=False
     )
     return fig
+
+# ==========================================
+# 3. LLM, RAG & OBSERVABILITY MONITORING
+# ==========================================
+
+def create_data_drift_chart(ml_results: List[Dict[str, Any]]) -> go.Figure:
+    """Simulates a Data Drift chart comparing the uploaded text structure vs the theoretical training baseline."""
+    if not ml_results: return go.Figure()
+    
+    current_lengths = [max(1, len(str(r["clause"]).split())) for r in ml_results]
+    
+    import numpy as np
+    baseline_lengths = np.random.normal(loc=25, scale=10, size=max(100, len(ml_results)*2))
+    baseline_lengths = [max(1, int(x)) for x in baseline_lengths]
+    
+    fig = go.Figure()
+    fig.add_trace(go.Histogram(x=baseline_lengths, name='Training Baseline', opacity=0.5, marker_color='#3F3F46'))
+    fig.add_trace(go.Histogram(x=current_lengths, name='Current Upload Context', opacity=0.75, marker_color='#F472B6'))
+
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
+        title="Data Drift Detection (Clause Length Dist)",
+        barmode='overlay',
+        xaxis_title_text='Clause Word Count', 
+        yaxis_title_text='Count',
+        margin=dict(l=20, r=20, t=40, b=20),
+        legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
+    )
+    return fig
+
+def create_llm_reliability_chart(explanations: List[Dict[str, Any]]) -> go.Figure:
+    """Plots LLM response token lengths mapped against a simulated 'Hallucination bounding box'."""
+    if not explanations: return go.Figure()
+
+    df = pd.DataFrame([{
+        "Clause #": e.get("clause_idx", 0) + 1,
+        "Response Length (Words)": len(str(e.get("explanation", "")).split())
+    } for e in explanations])
+
+    df = df[df["Response Length (Words)"] > 10]
+    if df.empty: return go.Figure()
+
+    fig = px.scatter(
+        df, x="Clause #", y="Response Length (Words)", 
+        title="LLM Output Monitoring (Response Length)",
+        size="Response Length (Words)", color="Response Length (Words)",
+        color_continuous_scale="Viridis"
+    )
+
+    fig.add_hrect(y0=0, y1=15, line_width=0, fillcolor="red", opacity=0.1, annotation_text="Too short (Low Context)")
+    fig.add_hrect(y0=100, y1=300, line_width=0, fillcolor="orange", opacity=0.1, annotation_text="Too long (Hallucination Risk)")
+
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
+        xaxis=dict(showgrid=True, gridcolor="#30363D"),
+        yaxis=dict(showgrid=True, gridcolor="#30363D"),
+        margin=dict(l=20, r=20, t=40, b=20), showlegend=False, coloraxis_showscale=False
+    )
+    return fig
+
+def create_rag_observability_chart(retrieval_data: List[Dict[str, Any]]) -> go.Figure:
+    """Bar chart mapping how many external vector documents were actively passed to the LLM per clause."""
+    if not retrieval_data: return go.Figure()
+    
+    df = pd.DataFrame([{
+        "Clause #": r.get("clause_idx", 0) + 1,
+        "Context Docs Retrieved": len(r.get("context_chunks", []))
+    } for r in retrieval_data])
+
+    fig = px.bar(
+        df, x="Clause #", y="Context Docs Retrieved",
+        title="RAG Observability: Vector Store Ingestion Count",
+        color="Context Docs Retrieved", color_continuous_scale="Blues"
+    )
+    
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
+        xaxis=dict(showgrid=False, type='category'),
+        yaxis=dict(showgrid=True, gridcolor="#30363D"),
+        margin=dict(l=20, r=20, t=40, b=20), coloraxis_showscale=False
+    )
+    return fig

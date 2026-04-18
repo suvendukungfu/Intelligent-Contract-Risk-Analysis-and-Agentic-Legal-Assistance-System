@@ -25,7 +25,10 @@ from analytics.dashboard import (
     create_anomaly_scatter,
     create_feature_importance_chart,
     create_confusion_matrix,
-    create_precision_recall_chart
+    create_precision_recall_chart,
+    create_data_drift_chart,
+    create_llm_reliability_chart,
+    create_rag_observability_chart
 )
 from models.comparison import compare_contracts
 
@@ -355,16 +358,29 @@ def tab_analytics():
         return
 
     report_stats = state.get("final_report", {}).get("statistics", {})
+    avg_conf = float(str(report_stats.get('avg_confidence', '0%')).replace('%', ''))
+    anomaly_count = sum(1 for r in results if r.get('is_anomaly'))
+    explanations = state.get("explanations", [])
+    retrieval_data = state.get("retrieved_contexts", [])
     
-    st.markdown("### 📊 Executive Insights Panel")
-    kc1, kc2, kc3 = st.columns(3)
+    st.markdown("### 📊 System Health & Overview (Executive Panel)")
+    kc1, kc2, kc3, kc4 = st.columns(4)
     with kc1:
-        st.markdown(f"<div class='saas-card'><h4>Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{report_stats.get('risk_index', 0)}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>Overall document risk level</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='saas-card'><h4>Overall Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{report_stats.get('risk_index', 0)}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>System risk classification</div></div>", unsafe_allow_html=True)
     with kc2:
-        st.markdown(f"<div class='saas-card'><h4>High-Risk Clauses</h4><div style='font-size:2rem; font-weight:700; color:#f87171;'>{report_stats.get('high_risk_clauses', 0)}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Total critical items flagged</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='saas-card'><h4>Average Confidence</h4><div style='font-size:2rem; font-weight:700; color:#34d399;'>{avg_conf}%</div><div style='color:#a1a1aa; font-size:0.8rem;'>AI inference certainty</div></div>", unsafe_allow_html=True)
     with kc3:
-        anomaly_count = sum(1 for r in results if r.get('is_anomaly'))
-        st.markdown(f"<div class='saas-card'><h4>Anomalies Detected</h4><div style='font-size:2rem; font-weight:700; color:#c084fc;'>{anomaly_count}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Zero-day structural risks</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='saas-card'><h4>Zero-Day Anomalies</h4><div style='font-size:2rem; font-weight:700; color:#c084fc;'>{anomaly_count}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Outlier structures found</div></div>", unsafe_allow_html=True)
+    with kc4:
+        st.markdown(f"<div class='saas-card'><h4>Context Pulled</h4><div style='font-size:2rem; font-weight:700; color:#fbbf24;'>{sum(len(r.get('context_chunks', [])) for r in retrieval_data)}</div><div style='color:#a1a1aa; font-size:0.8rem;'>ChromaDB vectors used</div></div>", unsafe_allow_html=True)
+
+    # Automated Alert System
+    if avg_conf < 85.0:
+        st.warning("⚠️ **Warning: Low Average Confidence.** The ML Model is exhibiting low certainty for this document structure. Proceed with manual legal review.")
+    if anomaly_count > 0:
+        st.error(f"🚨 **Alert: {anomaly_count} Anomalies Detected.** The Isolation Forest model flagged clauses severely disjointed from standard baseline patterns.")
+    if abs(25 - (sum(len(str(r["clause"]).split()) for r in results) / max(len(results), 1))) > 20: 
+        st.info("📉 **Data Drift Notice:** The average clause length significantly deviates from the historical training distributions, potentially lowering accuracy.")
 
     st.markdown("---")
     
@@ -388,31 +404,41 @@ def tab_analytics():
     with mc2: 
         st.plotly_chart(create_precision_recall_chart(), use_container_width=True)
         st.caption("Precision: How accurate the risk predictions are. Recall: How many risky clauses are correctly identified.")
-        
+
     st.markdown("---")
-    st.markdown("### 2️⃣ Risk Distribution & Data Analytics")
+    st.markdown("### 2️⃣ Data Drift & Clause Analytics")
     c1, c2 = st.columns(2)
     with c1: 
         st.plotly_chart(create_risk_distribution_chart(filtered_results), use_container_width=True)
         st.caption("Risk Categories: Ratio of High Risk to Low Risk clauses in your document.")
     with c2: 
-        st.plotly_chart(create_risk_histogram(filtered_results), use_container_width=True)
-        st.caption("Clause Complexity: Distribution of clause length (word count) vs risk severity.")
+        st.plotly_chart(create_data_drift_chart(filtered_results), use_container_width=True)
+        st.caption("Data Drift: Compares current clause lengths against static baseline boundaries. Shifted geometry implies model instability.")
 
     st.markdown("---")
     st.markdown("### 3️⃣ Real-time Confidence & Flow Analytics")
     st.plotly_chart(create_confidence_trend_chart(filtered_results), use_container_width=True)
-    st.caption("Model Certainty: Shows how confident the AI is across the chronological flow of the document (Top = Highly Confident).")
+    st.caption("Prediction Confidence Monitoring: Shows how confident the AI is across the chronological flow of the document. Spikes indicate clarity; dips indicate confusing terminology.")
 
     st.markdown("---")
-    st.markdown("### 4️⃣ Explainability (XAI) & Anomaly Detection")
+    st.markdown("### 4️⃣ Observability: RAG & LLM Extraction Health")
+    rc1, rc2 = st.columns(2)
+    with rc1:
+        st.plotly_chart(create_rag_observability_chart(retrieval_data), use_container_width=True)
+        st.caption("RAG Tracking: Tracks the raw injection vectors passed to the LLM. Empty plots mean semantic search yielded nothing.")
+    with rc2:
+        st.plotly_chart(create_llm_reliability_chart(explanations), use_container_width=True)
+        st.caption("LLM Safety: Maps response token-length constraints to detect uncontrolled hallucinatory generations (long lengths) or truncation errors (short lengths).")
+
+    st.markdown("---")
+    st.markdown("### 5️⃣ Explainability (XAI) & Anomaly Tracking")
     x1, x2 = st.columns(2)
     with x1: 
         st.plotly_chart(create_feature_importance_chart(filtered_results), use_container_width=True)
-        st.caption("Feature Importance: TF-IDF keywords that act as strong liability traps in the document across all High-Risk flags.")
+        st.caption("Feature Importance Tracking: TF-IDF keywords that act as strong liability traps.")
     with x2: 
         st.plotly_chart(create_anomaly_scatter(filtered_results), use_container_width=True)
-        st.caption("Isolation Forest: Plots normal clauses vs outliers to detect previously unseen or 'Zero-Day' legal formulations.")
+        st.caption("Anomaly Detection Monitoring: Plots normal clauses vs outliers to detect previously unseen or 'Zero-Day' legal formulations.")
 
 
 def tab_compare():
