@@ -20,7 +20,6 @@ from agents.workflow import run_agent_pipeline
 from analytics.dashboard import (
     create_confidence_trend_chart, 
     create_risk_distribution_chart, 
-    create_complexity_vs_risk_chart,
     create_risk_histogram,
     create_anomaly_scatter,
     create_feature_importance_chart,
