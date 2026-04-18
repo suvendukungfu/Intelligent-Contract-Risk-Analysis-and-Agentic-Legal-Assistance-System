@@ -94,13 +94,20 @@ def compare_contracts(
 
     # 3. Final Recommendation Logic
     recommendation = ""
-    # Scoring: Lower risk index is better
-    if abs(score_a - score_b) < 1.0 and not missing_in_a and not missing_in_b:
+    score_diff = score_a - score_b
+    protect_diff = len(missing_in_a) - len(missing_in_b)
+    
+    # Selection algorithm: Lower score is better, lower missing protections is better
+    if abs(score_diff) < 0.5 and protect_diff == 0:
         recommendation = "Both contracts are structurally similar and balanced. Selection can be based on commercial terms rather than legal risk."
-    elif score_a < score_b:
-        recommendation = f"Contract A ('{name_a}') is the preferred choice. It has a lower Risk Index ({score_a} vs {score_b}) and demonstrates fewer liability traps."
-    else:
+    elif score_a < score_b and len(missing_in_a) <= len(missing_in_b):
+        recommendation = f"Contract A ('{name_a}') is the preferred choice. It has a lower Risk Index ({score_a} vs {score_b}) and more comprehensive protection coverage."
+    elif score_b < score_a and len(missing_in_b) <= len(missing_in_a):
         recommendation = f"Contract B ('{name_b}') is significantly safer. It provides better standard protections and avoids the high-risk formulations found in Contract A."
+    else:
+        # Complex case: one has lower risk, but more missing protections
+        better = name_a if score_a < score_b else name_b
+        recommendation = f"Mixed Result: {better} has a lower mathematical risk score, but there are structural gaps in standard protections. Legal manual review is advised."
 
     return {
         "contract_a": name_a, "contract_b": name_b,
