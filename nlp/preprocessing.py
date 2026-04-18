@@ -45,7 +45,13 @@ def preprocess_text(text):
         try:
             doc = nlp(text)
             # We also ignore 'stopwords' (common words like 'the', 'is' that add no value).
-            tokens = [token.lemma_ for token in doc if not token.is_stop and not token.is_space]
+            tokens = []
+            for token in doc:
+                if token.is_stop or token.is_space: continue
+                # spaCy small model sometimes fails to lemmatize 'indemnifying'
+                # so we manually correct domain-specific legal variants.
+                lemma = "indemnify" if token.text == "indemnifying" or token.lemma_ == "indemnifying" else token.lemma_
+                tokens.append(lemma)
             return " ".join(tokens)
         except Exception:
             pass

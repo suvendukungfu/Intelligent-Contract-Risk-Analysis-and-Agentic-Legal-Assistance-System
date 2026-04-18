@@ -289,7 +289,7 @@ def tab_risk_analysis():
         if st.button("Explain Risk", key=f"btn_{idx}", help="Generate deep reasoning context"):
             st.session_state["selected_clause_idx"] = idx
             st.session_state["current_step"] = 3
-            st.toast("Opening Explanations...", icon="None")
+            st.toast("Opening Explanations...", icon=None)
 
 def tab_ai_assistant():
     if st.session_state["current_step"] < 3:
