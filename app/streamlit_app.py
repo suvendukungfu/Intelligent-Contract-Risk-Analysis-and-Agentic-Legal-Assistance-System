@@ -1,509 +1,411 @@
-import streamlit as st
+"""
+app/streamlit_app.py  —  Milestone 3: Top 1% SaaS LegalTech Platform
+======================================================================
+Enterprise-grade Legal AI Platform.
+Features:
+  - 📄 Risk Analysis (Real-time explainability)
+  - 🧠 AI Setup & Trust
+  - 📊 Analytics Dashboard (Plotly)
+  - 📑 Compare Contracts (Semantic Multi-Document)
+  - 📥 Export Center (Premium PDF & JSON)
+"""
+
 import os
 import sys
+import json
+import logging
+import time
 
-# --- DEFENSIVE STARTUP ---
-IMPORT_ERROR = None
-try:
-    import pandas as pd
-    import pdfplumber
-    import matplotlib.pyplot as plt
-    import numpy as np
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path: sys.path.insert(0, ROOT)
 
-    # Path Alignment
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import streamlit as st
+import pandas as pd
 
-    import spacy
-    import subprocess
-    
-    # --- RUNTIME MODEL INJECTION ---
-    # Streamlit Cloud Python 3.13 / Nixpacks workaround
-    try:
-        spacy.load("en_core_web_sm")
-    except OSError:
-        print("Downloading en_core_web_sm at runtime...")
-        subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"], check=True)
+# Core internal imports
+from config.settings import ARTIFACTS_DIR
+from nlp.clause_segmenter import segment_clauses
+from models.inference import risk_engine
 
-    from nlp.clause_segmenter import segment_clauses
-    from models.inference import risk_engine
-except Exception as e:
-    IMPORT_ERROR = str(e)
-    import traceback
-    IMPORT_ERROR += "\n" + traceback.format_exc()
+from reports.json_report import report_to_json_string
+from reports.pdf_export import generate_pdf_report
+from agents.workflow import run_agent_pipeline
+from analytics.dashboard import (
+    create_confidence_trend_chart, 
+    create_risk_distribution_chart, 
+    create_complexity_vs_risk_chart
+)
+from models.comparison import compare_contracts
 
-# --- DARK DESIGN TOKENS ---
-COLOR_BG       = "#0D1117"
-COLOR_SURFACE  = "#161B22"
-COLOR_SURFACE2 = "#1C2333"
-COLOR_PRIMARY  = "#4F8EF7"
-COLOR_CRITICAL = "#F87171"
-COLOR_MODERATE = "#FBBF24"
-COLOR_LOW      = "#4ADE80"
-COLOR_TEXT     = "#E6EDF3"
-COLOR_MUTED    = "#8B949E"
-COLOR_BORDER   = "#30363D"
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# --- PAGE CONFIGURATION ---
+# ══════════════════════════════════════════════════════════════════
+# PAGE SETTINGS & GLOBAL CSS
+# ══════════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="Intelligent Contract Risk Analysis System",
-    page_icon="⚖️",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="LexIQ Enterprise", page_icon="⚖️", layout="wide", initial_sidebar_state="expanded"
 )
 
-# --- GLOBAL STYLES ---
-st.markdown(f"""
+st.markdown("""
 <style>
+    /* LexIQ Obsidian Theme */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-    html, body, [class*="css"] {{
-        font-family: 'Inter', sans-serif;
-    }}
-
-    /* Override base app bg to match dark token */
-    .stApp {{
-        background-color: {COLOR_BG};
-        color: {COLOR_TEXT};
-    }}
-
-    /* Sidebar */
-    [data-testid="stSidebar"] {{
-        background-color: {COLOR_SURFACE};
-        border-right: 1px solid {COLOR_BORDER};
-    }}
-
-    /* KPI cards */
-    .kpi-card {{
-        background-color: {COLOR_SURFACE2};
-        padding: 20px 24px;
-        border-radius: 8px;
-        border: 1px solid {COLOR_BORDER};
-        display: flex;
-        flex-direction: column;
-        min-height: 90px;
-    }}
-    .kpi-label {{
-        color: {COLOR_MUTED};
-        font-size: 0.78rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 8px;
-    }}
-    .kpi-value {{
-        color: {COLOR_TEXT};
-        font-size: 1.6rem;
-        font-weight: 700;
-        line-height: 1;
-    }}
-
-    /* Section headings */
-    .section-title {{
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: {COLOR_TEXT};
-        margin: 0 0 4px 0;
-    }}
-    .section-sub {{
-        font-size: 0.82rem;
-        color: {COLOR_MUTED};
-        margin-bottom: 16px;
-    }}
-
-    /* Tab strip */
-    .stTabs [data-baseweb="tab-list"] {{
-        gap: 28px;
-        border-bottom: 1px solid {COLOR_BORDER};
-        background: transparent;
-    }}
-    .stTabs [data-baseweb="tab"] {{
-        height: 44px;
-        background: none;
-        border: none;
-        color: {COLOR_MUTED};
-        font-weight: 500;
-        font-size: 0.875rem;
-    }}
-    .stTabs [aria-selected="true"] {{
-        color: {COLOR_PRIMARY} !important;
-        border-bottom: 2px solid {COLOR_PRIMARY} !important;
-    }}
-
-    /* Expanders */
-    div[data-testid="stExpander"] {{
-        background-color: {COLOR_SURFACE};
-        border: 1px solid {COLOR_BORDER};
-        border-radius: 6px;
-        margin-bottom: 10px;
-    }}
-
-    /* Code blocks */
-    pre, code {{
-        background-color: {COLOR_BG} !important;
-        color: #A5D6FF !important;
-        border: 1px solid {COLOR_BORDER} !important;
-        border-radius: 6px;
-        font-size: 0.82rem !important;
-    }}
-
-    /* Divider */
-    hr {{
-        border-color: {COLOR_BORDER};
-        margin: 24px 0;
-    }}
-
-    /* Badge pill */
-    .badge {{
-        display: inline-block;
-        padding: 2px 10px;
-        border-radius: 20px;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-    }}
-    .badge-high {{ background-color: rgba(248,113,113,0.15); color: {COLOR_CRITICAL}; border: 1px solid rgba(248,113,113,0.3); }}
-    .badge-low  {{ background-color: rgba(74,222,128,0.12); color: {COLOR_LOW};  border: 1px solid rgba(74,222,128,0.25); }}
-
-    /* Keyword chip */
-    .kw-chip {{
-        display: inline-block;
-        background-color: rgba(79,142,247,0.12);
-        color: {COLOR_PRIMARY};
-        border: 1px solid rgba(79,142,247,0.25);
-        padding: 2px 10px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        margin: 2px;
-    }}
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    
+    .stApp { background-color: #0b0f19; color: #e2e8f0; }
+    [data-testid="stSidebar"] { background-color: #111827; border-right: 1px solid #1f2937; }
+    
+    .stTabs [data-baseweb="tab-list"] { background: #111827; border-radius: 12px; padding: 6px; box-shadow: inset 0px 2px 4px rgba(0,0,0,0.2); }
+    .stTabs [data-baseweb="tab"] { border-radius: 8px; color: #94a3b8; font-weight: 600; }
+    .stTabs [aria-selected="true"] { background: #1e293b !important; color: #38bdf8 !important; border-bottom: 2px solid #38bdf8 !important; }
+    
+    /* Neumorphic Cards */
+    .saas-card {
+        background: #1e293b; border-radius: 16px; padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3);
+        border: 1px solid #334155; margin-bottom: 24px; transition: transform 0.2s;
+    }
+    .saas-card:hover { transform: translateY(-2px); border-color: #475569; }
+    
+    /* Metrics */
+    .metric-title { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
+    .metric-value { font-size: 2.5rem; color: #f8fafc; font-weight: 700; line-height: 1; }
+    .metric-value.critical { color: #ef4444; }
+    .metric-value.warning { color: #f59e0b; }
+    .metric-value.safe { color: #10b981; }
+    
+    /* Badges */
+    .badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+    .badge-high { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .badge-low { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+    .kw-chip { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; margin: 2px; display: inline-block; }
+    
+    /* Clause List View */
+    .clause-row { background: #0f172a; padding: 16px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid #10b981; cursor: pointer; }
+    .clause-row.high { border-left-color: #ef4444; background: #1e1b24; }
+    .clause-row:hover { filter: brightness(1.2); }
 </style>
 """, unsafe_allow_html=True)
 
-# --- MODULAR RENDERING FUNCTIONS ---
+# ══════════════════════════════════════════════════════════════════
+# SESSION STATE & HELPERS
+# ══════════════════════════════════════════════════════════════════
+def init_session():
+    defaults = {
+        "agent_state_a": None, "ml_df_a": None, "file_name_a": "", "raw_a": "",
+        "agent_state_b": None, "ml_df_b": None, "file_name_b": "", "raw_b": "",
+        "active_doc": "A",
+        "selected_clause_idx": None
+    }
+    for k, v in defaults.items():
+        if k not in st.session_state: st.session_state[k] = v
 
-def render_control_panel():
-    """Dark sidebar control panel."""
+def get_text_from_file(file) -> str:
+    # PDF Parsing
+    if file.name.endswith(".pdf"):
+        try:
+            import pdfplumber
+            with pdfplumber.open(file) as pdf:
+                return "\n".join([p.extract_text() for p in pdf.pages if p.extract_text()])
+        except Exception as e: return f"PDF Error: {str(e)}"
+    return file.getvalue().decode("utf-8", errors="ignore")
+
+def load_demo_contract(variant="NDA"):
+    path = os.path.join(ROOT, "sample_docs", f"sample_{variant.lower()}.txt")
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read(), f"LexIQ_Demo_{variant}.txt"
+    return "", ""
+
+# ══════════════════════════════════════════════════════════════════
+# SIDEBAR / APP SHELL
+# ══════════════════════════════════════════════════════════════════
+def render_sidebar():
     with st.sidebar:
-        st.markdown(
-            f"<h2 style='font-weight:700;font-size:1.15rem;color:{COLOR_TEXT};margin-bottom:2px;'>⚖️ Contract Risk AI</h2>"
-            f"<p style='font-size:0.78rem;color:{COLOR_MUTED};margin-bottom:0;'>Intelligent Legal Analysis</p>",
-            unsafe_allow_html=True
-        )
-        st.markdown(f"<hr style='border-color:{COLOR_BORDER};margin:14px 0;'>", unsafe_allow_html=True)
-
-        # Status indicators
-        st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;'>System Status</p>", unsafe_allow_html=True)
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown(f"<div style='background:{COLOR_SURFACE2};border:1px solid {COLOR_BORDER};border-radius:6px;padding:8px 10px;text-align:center;'><div style='font-size:0.7rem;color:{COLOR_MUTED};'>Risk Engine</div><div style='font-size:0.75rem;font-weight:700;color:{COLOR_LOW};margin-top:2px;'>● LIVE</div></div>", unsafe_allow_html=True)
-        with col2:
-            st.markdown(f"<div style='background:{COLOR_SURFACE2};border:1px solid {COLOR_BORDER};border-radius:6px;padding:8px 10px;text-align:center;'><div style='font-size:0.7rem;color:{COLOR_MUTED};'>Agent Node</div><div style='font-size:0.75rem;font-weight:700;color:{COLOR_MUTED};margin-top:2px;'>○ M2</div></div>", unsafe_allow_html=True)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;'>Upload Document</p>", unsafe_allow_html=True)
-        uploaded_file = st.file_uploader("Legal document (PDF or TXT)", type=["pdf", "txt"], label_visibility="collapsed")
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;'>Pipeline</p>", unsafe_allow_html=True)
-        for item in ["spaCy v3.7  —  Lemmatization", "TF-IDF  —  Feature Vectorization", "Logistic Regression  —  Classifier"]:
-            st.markdown(f"<p style='font-size:0.78rem;color:{COLOR_MUTED};margin:3px 0;'>› {item}</p>", unsafe_allow_html=True)
-
-        st.markdown(f"<hr style='border-color:{COLOR_BORDER};margin:14px 0;'>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size:0.72rem;color:{COLOR_MUTED};'>Model artifacts loaded from <code>artifacts/</code></p>", unsafe_allow_html=True)
-
-        return uploaded_file
-
-def render_header_banner(file_present):
-    """Dark header banner."""
-    st.markdown(
-        f"<h1 style='font-weight:700;font-size:1.8rem;color:{COLOR_TEXT};margin-bottom:6px;'>Intelligent Contract Risk Analysis</h1>"
-        f"<p style='font-size:0.95rem;color:{COLOR_MUTED};margin-bottom:10px;'>Clause-level risk assessment using classical NLP — TF-IDF · Logistic Regression · spaCy</p>"
-        f"<p style='font-size:0.78rem;color:{COLOR_MUTED};border-left:3px solid {COLOR_BORDER};padding-left:10px;'>Governance: Model assessments highlight linguistic risk patterns and are intended to assist, not replace, professional legal review.</p>",
-        unsafe_allow_html=True
-    )
-    st.markdown(f"<hr style='border-color:{COLOR_BORDER};margin:18px 0;'>", unsafe_allow_html=True)
-
-def render_executive_overview(df):
-    """Dark KPI overview."""
-    st.markdown(f"<p class='section-title'>Executive Summary</p><p class='section-sub'>Metrics derived from clause-level model predictions.</p>", unsafe_allow_html=True)
-
-    total      = len(df)
-    high_risk  = len(df[df['Risk Level'] == "High Risk"])
-    low_risk   = total - high_risk
-    exposure   = (high_risk / total * 100) if total > 0 else 0
-    confidence = df['Confidence'].mean() * 100 if total > 0 else 0
-
-    c1, c2, c3, c4 = st.columns(4)
-    metrics = [
-        ("Evaluated Clauses",   f"{total}",          COLOR_PRIMARY),
-        ("High-Risk Detections",f"{high_risk}",       COLOR_CRITICAL),
-        ("Risk Exposure Index", f"{exposure:.1f}%",  COLOR_MODERATE),
-        ("Mean Confidence",     f"{confidence:.1f}%",COLOR_LOW),
-    ]
-    for i, (label, value, accent) in enumerate(metrics):
-        with [c1, c2, c3, c4][i]:
-            st.markdown(f"""
-            <div class="kpi-card">
-                <div class="kpi-label">{label}</div>
-                <div class="kpi-value" style="color:{accent};">{value}</div>
-            </div>
-            """, unsafe_allow_html=True)
-    st.markdown("<br>", unsafe_allow_html=True)
-
-def render_risk_radar_panel(df):
-    """Dark horizontal bar chart for risk distribution."""
-    st.markdown(f"<p class='section-title'>Risk Distribution</p><p class='section-sub'>Clause-level risk spread across the document.</p>", unsafe_allow_html=True)
-
-    if not df.empty:
-        counts = df['Risk Level'].value_counts()
-        bar_colors = [COLOR_CRITICAL if x == "High Risk" else COLOR_LOW for x in counts.index]
-
-        fig, ax = plt.subplots(figsize=(8, max(1.5, len(counts) * 0.65)), facecolor=COLOR_SURFACE)
-
-        bars = ax.barh(counts.index, counts.values, color=bar_colors, height=0.45)
-        ax.set_facecolor(COLOR_SURFACE)
-        ax.tick_params(colors=COLOR_MUTED, labelsize=9)
-        ax.xaxis.label.set_color(COLOR_MUTED)
-        ax.spines[:].set_color(COLOR_BORDER)
-        ax.tick_params(axis='both', colors=COLOR_MUTED)
-        ax.grid(axis='x', color=COLOR_BORDER, linestyle='--', linewidth=0.5, alpha=0.6)
-        for bar, val in zip(bars, counts.values):
-            ax.text(val + 0.1, bar.get_y() + bar.get_height() / 2,
-                    str(val), va='center', ha='left', color=COLOR_TEXT, fontsize=9, fontweight='600')
-        plt.tight_layout()
-        st.pyplot(fig)
-    else:
-        st.info("Upload a document to view risk distribution.")
-
-def render_clause_workspace(df):
-    """Dark clause review workspace."""
-    st.markdown(f"<p class='section-title' style='margin-top:24px;'>Risk Analysis Workspace</p><p class='section-sub'>Clause-level assessments and linguistic risk triggers.</p>", unsafe_allow_html=True)
-
-    # Sort: high-risk first
-    df_sorted = df.sort_values(by='Confidence', ascending=False)
-
-    for _, row in df_sorted.iterrows():
-        label   = row['Risk Level']
-        is_high = label == "High Risk"
-        badge   = f"<span class='badge badge-{'high' if is_high else 'low'}'>{'HIGH RISK' if is_high else 'LOW RISK'}</span>"
-        title   = f"Segment {row['id']+1}  ·  Confidence: {row['Confidence']:.1%}"
-
-        with st.expander(title, expanded=is_high):
-            st.markdown(badge, unsafe_allow_html=True)
-            st.markdown("<br>", unsafe_allow_html=True)
-
-            st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;'>Provision Text</p>", unsafe_allow_html=True)
-            st.code(row['Clause'], language=None)
-
-            bg  = "rgba(248,113,113,0.08)" if is_high else "rgba(74,222,128,0.07)"
-            bdr = COLOR_CRITICAL          if is_high else COLOR_LOW
-            msg = ("Significant legal exposure detected. Linguistic triggers indicate elevated liability or obligation profile."
-                   if is_high else
-                   "Standard operational language. Low liability signature detected.")
-            st.markdown(f"""
-            <div style="background:{bg};border-left:3px solid {bdr};padding:12px 16px;border-radius:6px;margin-top:10px;">
-                <p style="font-weight:600;font-size:0.85rem;color:{COLOR_TEXT};margin-bottom:4px;">Model Assessment</p>
-                <p style="font-size:0.82rem;color:{COLOR_MUTED};margin:0;">{msg}</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            keywords = [k for k in (row['Keywords'] or []) if k][:12]
-            if keywords:
-                st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px 0;'>Linguistic Triggers</p>", unsafe_allow_html=True)
-                chips = " ".join(f"<span class='kw-chip'>{w}</span>" for w in keywords)
-                st.markdown(chips, unsafe_allow_html=True)
-
-def render_intelligence_analytics(df):
-    """Dark analytics hub with styled charts."""
-    st.markdown(f"<p class='section-title' style='margin-top:28px;'>Analytics Hub</p><p class='section-sub'>Deep-dive model outputs and corpus statistics.</p>", unsafe_allow_html=True)
-
-    tab1, tab2, tab3, tab4 = st.tabs(["Risk Landscape", "Confidence Trend", "Trigger Corpus", "Roadmap"])
-
-    with tab1:
-        if not df.empty:
-            counts = df['Risk Level'].value_counts()
-            fig, ax = plt.subplots(figsize=(7, 3), facecolor=COLOR_SURFACE)
-            bar_colors = [COLOR_CRITICAL if x == \"High Risk\" else COLOR_LOW for x in counts.index]
-            ax.bar(counts.index, counts.values, color=bar_colors, width=0.4)
-            ax.set_facecolor(COLOR_SURFACE)
-            ax.spines[:].set_color(COLOR_BORDER)
-            ax.tick_params(colors=COLOR_MUTED)
-            for spine in ax.spines.values(): spine.set_color(COLOR_BORDER)
-            ax.set_ylabel("Clause Count", color=COLOR_MUTED, fontsize=9)
-            plt.tight_layout()
-            st.pyplot(fig)
-        else:
-            st.caption("No data available.")
-
-    with tab2:
-        if not df.empty:
-            fig, ax = plt.subplots(figsize=(9, 3), facecolor=COLOR_SURFACE)
-            ax.plot(df.index, df['Confidence'], color=COLOR_PRIMARY, linewidth=1.5)
-            ax.fill_between(df.index, df['Confidence'], alpha=0.12, color=COLOR_PRIMARY)
-            ax.set_facecolor(COLOR_SURFACE)
-            ax.spines[:].set_color(COLOR_BORDER)
-            ax.tick_params(colors=COLOR_MUTED)
-            ax.set_ylabel("Confidence", color=COLOR_MUTED, fontsize=9)
-            ax.set_xlabel("Clause Index", color=COLOR_MUTED, fontsize=9)
-            plt.tight_layout()
-            st.pyplot(fig)
-            st.caption("Confidence score distribution across all document segments.")
-
-    with tab3:
-        if not df.empty:
-            all_kw = []
-            for kws in df['Keywords']:
-                if isinstance(kws, list):
-                    all_kw.extend(kws)
-            unique_kw = list(dict.fromkeys(kw for kw in all_kw if kw))[:40]
-            if unique_kw:
-                chips = " ".join(f"<span class='kw-chip'>{w}</span>" for w in unique_kw)
-                st.markdown(f"<p style='font-size:0.78rem;color:{COLOR_MUTED};margin-bottom:10px;'>Top linguistic triggers found across all clauses:</p>{chips}", unsafe_allow_html=True)
-            else:
-                st.caption("No trigger data available.")
-
-    with tab4:
-        st.markdown(f"""
-        <div style="background:{COLOR_SURFACE2};border:1px solid {COLOR_BORDER};border-radius:8px;padding:20px;">
-            <p style="font-weight:600;color:{COLOR_TEXT};margin-bottom:8px;">Milestone 2 — Agentic Reasoning Node</p>
-            <p style="font-size:0.85rem;color:{COLOR_MUTED};margin:0;">Future integration: RAG-based legal clause retrieval, LLM-assisted contextual reasoning, and automated mitigation suggestions via an AI agent pipeline.</p>
+        st.markdown("""
+        <div style="text-align:center; padding-bottom: 24px;">
+            <div style="font-size:3rem; line-height:1;">⚖️</div>
+            <div style="font-size:1.5rem; font-weight:800; color:#f8fafc; letter-spacing:-0.5px;">LexIQ</div>
+            <div style="font-size:0.8rem; color:#38bdf8; font-weight:600; margin-top:4px;">ENTERPRISE EDITION</div>
         </div>
         """, unsafe_allow_html=True)
-
-def render_governance_section():
-    """Dark model governance section."""
-    st.markdown(f"<hr style='border-color:{COLOR_BORDER};margin:28px 0 20px 0;'>", unsafe_allow_html=True)
-    st.markdown(f"<p class='section-title'>Model Governance & Integrity</p><p class='section-sub'>Architecture details and validation performance metrics.</p>", unsafe_allow_html=True)
-
-    g1, g2 = st.columns([1, 1.5])
-
-    with g1:
-        st.markdown(f"""
-        <div style="background:{COLOR_SURFACE2};border:1px solid {COLOR_BORDER};border-radius:8px;padding:18px;">
-            <p style="font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Architecture</p>
-            <p style="font-size:0.85rem;color:{COLOR_TEXT};margin:4px 0;">🔤 NLP Core &nbsp;—&nbsp; spaCy v3.7 (Lemmatized)</p>
-            <p style="font-size:0.85rem;color:{COLOR_TEXT};margin:4px 0;">📊 Features &nbsp;—&nbsp; TF-IDF (1-gram + 2-gram)</p>
-            <p style="font-size:0.85rem;color:{COLOR_TEXT};margin:4px 0;">🤖 Classifier &nbsp;—&nbsp; Logistic Regression (balanced)</p>
-            <p style="font-size:0.85rem;color:{COLOR_TEXT};margin:4px 0;">⚡ Vocab Size &nbsp;—&nbsp; 5,000 features max</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size:0.75rem;color:{COLOR_MUTED};margin-bottom:10px;'>High accuracy for Logistic Regression: 94.2% Mean CV.</p>", unsafe_allow_html=True)
-
-    with g2:
-        st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;'>Model Performance Metrics</p>", unsafe_allow_html=True)
         
-        import json
-        metrics_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "artifacts", "metrics.json")
-        if os.path.exists(metrics_path):
-            with open(metrics_path, "r") as f:
-                m = json.load(f)
-            
-            mc1, mc2, mc3 = st.columns(3)
-            with mc1: st.metric("Precision", f"{m['precision']:.1%}")
-            with mc2: st.metric("Recall", f"{m['recall']:.1%}")
-            with mc3: st.metric("F1-Score", f"{m['f1']:.1%}")
-            
-            st.markdown(f"<p style='font-size:0.78rem;color:{COLOR_MUTED};'>Cross-Validation: {m['cv_mean']:.1%} (+/- {m['cv_std']*2:.1%})</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color:#94a3b8; font-size:0.8rem; font-weight:600; text-transform:uppercase;'>Upload Documents</p>", unsafe_allow_html=True)
+        
+        file_a = st.file_uploader("Primary Contract (Doc A)", type=["pdf", "txt"], key="upload_a")
+        file_b = st.file_uploader("Comparison Contract (Doc B, Optional)", type=["pdf", "txt"], key="upload_b")
+        
+        st.markdown("---")
+        
+        col1, col2 = st.columns(2)
+        demo_nda = col1.button("Preload NDA", use_container_width=True)
+        demo_msa = col2.button("Preload MSA", use_container_width=True)
+        
+        execute = st.button("🚀 EXECUTE AI PIPELINE", use_container_width=True, type="primary")
 
-        st.markdown(f"<p style='font-size:0.78rem;font-weight:600;color:{COLOR_MUTED};text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:10px;'>Confusion Matrix (Logistic Regression)</p>", unsafe_allow_html=True)
-        # Use absolute path to avoid cwd issues
-        matrix_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "artifacts", "logistic_regression_matrix.png")
-        if os.path.exists(matrix_path):
-            st.image(matrix_path, use_container_width=True)
-        else:
-            st.caption("Evaluation artifact not found. Run `python -m models.train` to generate.")
+        # LLM Trust / Status panel
+        st.markdown("""
+        <div style="background:#1e293b; padding:16px; border-radius:12px; margin-top:24px; border:1px solid #334155;">
+            <div style="font-size:0.75rem; font-weight:700; color:#94a3b8; margin-bottom:8px;">TRUST & COMPLIANCE HUD</div>
+            <div style="font-size:0.8rem; color:#10b981;">● RAG Vector Store: Sync'd</div>
+            <div style="font-size:0.8rem; color:#10b981;">● Inference Model: Scikit v1.6</div>
+            <div style="font-size:0.8rem; color:#38bdf8;">● LLM Tier: Rule/Local </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-def render_onboarding_state():
-    """Dark onboarding state."""
-    st.markdown(f"""
-    <div style="background:{COLOR_SURFACE};border:1px solid {COLOR_BORDER};border-radius:10px;padding:48px;text-align:center;">
-        <div style="font-size:2.5rem;margin-bottom:16px;">⚖️</div>
-        <h2 style="font-weight:700;color:{COLOR_TEXT};margin-bottom:8px;">Upload a Legal Document to Begin</h2>
-        <p style="color:{COLOR_MUTED};max-width:480px;margin:0 auto 0 auto;font-size:0.9rem;">Use the sidebar to upload a PDF or TXT contract. The system will segment, vectorize, and classify each provision automatically.</p>
-    </div>
-    """, unsafe_allow_html=True)
+        return execute, file_a, file_b, demo_nda, demo_msa
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    c1, c2, c3 = st.columns(3)
-    features = [
-        ("🔍", "Structural Segmentation", "Splits the document into discrete legal clauses with regex-based boundary detection."),
-        ("🧠", "Linguistic Risk Assessment", "TF-IDF vectorization + Logistic Regression classifies each clause as High or Low risk."),
-        ("💡", "Trigger Extraction", "Extracts the top weighted keywords that drove each risk prediction for explainability."),
-    ]
-    for i, (icon, title, desc) in enumerate(features):
-        with [c1, c2, c3][i]:
-            st.markdown(f"""
-            <div style="background:{COLOR_SURFACE2};border:1px solid {COLOR_BORDER};border-radius:8px;padding:20px;text-align:center;height:100%;">
-                <div style="font-size:1.6rem;margin-bottom:10px;">{icon}</div>
-                <p style="font-weight:600;color:{COLOR_TEXT};margin-bottom:6px;font-size:0.9rem;">{title}</p>
-                <p style="font-size:0.78rem;color:{COLOR_MUTED};margin:0;">{desc}</p>
-            </div>
-            """, unsafe_allow_html=True)
+def process_document(raw_text: str, filename: str, doc_key: str):
+    """Runs LangGraph pipeline and saves to session state."""
+    with st.spinner(f"Analyzing {filename}... Parse → RAG → LLM"):
+        state = run_agent_pipeline(raw_text, file_name=filename)
+        ml_results = state.get("ml_results", [])
+        
+        rows = [{
+            "id": r["clause_idx"],
+            "Clause": r["clause"],
+            "Risk Level": r["risk_level"],
+            "Confidence": r["confidence"],
+            "Keywords": r.get("triggers", [])
+        } for r in ml_results]
+        
+        df = pd.DataFrame(rows)
+        st.session_state[f"ml_df_{doc_key}"] = df
+        st.session_state[f"agent_state_{doc_key}"] = state
+        st.session_state[f"file_name_{doc_key}"] = filename
+        st.session_state[f"raw_{doc_key}"] = raw_text
 
-# --- UTILITY: FILE PARSING ---
-def get_text_from_file(file):
-    if file.type == "application/pdf":
-        with pdfplumber.open(file) as pdf:
-            return "\n".join([page.extract_text() for page in pdf.pages if page.extract_text()])
-    else:
-        return file.getvalue().decode("utf-8")
+# ══════════════════════════════════════════════════════════════════
+# MAIN TABS
+# ══════════════════════════════════════════════════════════════════
 
-# --- MAIN OPERATIONAL FLOW ---
-
-def main():
-    # 0. Global Error Handling (Cloud Diagnostics)
-    if IMPORT_ERROR:
-        st.error("Platform Foundation Error: Critical module discovery failure.")
-        st.info("The system was unable to initialize the core NLP or Inference engine. This is usually caused by absolute path mismatches on Streamlit Cloud.")
-        with st.expander("Technical Debugging Log"):
-            st.code(IMPORT_ERROR)
+def tab_risk_analysis():
+    state = st.session_state["agent_state_a"]
+    df = st.session_state["ml_df_a"]
+    
+    if not state:
+        st.info("Upload a contract or select a Demo file, then click Execute Workflow.")
         return
 
-    # 1. Platform Console
-    uploaded_file = render_control_panel()
+    report = state.get("final_report", {})
+    stats = report.get("statistics", {})
+
+    # Top KPI Bar
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(f"""<div class="saas-card" style="padding:16px;">
+            <div class="metric-title">Risk Index</div>
+            <div class="metric-value { 'critical' if stats.get('risk_index',0) >= 7 else 'safe'}">{stats.get('risk_index', '0.0')}</div>
+        </div>""", unsafe_allow_html=True)
+    with c2:
+        st.markdown(f"""<div class="saas-card" style="padding:16px;">
+            <div class="metric-title">High Risk Clauses</div>
+            <div class="metric-value critical">{stats.get('high_risk_clauses', 0)}</div>
+        </div>""", unsafe_allow_html=True)
+    with c3:
+        st.markdown(f"""<div class="saas-card" style="padding:16px;">
+            <div class="metric-title">Total Provisions</div>
+            <div class="metric-value">{stats.get('total_clauses', 0)}</div>
+        </div>""", unsafe_allow_html=True)
+    with c4:
+        st.markdown(f"""<div class="saas-card" style="padding:16px;">
+            <div class="metric-title">Avg Confidence</div>
+            <div class="metric-value" style="color:#38bdf8;">{stats.get('avg_confidence', '0%')}</div>
+        </div>""", unsafe_allow_html=True)
+
+    # ── Real-Time Clause Explanation UI ──
+    st.markdown("<h3 style='color:#e2e8f0; font-weight:700; margin-bottom:16px;'>Interactive Clause Review</h3>", unsafe_allow_html=True)
     
-    # 2. Strategic Header
-    render_header_banner(bool(uploaded_file))
+    col_list, col_details = st.columns([1.2, 1.8])
     
-    if uploaded_file:
-        # 3. Model Inference (Self-Healing Interface)
-        with st.spinner("Analyzing document structure and linguistic risk vectors..."):
-            try:
-                raw_text = get_text_from_file(uploaded_file)
-                clauses = segment_clauses(raw_text)
+    with col_list:
+        st.markdown("##### Document Clauses")
+        st.markdown("<div style='height: 600px; overflow-y:auto; padding-right:10px;'>", unsafe_allow_html=True)
+        
+        risks = report.get("identified_risks", [])
+        
+        # We simulate interactivity using streamlit buttons masked as rows
+        for idx, item in enumerate(risks):
+            r_level = item.get("risk_level")
+            cls = "high" if r_level == "High Risk" else "low"
+            
+            # Using st.button for clickability
+            btn_label = f"Clause #{item['clause_number']} ━ {item['confidence']}"
+            if r_level == 'High Risk': btn_label = "🔴 " + btn_label
+            else: btn_label = "🟢 " + btn_label
+            
+            if st.button(btn_label, key=f"btn_c_{idx}", use_container_width=True):
+                st.session_state["selected_clause_idx"] = idx
                 
-                results = []
-                for idx, c in enumerate(clauses):
-                    label, conf, reasons = risk_engine.analyze_clause(c)
-                    results.append({
-                        "id": idx,
-                        "Clause": c,
-                        "Risk Level": label,
-                        "Confidence": conf,
-                        "Keywords": reasons
-                    })
-                df = pd.DataFrame(results)
+        st.markdown("</div>", unsafe_allow_html=True)
+        
+    with col_details:
+        st.markdown("##### Explainable AI Insight")
+        idx = st.session_state.get("selected_clause_idx")
+        
+        if idx is not None and idx < len(risks):
+            item = risks[idx]
+            
+            conf_float = float(item["confidence"].replace("%", ""))
+            warning_html = ""
+            if conf_float < 75.0:
+                warning_html = "<div style='color:#f59e0b; background:rgba(245,158,11,0.1); padding:8px; border-radius:6px; font-size:0.8rem; margin-bottom:12px;'>⚠️ <b>Low Confidence Warning:</b> The AI is uncertain. Human review strongly advised.</div>"
+
+            chips = "".join([f"<span class='kw-chip'>{t}</span>" for t in item.get("linguistic_triggers", [])])
+            
+            st.markdown(f"""
+            <div class="saas-card" style="margin-bottom:0;">
+                {warning_html}
+                <div style="margin-bottom: 16px;">
+                    <span class="badge {'badge-high' if item['risk_level'] == 'High Risk' else 'badge-low'}">{item['risk_level']}</span>
+                    {chips}
+                </div>
+                <div style="background:#0b0f19; padding:16px; border-radius:8px; font-style:italic; font-size:0.9rem; color:#94a3b8; margin-bottom: 24px; max-height:180px; overflow-y:auto;">
+                    "{item['clause']}"
+                </div>
                 
-                # Success state
-                st.toast("Document analysis complete.")
+                <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Deep Reasoning</h6>
+                <p style="font-size:0.95rem; color:#cbd5e1; line-height:1.6; margin-bottom:24px;">
+                    {item.get('explanation', '')}
+                </p>
                 
-                # 4. Content Presentation
-                render_executive_overview(df)
+                <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Strategic Mitigation</h6>
+                <p style="font-size:0.95rem; color:#10b981; line-height:1.6; background:rgba(16,185,129,0.05); padding:12px; border-radius:8px;">
+                    {item.get('mitigation', '')}
+                </p>
                 
-                col_radar, col_spacer = st.columns([2, 1])
-                with col_radar:
-                    render_risk_radar_panel(df)
-                
-                render_clause_workspace(df)
-                render_intelligence_analytics(df)
-                render_governance_section()
-                
-            except Exception as e:
-                st.warning("Model compatibility issue detected — attempting safe inference mode.")
-                st.info("System has engaged standby recover protocols to maintain platform stability.")
-                st.error("Platform Warning: An inconsistency occurred during ingestion. Initiating recovery protocols.")
-                st.caption(f"Context: {str(e)}")
-    else:
-        render_onboarding_state()
+                <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">RAG Legal Reference</h6>
+                <p style="font-size:0.9rem; color:#38bdf8; line-height:1.6; margin-bottom:0;">
+                    {item.get('legal_reference', '')}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.info("👈 Select a clause from the document to view its AI reasoning and mitigation strategy.")
+
+
+def tab_analytics():
+    state = st.session_state["agent_state_a"]
+    if not state:
+        st.info("Run analysis to view Risk Analytics.")
+        return
+    
+    results = state.get("ml_results", [])
+    if not results:
+        return
+
+    st.markdown("### Executive Analytics Dashboard")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.plotly_chart(create_risk_distribution_chart(results), use_container_width=True)
+    with col2:
+        st.plotly_chart(create_confidence_trend_chart(results), use_container_width=True)
+        
+    st.plotly_chart(create_complexity_vs_risk_chart(results), use_container_width=True)
+
+
+def tab_compare():
+    state_a = st.session_state.get("agent_state_a")
+    state_b = st.session_state.get("agent_state_b")
+
+    if not state_a or not state_b:
+        st.info("Upload and process BOTH Doc A and Doc B to unlock the Comparison Engine.")
+        return
+
+    st.markdown("### Document Delta & Semantic Alignment")
+
+    try:
+        score_a = state_a["final_report"]["statistics"]["risk_index"]
+        score_b = state_b["final_report"]["statistics"]["risk_index"]
+        
+        comp = compare_contracts(
+            st.session_state["file_name_a"], state_a["clauses"], state_a["ml_results"], score_a,
+            st.session_state["file_name_b"], state_b["clauses"], state_b["ml_results"], score_b
+        )
+        
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Doc A Score", score_a)
+        col2.metric("Doc B Score", score_b)
+        col3.metric("Semantic Alignment", comp["semantic_alignment"])
+
+        st.markdown(f"""
+        <div class="saas-card" style="margin-top:24px;">
+            <h5 style="color:#e2e8f0; margin-bottom:16px;">Executive Comparison Summary</h5>
+            <p style="font-size:1.05rem; line-height:1.6; color:#94a3b8;">{comp['summary']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("##### Missing Protections in Doc A")
+            if comp["missing_in_a"]:
+                for m in comp["missing_in_a"]: st.error(f"❌ {m}")
+            else: st.success("No major discrepancies detected.")
+
+        with colB:
+            st.markdown("##### Missing Protections in Doc B")
+            if comp["missing_in_b"]:
+                for m in comp["missing_in_b"]: st.error(f"❌ {m}")
+            else: st.success("No major discrepancies detected.")
+
+    except Exception as e:
+        st.error(f"Comparison computation failed: {e}")
+
+
+def tab_export():
+    state = st.session_state.get("agent_state_a")
+    if not state: return st.info("Run analysis to enable exports.")
+    
+    st.markdown("### Export Center")
+    st.markdown("Download production-ready corporate artifacts.")
+    
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("""<div class="saas-card" style="text-align:center;">
+            <h1>📄</h1><h3>C-Suite PDF Report</h3>
+            <p style="color:#94a3b8;">Executive summary, risk graphs, and mitigation tables.</p>
+        </div>""", unsafe_allow_html=True)
+        pdf_bytes = generate_pdf_report(state.get("final_report", {}))
+        st.download_button("Download PDF", pdf_bytes, file_name="LexIQ_Premium_Report.pdf", use_container_width=True)
+        
+    with c2:
+        st.markdown("""<div class="saas-card" style="text-align:center;">
+            <h1>🗂️</h1><h3>JSON Data Artifact</h3>
+            <p style="color:#94a3b8;">Structured ML response for internal API systems.</p>
+        </div>""", unsafe_allow_html=True)
+        json_b = report_to_json_string(state.get("final_report", {})).encode("utf-8")
+        st.download_button("Download JSON", json_b, file_name="LexIQ_Report.json", use_container_width=True)
+
+
+# ══════════════════════════════════════════════════════════════════
+# ROUTER
+# ══════════════════════════════════════════════════════════════════
+def main():
+    init_session()
+    execute, file_a, file_b, d_nda, d_msa = render_sidebar()
+
+    # Handle Demo Modes
+    if d_nda or d_msa:
+        v = "NDA" if d_nda else "MSA"
+        t, n = load_demo_contract(v)
+        if t: process_document(t, n, "a")
+        else: st.sidebar.error("Demo file not found.")
+
+    # Handle Execution
+    if execute:
+        if file_a: process_document(get_text_from_file(file_a), file_a.name, "a")
+        else: st.sidebar.warning("Upload Doc A first.")
+        
+        if file_b: process_document(get_text_from_file(file_b), file_b.name, "b")
+
+    t1, t2, t3, t4 = st.tabs(["📄 Workspace", "📊 Analytics", "📑 Compare", "📥 Export Center"])
+    
+    with t1: tab_risk_analysis()
+    with t2: tab_analytics()
+    with t3: tab_compare()
+    with t4: tab_export()
 
 if __name__ == "__main__":
     main()
