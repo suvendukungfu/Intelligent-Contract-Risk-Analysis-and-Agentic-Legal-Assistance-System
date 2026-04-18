@@ -1,0 +1,5 @@
+build-essential
+git
+cmake
+libsqlite3-dev
+python3-dev
