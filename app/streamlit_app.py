@@ -9,6 +9,7 @@ import streamlit as st
 import pandas as pd
 import os
 import sys
+import json
 
 # ── Ensure project root is in path ───────────────────────────────────────────
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -149,16 +150,33 @@ def tab_upload():
     </div>
     """, unsafe_allow_html=True)
     
-    uploaded_file = st.file_uploader("Upload Contract (PDF/TXT)", type=["pdf", "txt"])
+    comp_mode = st.checkbox("Enable Comparison Mode (Dual Contract Analysis)", key="comp_toggle")
     
-    if uploaded_file:
-        with st.spinner("Agentic pipeline initializing..."):
-            # Mock extraction for example
-            content = uploaded_file.read().decode("utf-8") if uploaded_file.type == "text/plain" else "PDF Content Placeholder"
-            state = run_agent_pipeline(content, uploaded_file.name)
-            st.session_state["agent_state_a"] = state
-            st.session_state["current_step"] = 2
-            st.rerun()
+    if not comp_mode:
+        uploaded_file = st.file_uploader("Upload Primary Contract (PDF/TXT)", type=["pdf", "txt"], key="single_up")
+        if uploaded_file:
+            with st.spinner("Agentic pipeline initializing..."):
+                content = uploaded_file.read().decode("utf-8", errors="ignore")
+                state = run_agent_pipeline(content, uploaded_file.name)
+                st.session_state["agent_state_a"] = state
+                st.session_state["current_step"] = 2
+                st.rerun()
+    else:
+        c1, c2 = st.columns(2)
+        with c1: f1 = st.file_uploader("Contract A", type=["pdf", "txt"])
+        with c2: f2 = st.file_uploader("Contract B", type=["pdf", "txt"])
+        
+        if f1 and f2:
+            if st.button("Analyze & Compare", use_container_width=True):
+                with st.spinner("Running Dual Agentic Pipeline..."):
+                    c1_text = f1.read().decode("utf-8", errors="ignore")
+                    c2_text = f2.read().decode("utf-8", errors="ignore")
+                    st.session_state["agent_state_a"] = run_agent_pipeline(c1_text, f1.name)
+                    st.session_state["agent_state_b"] = run_agent_pipeline(c2_text, f2.name)
+                    st.session_state["comparison_active"] = True
+                    st.session_state["current_step"] = 2
+                    st.rerun()
+
 
 def render_executive_summary(stats, risks):
     score = stats.get('risk_index', 0)
@@ -220,6 +238,73 @@ def tab_risk_analysis():
             exp = exp_map.get(idx, {})
             st.info(exp.get("explanation", "No reasoning available for this clause."))
             st.warning(f"Mitigation: {exp.get('mitigation', 'N/A')}")
+
+
+def tab_comparison():
+    """Side-by-side Contract Comparison UI."""
+    st.session_state["current_step"] = 3
+    render_stepper()
+    
+    state_a = st.session_state.get("agent_state_a")
+    state_b = st.session_state.get("agent_state_b")
+    
+    if not state_a or not state_b:
+        st.info("Comparison Mode requires two contracts. Please upload them in the [Upload] step.")
+        return
+
+    from models.comparison import compare_contracts
+    
+    # Run Comparison Engine
+    results = compare_contracts(
+        state_a["file_name"], state_a["clauses"], state_a["risks"], float(state_a["final_report"]["executive_summary"]["overall_risk_score"].split("/")[0]),
+        state_b["file_name"], state_b["clauses"], state_b["risks"], float(state_b["final_report"]["executive_summary"]["overall_risk_score"].split("/")[0])
+    )
+
+    
+    # ══════════════════════════════════════════════════════════════════
+    # VERDICT CARD
+    # ══════════════════════════════════════════════════════════════════
+    winner = results["winner"]
+    st.markdown(f"""
+    <div class="saas-card" style="border-left: 10px solid #818cf8; background: rgba(129, 140, 248, 0.1);">
+        <h3 style="margin:0;">🏆 Safety Verdict: {winner if winner != 'Tie' else 'Equally Balanced'}</h3>
+        <p style="font-size:1.1rem; color:#f4f4f5; margin-top:10px;">{results['verdict']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # ══════════════════════════════════════════════════════════════════
+    # SIDE BY SIDE MATRIX
+    # ══════════════════════════════════════════════════════════════════
+    st.markdown("#### Clause-Level Delta Matrix")
+    
+    categories = list(results["coverage_a"].keys())
+    for cat in categories:
+        ca = results["coverage_a"].get(cat)
+        cb = results["coverage_b"].get(cat)
+        
+        with st.expander(f"📌 {cat}"):
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown(f"**{results['metadata']['a']}**")
+                if ca:
+                    st.markdown(f"<span class='badge {'badge-high' if ca['risk']=='High Risk' else 'badge-low'}'>{ca['risk']}</span>", unsafe_allow_html=True)
+                    st.caption(ca["text"])
+                else:
+                    st.error("Missing Protection")
+            with c2:
+                st.markdown(f"**{results['metadata']['b']}**")
+                if cb:
+                    st.markdown(f"<span class='badge {'badge-high' if cb['risk']=='High Risk' else 'badge-low'}'>{cb['risk']}</span>", unsafe_allow_html=True)
+                    st.caption(cb["text"])
+                else:
+                    st.error("Missing Protection")
+
+    st.markdown("#### Structural Gaps & Risk Discordance")
+    if results["gaps"]:
+        st.table(pd.DataFrame(results["gaps"]))
+    else:
+        st.success("No structural gaps detected between documents.")
+
 
 def tab_analytics():
     """AI Monitoring System (Production Dashboard)"""
@@ -326,10 +411,22 @@ def main():
         # Landing Page
         tab_upload()
     else:
-        tabs = st.tabs(["Analyze", "Monitor", "Report"])
+        tab_list = ["Analyze", "Monitor", "Report"]
+        if st.session_state.get("comparison_active"):
+            tab_list.insert(1, "Comparison")
+            
+        tabs = st.tabs(tab_list)
+        
         with tabs[0]: tab_risk_analysis()
-        with tabs[1]: tab_analytics()
-        with tabs[2]: tab_export()
+        
+        if st.session_state.get("comparison_active"):
+            with tabs[1]: tab_comparison()
+            with tabs[2]: tab_analytics()
+            with tabs[3]: tab_export()
+        else:
+            with tabs[1]: tab_analytics()
+            with tabs[2]: tab_export()
+
 
 if __name__ == "__main__":
     main()
