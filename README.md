@@ -1,3 +1,12 @@
+---
+title: LexIQ Enterprise AI
+emoji: ⚖️
+colorFrom: blue
+colorTo: indigo
+sdk: streamlit
+app_file: app.py
+pinned: false
+---
 # Intelligent Contract Risk Analysis System
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=suvendukungfu/Intelligent-Contract-Risk-Analysis-and-Agentic-Legal-Assistance-System&branch=main&main_module_path=app/streamlit_app.py)
