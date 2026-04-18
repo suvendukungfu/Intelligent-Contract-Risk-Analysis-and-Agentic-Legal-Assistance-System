@@ -471,48 +471,57 @@ def tab_compare():
         st.markdown("### Executive Risk Comparison")
         c1, c2, c3 = st.columns(3)
         with c1:
-            st.markdown(f"<div class='saas-card'><h4>Average Risk Score</h4><div style='font-size:1.8rem; font-weight:700; color:#818cf8;'>{score_a} vs {score_b}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Lower is safer</div></div>", unsafe_allow_html=True)
+            st.metric("Risk Index (A vs B)", f"{score_a}", f"{score_a - score_b:+.1f}", delta_color="inverse")
         with c2:
-            st.markdown(f"<div class='saas-card'><h4>Semantic Similarity</h4><div style='font-size:1.8rem; font-weight:700; color:#34d399;'>{comp['semantic_alignment']}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Structural alignment</div></div>", unsafe_allow_html=True)
+            st.metric("Similarity", comp['semantic_alignment'])
         with c3:
-            st.markdown(f"<div class='saas-card'><h4>Risk Delta</h4><div style='font-size:1.8rem; font-weight:700; color:#f87171;'>{comp['high_risk_diff']} Clauses</div><div style='color:#a1a1aa; font-size:0.8rem;'>High-risk count difference</div></div>", unsafe_allow_html=True)
+            st.metric("Risk Delta", f"{comp['high_risk_diff']} Clauses", delta_color="off")
 
-        # 2. Recommendation Card
-        st.info(f"**AI Recommendation:** {comp['recommendation']}")
+        st.markdown(f"""
+        <div class="saas-card" style="background: rgba(129, 140, 248, 0.05); border: 1px solid rgba(129, 140, 248, 0.2);">
+            <h4 style="color:#818cf8; margin-bottom:8px;">AI Verdict & Selection Recommendation</h4>
+            <p style="color:#e4e4e7; font-size:0.95rem; line-height:1.6;">{comp['recommendation']}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
         # 3. Missing Protections Side-by-Side
         st.markdown("---")
-        st.markdown("### Missing Legal Protections")
+        st.markdown("### Structural Gaps & Missing Protections")
         m1, m2 = st.columns(2)
         with m1:
-            st.markdown(f"**Missing in Contract A ({st.session_state['file_name_a']}):**")
+            st.markdown(f"**Missing in {st.session_state['file_name_a']}**")
             if comp['missing_in_a']:
                 for item in comp['missing_in_a']:
-                    st.error(f"Missing: {item}")
+                    st.markdown(f"<div style='color:#f87171; border-left:2px solid #f87171; padding-left:10px; margin-bottom:8px; font-size:0.85rem;'>[!] Missing {item}</div>", unsafe_allow_html=True)
             else:
-                st.success("No standard protections missing.")
+                st.success("All standard protections present.")
         with m2:
-            st.markdown(f"**Missing in Contract B ({st.session_state['file_name_b']}):**")
+            st.markdown(f"**Missing in {st.session_state['file_name_b']}**")
             if comp['missing_in_b']:
                 for item in comp['missing_in_b']:
-                    st.error(f"Missing: {item}")
+                    st.markdown(f"<div style='color:#f87171; border-left:2px solid #f87171; padding-left:10px; margin-bottom:8px; font-size:0.85rem;'>[!] Missing {item}</div>", unsafe_allow_html=True)
             else:
-                st.success("No standard protections missing.")
+                st.success("All standard protections present.")
 
         # 4. Detailed Delta Comparison
         if comp['mapped_diffs']:
             st.markdown("---")
-            st.markdown("### Detailed Protection Delta")
+            st.markdown("### Clause-Level Semantic Deltas")
             for diff in comp['mapped_diffs']:
-                with st.expander(f"Topic Delta: {diff['topic']}"):
+                with st.expander(f"Analysis: {diff['topic']}"):
                     dc1, dc2 = st.columns(2)
                     with dc1:
-                        st.markdown(f"**Contract A (High Risk)**")
+                        st.markdown(f"**Contract A (Risky Formulation)**")
                         st.caption(f"\"{diff['clause_a']}...\"")
                     with dc2:
-                        st.markdown(f"**Contract B (Low Risk)**")
+                        st.markdown(f"**Contract B (Balanced Alternative)**")
                         st.caption(f"\"{diff['clause_b']}...\"")
-                    st.markdown(f"*Insight: {diff['insight']}*")
+                    st.markdown(f"**System Insight:** {diff['insight']}")
+        
+        st.markdown("<br/>", unsafe_allow_html=True)
+        import json
+        comp_json = json.dumps(comp, indent=4).encode('utf-8')
+        st.download_button("Export Comparison Data (JSON)", comp_json, "Comparison_Report.json", use_container_width=True)
 
     except Exception as e:
         st.error(f"Comparison computation failed: {e}")
