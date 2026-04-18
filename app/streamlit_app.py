@@ -460,24 +460,63 @@ def tab_compare():
 
     try:
         score_a = state_a["final_report"]["statistics"]["risk_index"]
-        score_b = state_b["final_report"]["statistics"]["risk_index"]
+        score_b = state_b["final_report_b"]["statistics"]["risk_index"] if "final_report_b" in state_b else state_b["final_report"]["statistics"]["risk_index"]
+        
         comp = compare_contracts(
             st.session_state["file_name_a"], state_a["clauses"], state_a["ml_results"], score_a,
             st.session_state["file_name_b"], state_b["clauses"], state_b["ml_results"], score_b
         )
         
-        st.markdown(f"""
-        <div class="saas-card" style="margin-top:24px;">
-            <div style="display:flex; justify-content:space-around; margin-bottom:24px; text-align:center;">
-                <div><div style="color:#71717a; font-size:0.8rem;">Contract A Score</div><div style="font-size:1.5rem; font-weight:600;">{score_a}</div></div>
-                <div><div style="color:#71717a; font-size:0.8rem;">Contract B Score</div><div style="font-size:1.5rem; font-weight:600;">{score_b}</div></div>
-                <div><div style="color:#71717a; font-size:0.8rem;">Similarity</div><div style="font-size:1.5rem; font-weight:600; color:#818cf8;">{comp['semantic_alignment']}</div></div>
-            </div>
-            <p style="font-size:1rem; line-height:1.6; color:#a1a1aa; text-align:center;">{comp['summary']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        # 1. Executive Summary Cards
+        st.markdown("### Executive Risk Comparison")
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown(f"<div class='saas-card'><h4>Average Risk Score</h4><div style='font-size:1.8rem; font-weight:700; color:#818cf8;'>{score_a} vs {score_b}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Lower is safer</div></div>", unsafe_allow_html=True)
+        with c2:
+            st.markdown(f"<div class='saas-card'><h4>Semantic Similarity</h4><div style='font-size:1.8rem; font-weight:700; color:#34d399;'>{comp['semantic_alignment']}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Structural alignment</div></div>", unsafe_allow_html=True)
+        with c3:
+            st.markdown(f"<div class='saas-card'><h4>Risk Delta</h4><div style='font-size:1.8rem; font-weight:700; color:#f87171;'>{comp['high_risk_diff']} Clauses</div><div style='color:#a1a1aa; font-size:0.8rem;'>High-risk count difference</div></div>", unsafe_allow_html=True)
+
+        # 2. Recommendation Card
+        st.info(f"**AI Recommendation:** {comp['recommendation']}")
+
+        # 3. Missing Protections Side-by-Side
+        st.markdown("---")
+        st.markdown("### Missing Legal Protections")
+        m1, m2 = st.columns(2)
+        with m1:
+            st.markdown(f"**Missing in Contract A ({st.session_state['file_name_a']}):**")
+            if comp['missing_in_a']:
+                for item in comp['missing_in_a']:
+                    st.error(f"Missing: {item}")
+            else:
+                st.success("No standard protections missing.")
+        with m2:
+            st.markdown(f"**Missing in Contract B ({st.session_state['file_name_b']}):**")
+            if comp['missing_in_b']:
+                for item in comp['missing_in_b']:
+                    st.error(f"Missing: {item}")
+            else:
+                st.success("No standard protections missing.")
+
+        # 4. Detailed Delta Comparison
+        if comp['mapped_diffs']:
+            st.markdown("---")
+            st.markdown("### Detailed Protection Delta")
+            for diff in comp['mapped_diffs']:
+                with st.expander(f"Topic Delta: {diff['topic']}"):
+                    dc1, dc2 = st.columns(2)
+                    with dc1:
+                        st.markdown(f"**Contract A (High Risk)**")
+                        st.caption(f"\"{diff['clause_a']}...\"")
+                    with dc2:
+                        st.markdown(f"**Contract B (Low Risk)**")
+                        st.caption(f"\"{diff['clause_b']}...\"")
+                    st.markdown(f"*Insight: {diff['insight']}*")
+
     except Exception as e:
         st.error(f"Comparison computation failed: {e}")
+        st.exception(e)
 
 
 def tab_export():
