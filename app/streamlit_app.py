@@ -20,7 +20,12 @@ from agents.workflow import run_agent_pipeline
 from analytics.dashboard import (
     create_confidence_trend_chart, 
     create_risk_distribution_chart, 
-    create_complexity_vs_risk_chart
+    create_complexity_vs_risk_chart,
+    create_risk_histogram,
+    create_anomaly_scatter,
+    create_feature_importance_chart,
+    create_confusion_matrix,
+    create_precision_recall_chart
 )
 from models.comparison import compare_contracts
 
@@ -286,61 +291,58 @@ def tab_risk_analysis():
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("Explain Risk", key=f"btn_{idx}", help="Generate deep reasoning context"):
-            st.session_state["selected_clause_idx"] = idx
-            st.session_state["current_step"] = 3
-            st.toast("Opening Explanations...", icon=None)
+        if st.session_state.get("selected_clause_idx") != idx:
+            if st.button("Explain Risk", key=f"btn_{idx}", help="Generate deep reasoning context"):
+                st.session_state["selected_clause_idx"] = idx
+                st.session_state["current_step"] = 3
+                st.rerun()
+        else:
+            if st.button("Collapse Explanation", key=f"btn_close_{idx}"):
+                st.session_state["selected_clause_idx"] = None
+                st.rerun()
+                
+            xai_html = render_xai_block(item)
+            anomaly_html = ""
+            if item.get("is_anomaly"):
+                anomaly_html = f"<div style='background:rgba(192, 132, 252, 0.1); border-left:4px solid #c084fc; padding:12px; border-radius:8px; margin-bottom:24px; color:#e9d5ff;'><b style='color:#d8b4fe;'>Anomaly Detected:</b> This clause triggered Isolation Forest anomaly scores (Score: {item.get('anomaly_score')}). It represents an unusual zero-day formulation outside our training baseline.</div>"
+
+            if r_level == "Low Risk":
+                st.markdown(f"""
+                <div class="saas-card" style="margin-top: -12px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none; background: rgba(0,0,0,0.4);">
+                    {anomaly_html}
+                    <h5 style="color:#34d399; margin-bottom:12px;">Standard Clause Verified</h5>
+                    <p style="font-size:0.95rem; color:#a1a1aa; line-height:1.6; padding-left:16px; border-left:2px solid #34d399;">
+                        The AI engine reviewed this clause and verified it uses standard, balanced legal language. There are no predatory structures or hidden liability traps detected, so no further legal action is required.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                <div class="saas-card" style="margin-top: -12px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none; background: rgba(0,0,0,0.4);">
+                    {anomaly_html}
+                    <h5 style="color:#f4f4f5; margin-bottom:16px;">1. Why is this risky? (ML Analysis)</h5>
+                    <div style="margin-bottom:12px; font-size:0.9rem; color:#a1a1aa;">The algorithm flagged these terms strongly correlating to liability traps:</div>
+                    {xai_html}
+                    
+                    <h5 style="color:#f4f4f5; margin-bottom:12px;">2. Legal Context (RAG Evidence)</h5>
+                    <p style="font-size:0.9rem; color:#c7d2fe; line-height:1.6; background:rgba(99, 102, 241, 0.05); padding:16px; border-radius:12px; margin-bottom:32px;">
+                        {item.get('legal_reference', '')}
+                    </p>
+                    
+                    <h5 style="color:#f4f4f5; margin-bottom:12px;">3. AI Reasoning & Reasoning</h5>
+                    <p style="font-size:0.95rem; color:#e4e4e7; line-height:1.6; border-left:2px solid #818cf8; padding-left:16px; margin-bottom:32px;">
+                        {item.get('explanation', '')}
+                    </p>
+                    
+                    <h5 style="color:#f4f4f5; margin-bottom:12px;">4. Suggested Fix</h5>
+                    <p style="font-size:0.95rem; color:#fca5a5; line-height:1.6; background:rgba(248, 113, 113, 0.05); padding:16px; border-radius:12px;">
+                        {item.get('mitigation', '')}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
 def tab_ai_assistant():
-    if st.session_state["current_step"] < 3:
-        st.session_state["current_step"] = 3
-    render_stepper()
-    
-    state = st.session_state["agent_state_a"]
-    risks = state["final_report"]["identified_risks"]
-    idx = st.session_state.get("selected_clause_idx")
-    
-    if idx is None or idx >= len(risks):
-        st.info("Please select 'Explain Risk' in the Risk Analysis tab.")
-        return
-
-    item = risks[idx]
-
-    st.info("**Next Step →** Review insights here, then Generate full report on the Export Tab.")
-
-    xai_html = render_xai_block(item)
-    anomaly_html = ""
-    if item.get("is_anomaly"):
-        anomaly_html = f"<div style='background:rgba(192, 132, 252, 0.1); border-left:4px solid #c084fc; padding:12px; border-radius:8px; margin-bottom:24px; color:#e9d5ff;'><b style='color:#d8b4fe;'>Anomaly Detected:</b> This clause triggered Isolation Forest anomaly scores (Score: {item.get('anomaly_score')}). It represents an unusual zero-day formulation outside our training baseline.</div>"
-
-    st.markdown(f"""
-    <div class="saas-card" style="margin-bottom:0;">
-        {anomaly_html}
-        <h5 style="color:#f4f4f5; margin-bottom:8px;">Target Clause</h5>
-        <div style="background:rgba(0,0,0,0.3); padding:16px; border-radius:12px; font-size:0.9rem; color:#a1a1aa; margin-bottom: 32px;">
-            "{item['clause']}"
-        </div>
-        
-        <h5 style="color:#f4f4f5; margin-bottom:16px;">1. Why is this risky? (ML Analysis)</h5>
-        <div style="margin-bottom:12px; font-size:0.9rem; color:#a1a1aa;">The algorithm flagged these terms strongly correlating to liability traps:</div>
-        {xai_html}
-        
-        <h5 style="color:#f4f4f5; margin-bottom:12px;">2. Legal Context (RAG Evidence)</h5>
-        <p style="font-size:0.9rem; color:#c7d2fe; line-height:1.6; background:rgba(99, 102, 241, 0.05); padding:16px; border-radius:12px; margin-bottom:32px;">
-            {item.get('legal_reference', '')}
-        </p>
-        
-        <h5 style="color:#f4f4f5; margin-bottom:12px;">3. AI Reasoning & Reasoning</h5>
-        <p style="font-size:0.95rem; color:#e4e4e7; line-height:1.6; border-left:2px solid #818cf8; padding-left:16px; margin-bottom:32px;">
-            {item.get('explanation', '')}
-        </p>
-        
-        <h5 style="color:#f4f4f5; margin-bottom:12px;">4. Suggested Fix</h5>
-        <p style="font-size:0.95rem; color:#34d399; line-height:1.6; background:rgba(52, 211, 153, 0.05); padding:16px; border-radius:12px;">
-            {item.get('mitigation', '')}
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.info("The AI Assistant explanations are now seamlessly integrated directly beneath the clauses in the Risk Analysis tab! Go back and click 'Explain Risk' to see them instantly.")
 
 
 def tab_analytics():
@@ -348,11 +350,69 @@ def tab_analytics():
     render_stepper()
     state = st.session_state["agent_state_a"]
     results = state.get("ml_results", [])
-    if not results: return
+    if not results:
+        st.info("No analytics data available yet.")
+        return
 
-    col1, col2 = st.columns(2)
-    with col1: st.plotly_chart(create_risk_distribution_chart(results), use_container_width=True)
-    with col2: st.plotly_chart(create_confidence_trend_chart(results), use_container_width=True)
+    report_stats = state.get("final_report", {}).get("statistics", {})
+    
+    st.markdown("### 📊 Executive Insights Panel")
+    kc1, kc2, kc3 = st.columns(3)
+    with kc1:
+        st.markdown(f"<div class='saas-card'><h4>Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{report_stats.get('risk_index', 0)}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>Overall document risk level</div></div>", unsafe_allow_html=True)
+    with kc2:
+        st.markdown(f"<div class='saas-card'><h4>High-Risk Clauses</h4><div style='font-size:2rem; font-weight:700; color:#f87171;'>{report_stats.get('high_risk_clauses', 0)}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Total critical items flagged</div></div>", unsafe_allow_html=True)
+    with kc3:
+        anomaly_count = sum(1 for r in results if r.get('is_anomaly'))
+        st.markdown(f"<div class='saas-card'><h4>Anomalies Detected</h4><div style='font-size:2rem; font-weight:700; color:#c084fc;'>{anomaly_count}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Zero-day structural risks</div></div>", unsafe_allow_html=True)
+
+    st.markdown("---")
+    
+    # Filters
+    st.markdown("### 🎛️ Interactive Filters")
+    fcol1, fcol2 = st.columns(2)
+    with fcol1:
+        selected_risks = st.multiselect("Filter by Risk Level", ["Low Risk", "Unknown", "High Risk"], default=["Low Risk", "Unknown", "High Risk"])
+    with fcol2:
+        conf_min = st.slider("Minimum AI Confidence (%)", 0, 100, 0)
+        
+    filtered_results = [r for r in results if r["risk_level"] in selected_risks and (r["confidence"] * 100) >= conf_min]
+    
+    st.markdown("---")
+    st.markdown("### 1️⃣ Model Evaluation Metrics (Baseline)")
+    st.info("Demonstrates the machine learning agent's standardized validation metrics from training.")
+    mc1, mc2 = st.columns(2)
+    with mc1: 
+        st.plotly_chart(create_confusion_matrix(), use_container_width=True)
+        st.caption("Confusion Matrix: Standardized evaluation showing True Positives vs False Positives.")
+    with mc2: 
+        st.plotly_chart(create_precision_recall_chart(), use_container_width=True)
+        st.caption("Precision: How accurate the risk predictions are. Recall: How many risky clauses are correctly identified.")
+        
+    st.markdown("---")
+    st.markdown("### 2️⃣ Risk Distribution & Data Analytics")
+    c1, c2 = st.columns(2)
+    with c1: 
+        st.plotly_chart(create_risk_distribution_chart(filtered_results), use_container_width=True)
+        st.caption("Risk Categories: Ratio of High Risk to Low Risk clauses in your document.")
+    with c2: 
+        st.plotly_chart(create_risk_histogram(filtered_results), use_container_width=True)
+        st.caption("Clause Complexity: Distribution of clause length (word count) vs risk severity.")
+
+    st.markdown("---")
+    st.markdown("### 3️⃣ Real-time Confidence & Flow Analytics")
+    st.plotly_chart(create_confidence_trend_chart(filtered_results), use_container_width=True)
+    st.caption("Model Certainty: Shows how confident the AI is across the chronological flow of the document (Top = Highly Confident).")
+
+    st.markdown("---")
+    st.markdown("### 4️⃣ Explainability (XAI) & Anomaly Detection")
+    x1, x2 = st.columns(2)
+    with x1: 
+        st.plotly_chart(create_feature_importance_chart(filtered_results), use_container_width=True)
+        st.caption("Feature Importance: TF-IDF keywords that act as strong liability traps in the document across all High-Risk flags.")
+    with x2: 
+        st.plotly_chart(create_anomaly_scatter(filtered_results), use_container_width=True)
+        st.caption("Isolation Forest: Plots normal clauses vs outliers to detect previously unseen or 'Zero-Day' legal formulations.")
 
 
 def tab_compare():
@@ -393,8 +453,40 @@ def tab_export():
     render_stepper()
     state = st.session_state["agent_state_a"]
     
-    st.success("Analysis Complete! Download your final artifacts below.")
+    st.success("Analysis Complete! Review your final report or download the artifacts below.")
     
+    report = state.get("final_report", {})
+    if report:
+        st.markdown("""
+        <div class="saas-card" style="background: rgba(0,0,0,0.5); border-top: 4px solid #818cf8;">
+            <h3 style="color:#f4f4f5; font-family:'Outfit'; margin-bottom:8px;">Final Intelligence Report</h3>
+            <p style="color:#a1a1aa; font-family:'JetBrains Mono'; font-size:0.85rem; margin-bottom:32px;">Generated by LexIQ Enterprise Legal AI</p>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"**Overall Risk Index:** `{report.get('statistics', {}).get('risk_index', 0)} / 10`")
+        st.markdown(f"**Total High-Risk Clauses:** `{report.get('statistics', {}).get('high_risk_clauses', 0)}`")
+        
+        for idx, risk in enumerate(report.get("identified_risks", [])):
+            clean_clause = str(risk.get('clause', '')).strip()
+            
+            st.markdown(f"""
+            <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.05);">
+                <div style="color:#818cf8; font-weight:700; margin-bottom:8px; font-family:'Outfit';">Clause {idx+1} [ {risk.get('risk_level', 'Unknown')} ]</div>
+                <div style="font-size:0.9rem; color:#a1a1aa; font-style:italic; border-left:2px solid #3f3f46; padding-left:12px; margin-bottom:16px;">
+                    "{clean_clause}"
+                </div>
+            """, unsafe_allow_html=True)
+            
+            if risk.get("risk_level") == "Low Risk":
+                 st.markdown("<p style='color:#34d399; font-size:0.9rem;'>✅ Verification passed. Standard language detected.</p>", unsafe_allow_html=True)
+            else:
+                 st.markdown(f"**Triggers Identified:** `{', '.join(risk.get('linguistic_triggers', []))}`")
+                 st.markdown(f"**AI Reasoning:** {risk.get('explanation', 'N/A')}")
+                 st.markdown(f"<span style='color:#fca5a5;'>**Suggested Mitigation:** {risk.get('mitigation', 'N/A')}</span>", unsafe_allow_html=True)
+                 
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+        st.markdown("</div>", unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("""<div class="saas-card" style="text-align:center;">
