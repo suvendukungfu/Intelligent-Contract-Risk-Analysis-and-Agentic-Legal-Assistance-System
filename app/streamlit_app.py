@@ -261,8 +261,16 @@ def tab_risk_analysis():
     render_stepper()
     
     state = st.session_state["agent_state_a"]
-    stats = state["final_report"]["statistics"]
-    risks = state["final_report"]["identified_risks"]
+    risks = state.get("risks", [])
+    
+    # Calculate stats on the fly from the new state
+    high_count = sum(1 for r in risks if r["risk_level"] == "High Risk")
+    avg_conf = sum(r["confidence"] for r in risks) / len(risks) if risks else 0
+    
+    stats = {
+        "risk_index": round((high_count / len(risks) * 10) if risks else 0, 1),
+        "high_risk_clauses": high_count
+    }
 
     render_executive_summary(stats, risks)
 
@@ -355,28 +363,30 @@ def tab_ai_assistant():
 def tab_analytics():
     st.session_state["current_step"] = 4
     render_stepper()
+    
     state = st.session_state["agent_state_a"]
-    results = state.get("ml_results", [])
+    results = state.get("risks", [])
     if not results:
         st.info("No analytics data available yet.")
         return
 
-    report_stats = state.get("final_report", {}).get("statistics", {})
-    avg_conf = float(str(report_stats.get('avg_confidence', '0%')).replace('%', ''))
+    # Calculate stats for analytics dashboard
+    high_count = sum(1 for r in results if r["risk_level"] == "High Risk")
+    avg_conf = round((sum(r["confidence"] for r in results) / len(results) * 100) if results else 0, 1)
+    risk_index = round((high_count / len(results) * 10) if results else 0, 1)
     anomaly_count = sum(1 for r in results if r.get('is_anomaly'))
-    explanations = state.get("explanations", [])
-    retrieval_data = state.get("retrieved_contexts", [])
+    retrieval_data = state.get("retrieved_context", [])
     
     st.markdown("### System Health and Overview (Executive Panel)")
     kc1, kc2, kc3, kc4 = st.columns(4)
     with kc1:
-        st.markdown(f"<div class='saas-card'><h4>Overall Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{report_stats.get('risk_index', 0)}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>System risk classification</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='saas-card'><h4>Overall Risk Index</h4><div style='font-size:2rem; font-weight:700; color:#818cf8;'>{risk_index}/10</div><div style='color:#a1a1aa; font-size:0.8rem;'>System risk classification</div></div>", unsafe_allow_html=True)
     with kc2:
         st.markdown(f"<div class='saas-card'><h4>Average Confidence</h4><div style='font-size:2rem; font-weight:700; color:#34d399;'>{avg_conf}%</div><div style='color:#a1a1aa; font-size:0.8rem;'>AI inference certainty</div></div>", unsafe_allow_html=True)
     with kc3:
         st.markdown(f"<div class='saas-card'><h4>Zero-Day Anomalies</h4><div style='font-size:2rem; font-weight:700; color:#c084fc;'>{anomaly_count}</div><div style='color:#a1a1aa; font-size:0.8rem;'>Outlier structures found</div></div>", unsafe_allow_html=True)
     with kc4:
-        st.markdown(f"<div class='saas-card'><h4>Context Pulled</h4><div style='font-size:2rem; font-weight:700; color:#fbbf24;'>{sum(len(r.get('context_chunks', [])) for r in retrieval_data)}</div><div style='color:#a1a1aa; font-size:0.8rem;'>ChromaDB vectors used</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='saas-card'><h4>Context Pulled</h4><div style='font-size:2rem; font-weight:700; color:#fbbf24;'>{sum(len(r.get('context', [])) for r in retrieval_data)}</div><div style='color:#a1a1aa; font-size:0.8rem;'>ChromaDB vectors used</div></div>", unsafe_allow_html=True)
 
     # Automated Alert System
     if avg_conf < 85.0:
@@ -565,6 +575,20 @@ def tab_export():
             st.markdown("</div>", unsafe_allow_html=True)
             
         st.markdown("</div>", unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="saas-card" style="margin-top:24px;">
+            <div style="font-size:1.1rem; font-weight:600; color:#f4f4f5; margin-bottom:16px;">Final Agentic Report (Mandatory JSON)</div>
+            <p style="color:#71717a; font-size:0.9rem; margin-bottom:16px;">Verified structured output for external compliance integration.</p>
+        </div>""", unsafe_allow_html=True)
+        
+        final_report = state.get("final_report", {})
+        st.json(final_report)
+        
+        from reports.json_report import report_to_json_string
+        json_b = report_to_json_string(final_report).encode("utf-8")
+        st.download_button("Download Agentic JSON", json_b, file_name="LexIQ_Agentic_Report.json", use_container_width=True)
+
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("""<div class="saas-card" style="text-align:center;">

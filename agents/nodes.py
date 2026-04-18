@@ -1,12 +1,11 @@
 """
 agents/nodes.py
 ---------------
-The 5 node functions executed in the LangGraph workflow.
-Each node takes the ContractState, does work, and returns an updated state.
+Multi-agent architecture for the LexIQ Agentic AI pipeline.
+Each agent specialized in one domain (Risk, RAG, Reasoning, Reporting).
 """
 
 import logging
-import traceback
 from typing import Dict, Any
 
 from agents.states import ContractState
@@ -15,214 +14,140 @@ from models.inference import risk_engine
 
 logger = logging.getLogger(__name__)
 
-
 # ══════════════════════════════════════════════════════════════════
-# STATE 1 — Parse Contract
+    # Agent 1: Parsing Agent
 # ══════════════════════════════════════════════════════════════════
 
-def node_parse_contract(state: ContractState) -> ContractState:
-    """
-    Splits raw contract text into discrete legal clauses.
-    Uses the existing RegEx-based clause segmenter.
-    """
-    state["current_step"] = "STATE_1: Parsing Contract"
-    logger.info(f"[Agent] {state['current_step']}")
-
+def parse_contract_agent(state: ContractState) -> ContractState:
+    state["current_step"] = "Agent: Parsing"
+    logger.info(f"[{state['current_step']}] Segmenting text...")
     try:
         clauses = segment_clauses(state["raw_text"])
-        if not clauses:
-            # Fallback: treat whole text as one clause
-            clauses = [state["raw_text"].strip()]
-            state["errors"].append("Clause segmentation found no markers; treating document as single block.")
-
-        state["clauses"] = clauses
-        logger.info(f"[Agent] Segmented into {len(clauses)} clauses.")
+        state["clauses"] = clauses if clauses else [state["raw_text"]]
     except Exception as e:
-        state["errors"].append(f"STATE_1 Error: {str(e)}")
-        state["clauses"] = [state["raw_text"].strip()] if state["raw_text"] else []
-
+        state["errors"].append(f"Parsing Error: {e}")
+        state["clauses"] = [state["raw_text"]]
     return state
 
-
 # ══════════════════════════════════════════════════════════════════
-# STATE 2 — ML Risk Detection
+    # Agent 2: Risk Detection Agent (ML)
 # ══════════════════════════════════════════════════════════════════
 
-def node_detect_risks(state: ContractState) -> ContractState:
-    """
-    Runs each clause through the existing Logistic Regression classifier,
-    checks for Semantic Anomalies, and extracts XAI Mathematical Weights.
-    """
-    state["current_step"] = "STATE_2: ML Risk Detection & Clustering"
-    logger.info(f"[Agent] {state['current_step']}")
-
+def risk_detection_agent(state: ContractState) -> ContractState:
+    state["current_step"] = "Agent: Risk Detection"
+    logger.info(f"[{state['current_step']}] Running ML Inference...")
+    
     try:
         from models.anomaly_detection import detect_semantic_anomalies
-        anomalies = detect_semantic_anomalies(state["clauses"])
+        anom_results = detect_semantic_anomalies(state["clauses"])
+        state["anomalies"] = anom_results
     except Exception as e:
-        logger.error(f"[Agent] Anomaly inference failed: {e}")
-        anomalies = [{"is_anomaly": False, "anomaly_score": 0.0} for _ in state["clauses"]]
+        state["errors"].append(f"Anomaly Error: {e}")
+        state["anomalies"] = [{"is_anomaly": False, "anomaly_score": 0.0} for _ in state["clauses"]]
 
-    from models.explainability import generate_xai_importance
-
-    ml_results = []
+    risks = []
     for idx, clause in enumerate(state["clauses"]):
-        try:
-            risk_level, confidence, triggers = risk_engine.analyze_clause(clause)
-            
-            # If the unsupervised model flags it as an anomaly, force risk level investigation
-            is_anom = anomalies[idx]["is_anomaly"]
-            if is_anom and risk_level == "Low Risk":
-                risk_level = "High Risk"  # Override safe rating if mathematically anomalous
-                triggers.append("SEMANTIC_ANOMALY")
-                
-            xai_weights = {}
-            if risk_level == "High Risk":
-                xai_weights = generate_xai_importance(clause, (risk_engine.model, risk_engine.vectorizer))
+        level, conf, triggers = risk_engine.analyze_clause(clause)
+        
+        # Cross-reference with anomalies
+        is_anom = state["anomalies"][idx]["is_anomaly"]
+        if is_anom and level == "Low Risk":
+            level = "High Risk"
+            triggers.append("SEMANTIC_ANOMALY")
 
-            ml_results.append({
-                "clause_idx": idx,
-                "clause": clause,
-                "risk_level": risk_level,
-                "confidence": round(confidence, 4),
-                "triggers": triggers,
-                "is_anomaly": is_anom,
-                "anomaly_score": anomalies[idx]["anomaly_score"],
-                "xai_weights": xai_weights
-            })
-        except Exception as e:
-            state["errors"].append(f"STATE_2 Error on clause {idx}: {str(e)}")
-            ml_results.append({
-                "clause_idx": idx, "clause": clause, "risk_level": "Unknown",
-                "confidence": 0.0, "triggers": [], "is_anomaly": False, "anomaly_score": 0.0, "xai_weights": {}
-            })
-
-    state["ml_results"] = ml_results
-    high = sum(1 for r in ml_results if r["risk_level"] == "High Risk")
-    logger.info(f"[Agent] {high}/{len(ml_results)} flagged as High Risk (Post-Anomaly Check).")
+        risks.append({
+            "clause_idx": idx,
+            "clause": clause,
+            "risk_level": level,
+            "confidence": conf,
+            "triggers": triggers,
+            "is_anomaly": is_anom
+        })
+    
+    state["risks"] = risks
     return state
 
-
 # ══════════════════════════════════════════════════════════════════
-# STATE 3 — Retrieve Legal Context (RAG)
+    # Agent 3: Legal Retrieval Agent (RAG)
 # ══════════════════════════════════════════════════════════════════
 
-def node_retrieve_context(state: ContractState) -> ContractState:
-    """
-    For each HIGH-RISK clause, retrieves the top-2 most relevant
-    legal knowledge chunks from the ChromaDB vector store.
-    Low-risk clauses skip RAG to save compute time.
-    """
-    state["current_step"] = "STATE_3: RAG Retrieval"
-    logger.info(f"[Agent] {state['current_step']}")
-
-    # Import here to avoid circular imports at module load time
+def legal_retrieval_agent(state: ContractState) -> ContractState:
+    state["current_step"] = "Agent: Legal Retrieval"
+    logger.info(f"[{state['current_step']}] Fetching legal context...")
+    
     from retrieval.rag_engine import retrieve_context_for_clause
-
+    
     retrieved = []
-    for result in state["ml_results"]:
-        if result["risk_level"] == "High Risk":
+    for risk in state["risks"]:
+        if risk["risk_level"] == "High Risk":
             try:
-                chunks = retrieve_context_for_clause(result["clause"], top_k=2)
-                retrieved.append({
-                    "clause_idx": result["clause_idx"],
-                    "context_chunks": chunks
-                })
-            except Exception as e:
-                state["errors"].append(f"STATE_3 RAG Error clause {result['clause_idx']}: {str(e)}")
-                retrieved.append({
-                    "clause_idx": result["clause_idx"],
-                    "context_chunks": ["No relevant legal context found."]
-                })
+                chunks = retrieve_context_for_clause(risk["clause"], top_k=2)
+                retrieved.append({"clause_idx": risk["clause_idx"], "context": chunks})
+            except:
+                retrieved.append({"clause_idx": risk["clause_idx"], "context": []})
         else:
-            # Low-risk: skip RAG, leave empty
-            retrieved.append({
-                "clause_idx": result["clause_idx"],
-                "context_chunks": []
-            })
-
-    state["retrieved_contexts"] = retrieved
-    logger.info(f"[Agent] RAG complete for {len(retrieved)} clauses.")
+            retrieved.append({"clause_idx": risk["clause_idx"], "context": []})
+            
+    state["retrieved_context"] = retrieved
     return state
 
-
 # ══════════════════════════════════════════════════════════════════
-# STATE 4 — LLM Reasoning
+    # Agent 4: Reasoning Agent (LLM)
 # ══════════════════════════════════════════════════════════════════
 
-def node_generate_explanations(state: ContractState) -> ContractState:
-    """
-    Sends each high-risk clause + its retrieved legal context to the LLM.
-    The LLM generates a structured legal explanation with mitigation advice.
-    """
-    state["current_step"] = "STATE_4: LLM Reasoning"
-    logger.info(f"[Agent] {state['current_step']}")
-
+def reasoning_agent(state: ContractState) -> ContractState:
+    state["current_step"] = "Agent: Reasoning"
+    logger.info(f"[{state['current_step']}] Logical analysis...")
+    
     from llm.engine import get_llm_explanation
-
+    
     explanations = []
-    context_map = {r["clause_idx"]: r["context_chunks"] for r in state["retrieved_contexts"]}
-
-    for result in state["ml_results"]:
-        idx = result["clause_idx"]
-        if result["risk_level"] == "High Risk":
-            try:
-                context_chunks = context_map.get(idx, [])
-                explanation = get_llm_explanation(
-                    clause=result["clause"],
-                    risk_level=result["risk_level"],
-                    triggers=result["triggers"],
-                    context_chunks=context_chunks
-                )
-                explanations.append({"clause_idx": idx, **explanation})
-            except Exception as e:
-                state["errors"].append(f"STATE_4 LLM Error clause {idx}: {str(e)}")
-                explanations.append({
-                    "clause_idx": idx,
-                    "explanation": "Insufficient information to analyze this clause.",
-                    "mitigation": "Consult a licensed attorney.",
-                    "legal_reference": "N/A"
-                })
-        else:
-            # Low-risk clauses get a brief standard note
+    context_map = {r["clause_idx"]: r["context"] for r in state["retrieved_context"]}
+    
+    for risk in state["risks"]:
+        idx = risk["clause_idx"]
+        
+        # Logic 1: Decision Logic - Confidence Threshold
+        if risk["confidence"] < 0.6 and risk["risk_level"] == "High Risk":
             explanations.append({
                 "clause_idx": idx,
-                "explanation": "This clause appears standard and low-risk. No immediate concerns identified.",
-                "mitigation": "No action required.",
+                "explanation": "LOW_CONFIDENCE_FALLBACK: The model detected a possible risk but with low certainty. Deep manual review is suggested.",
+                "mitigation": "Clarify intent with counterparty.",
                 "legal_reference": "N/A"
             })
+            continue
 
+        if risk["risk_level"] == "High Risk":
+            context = context_map.get(idx, [])
+            
+            # Logic 2: RAG Hit Logic
+            if not context or "No relevant legal context found" in str(context):
+                explanations.append({
+                    "clause_idx": idx, 
+                    "explanation": "RAG_MISS_FALLBACK: No specific legal precedent found in knowledge base. Applying general contract principles.",
+                    "mitigation": "Standardize using industry-wide templates.",
+                    "legal_reference": "General Commercial Practice"
+                })
+            else:
+                try:
+                    expl = get_llm_explanation(risk["clause"], risk["risk_level"], risk["triggers"], context)
+                    explanations.append({"clause_idx": idx, **expl})
+                except:
+                    explanations.append({"clause_idx": idx, "explanation": "LLM_ERROR", "mitigation": "Error", "legal_reference": "N/A"})
+        else:
+            explanations.append({"clause_idx": idx, "explanation": "Low risk. Standard formulation.", "mitigation": "None", "legal_reference": "N/A"})
+            
     state["explanations"] = explanations
-    logger.info(f"[Agent] LLM explanations generated for {len(explanations)} clauses.")
     return state
 
-
 # ══════════════════════════════════════════════════════════════════
-# STATE 5 — Generate Final Report
+    # Agent 5: Report Generator Agent
 # ══════════════════════════════════════════════════════════════════
 
-def node_generate_report(state: ContractState) -> ContractState:
-    """
-    Assembles all agent outputs into the final structured JSON report.
-    This is the "finished product" — ready for display and PDF export.
-    """
-    state["current_step"] = "STATE_5: Final Report"
-    logger.info(f"[Agent] {state['current_step']}")
-
+def report_generator_agent(state: ContractState) -> ContractState:
+    state["current_step"] = "Agent: Reporting"
+    logger.info(f"[{state['current_step']}] Finalizing JSON output...")
+    
     from reports.json_report import build_report
-
-    try:
-        report = build_report(state)
-        state["final_report"] = report
-    except Exception as e:
-        state["errors"].append(f"STATE_5 Report Error: {str(e)}")
-        state["final_report"] = {
-            "contract_summary": "Report generation failed.",
-            "identified_risks": [],
-            "severity_assessment": "Unknown",
-            "recommendations": "Manual review required.",
-            "disclaimer": "AI-generated. Not legal advice."
-        }
-
-    logger.info("[Agent] Pipeline complete.")
+    state["final_report"] = build_report(state)
     return state

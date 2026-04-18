@@ -128,7 +128,7 @@ def create_feature_importance_chart(ml_results: List[Dict[str, Any]]) -> go.Figu
     for r in ml_results:
         # Only aggregate triggers from risky clauses
         if r["risk_level"] == "High Risk":
-            triggers.extend(r.get("linguistic_triggers", []))
+            triggers.extend(r.get("triggers", []))
             
     if not triggers:
         # Empty graph if no risks
@@ -263,7 +263,7 @@ def create_rag_observability_chart(retrieval_data: List[Dict[str, Any]]) -> go.F
     
     df = pd.DataFrame([{
         "Clause #": r.get("clause_idx", 0) + 1,
-        "Context Docs Retrieved": len(r.get("context_chunks", []))
+        "Context Docs Retrieved": len(r.get("context", []))
     } for r in retrieval_data])
 
     fig = px.bar(

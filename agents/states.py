@@ -17,21 +17,15 @@ class ContractState(TypedDict):
     raw_text: str                        # Full contract text extracted from upload
     file_name: str                       # Original filename (for report header)
 
-    # ── STATE 1 OUTPUT: Parsing ────────────────────────────────────────────
+    # ── AGENT STATE ────────────────────────────────────────────────────────
     clauses: List[str]                   # List of individual legal clauses
-
-    # ── STATE 2 OUTPUT: ML Risk Detection ─────────────────────────────────
-    ml_results: List[Dict[str, Any]]     # [{clause, risk_level, confidence, triggers}, ...]
-
-    # ── STATE 3 OUTPUT: RAG Retrieval ─────────────────────────────────────
-    retrieved_contexts: List[Dict[str, Any]]  # [{clause_idx, context_chunks}, ...]
-
-    # ── STATE 4 OUTPUT: LLM Reasoning ─────────────────────────────────────
-    explanations: List[Dict[str, Any]]   # [{clause_idx, explanation, mitigation, legal_ref}, ...]
-
-    # ── STATE 5 OUTPUT: Final Report ──────────────────────────────────────
-    final_report: Dict[str, Any]         # The complete structured JSON report
+    risks: List[Dict[str, Any]]          # Agent 1 (RiskDetection): ML results
+    anomalies: List[Dict[str, Any]]      # Agent 1 (RiskDetection): Semantic outliers
+    retrieved_context: List[Dict[str, Any]] # Agent 2 (LegalRetrieval): RAG results
+    explanations: List[Dict[str, Any]]   # Agent 3 (Reasoning): LLM logic
+    final_report: Dict[str, Any]         # Agent 4 (Report): Structured JSON
 
     # ── META ───────────────────────────────────────────────────────────────
     errors: List[str]                    # Any non-fatal errors collected during pipeline
-    current_step: str                    # Tracks which state is currently active
+    current_step: str                    # Tracks which agent is currently active
+
