@@ -225,6 +225,7 @@ def tab_risk_analysis():
         st.markdown("<div style='border-left:2px solid #34d399; padding-left:16px; color:#34d399; font-family:monospace;'>[SYS_OK] Zero high-risk provisions detected. Document conforms to safety baseline.</div>", unsafe_allow_html=True)
         return
 
+    st.info("[NEXT STEP REQUIRED] Select '► EXPLAIN PROVISION' below to activate the AI Assistant and generate deep reasoning context.")
     st.markdown("<div style='font-size:0.8rem; color:#71717a; text-transform:uppercase; margin-bottom:16px;'>PROVISION BREAKDOWN:</div>", unsafe_allow_html=True)
     for idx, item in enumerate(risks):
         r_level = item.get("risk_level")
