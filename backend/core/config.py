@@ -85,12 +85,11 @@ class Settings(BaseSettings):
     
     @validator("gemini_api_key")
     def validate_api_key(cls, v: Optional[str], values: dict) -> Optional[str]:
-        """Validate that API key is provided for Gemini provider."""
+        """Validate that API key is provided for Gemini provider (optional for development)."""
         llm_provider = values.get("llm_provider", "").lower()
         if llm_provider == "gemini" and not v:
-            raise ValueError(
-                "GEMINI_API_KEY must be set when using Gemini as LLM provider"
-            )
+            import logging
+            logging.warning("GEMINI_API_KEY not set - will use mock LLM for development")
         return v
     
     class Config:

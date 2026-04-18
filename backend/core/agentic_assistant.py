@@ -6,7 +6,7 @@ Uses LLM with multi-step reasoning to generate comprehensive risk reports.
 import logging
 import time
 import json
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 import google.generativeai as genai
 
 # Import models - handle both direct and module imports
@@ -52,17 +52,26 @@ class AgenticAssistant:
         self.rag = rag_system
         self.max_retries = settings.max_retries
         self.timeout = settings.analysis_timeout_seconds
+        self.use_mock = False
         
         # Configure Gemini API
         if settings.llm_provider.lower() == "gemini":
             if not settings.gemini_api_key:
-                raise ValueError("GEMINI_API_KEY not configured")
-            
-            genai.configure(api_key=settings.gemini_api_key)
-            self.model = genai.GenerativeModel(settings.llm_model)
-            logger.info(f"Initialized Gemini model: {settings.llm_model}")
+                logger.warning("GEMINI_API_KEY not configured, using mock LLM")
+                self.use_mock = True
+            else:
+                try:
+                    genai.configure(api_key=settings.gemini_api_key)
+                    logger.info(f"Initialized Gemini with model: {settings.llm_model}")
+                except Exception as e:
+                    logger.warning(f"Failed to initialize Gemini: {e}, using mock LLM")
+                    self.use_mock = True
         else:
             raise ValueError(f"Unsupported LLM provider: {settings.llm_provider}")
+        
+        if self.use_mock:
+            from core.mock_llm import MockLLM
+            self.mock_llm = MockLLM()
     
     def analyze(
         self,
@@ -402,7 +411,7 @@ Provide 2-4 specific, actionable mitigation steps. Format as a numbered list:
         risk_description: str,
         severity: str,
         guidelines_text: str
-    ) -> tuple[str, str]:
+    ) -> Tuple[str, str]:
         """
         Generate plain-language explanation and consequences.
         
@@ -503,24 +512,27 @@ CONSEQUENCES: [your consequences]"""
         Raises:
             AnalysisError: If all retries fail
         """
+        # Use mock LLM if configured
+        if self.use_mock:
+            return self.mock_llm(prompt)
+        
         last_error = None
         
         for attempt in range(self.max_retries):
             try:
                 logger.debug(f"LLM call attempt {attempt + 1}/{self.max_retries}")
                 
-                # Call Gemini API
-                response = self.model.generate_content(
-                    prompt,
-                    generation_config=genai.types.GenerationConfig(
-                        max_output_tokens=settings.llm_max_tokens,
-                        temperature=settings.llm_temperature,
-                    )
+                # Call Gemini API (old version)
+                response = genai.generate_text(
+                    prompt=prompt,
+                    model=settings.llm_model,
+                    temperature=settings.llm_temperature,
+                    max_output_tokens=settings.llm_max_tokens
                 )
                 
                 # Extract text from response
-                if response and response.text:
-                    return response.text
+                if response and response.result:
+                    return response.result
                 else:
                     raise ValueError("Empty response from LLM")
                 

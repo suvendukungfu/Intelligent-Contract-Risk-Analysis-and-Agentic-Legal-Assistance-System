@@ -1,0 +1,3602 @@
+[
+  {
+    "clause_text": "Section 1. The contractor agrees to maintain professional liability insurance of at least $1,000,000. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "This agreement shall be binding upon and inure to the benefit of the parties and their successors.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "1. The contractor agrees to deliver work product by the agreed-upon deadlines. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to unlimited liability for any damages caused during employment. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to a 90-day notice period for resignation.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of proprietary information during the term of the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to provide reasonable notice of any delays.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to attend scheduled meetings and reviews. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to unlimited liability for any damages caused during employment. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to pay liquidated damages of $1,000,000 for any breach, regardless of actual harm.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The parties agree that this document constitutes the entire agreement between them.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to comply with company policies and procedures.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall maintain confidentiality of all company information for 5 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. This agreement may be executed in counterparts, each of which shall be deemed an original. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to provide 2 weeks notice before resignation. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor shall invoice the company monthly for services rendered. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall maintain confidentiality of proprietary information during the term of the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The parties acknowledge that they have read and understood this agreement. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The employee shall receive a salary of $X per year, payable bi-weekly. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to jurisdiction in the company's home state for all disputes. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to automatic renewal unless written notice is provided 60 days in advance. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to communicate any conflicts of interest to the company.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. This agreement may be amended only by written agreement signed by both parties. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to a penalty of 10% of contract value for late delivery.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall maintain confidentiality of all company information for 5 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The contractor agrees to provide monthly progress reports. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee shall be entitled to standard company benefits as described in the employee handbook.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "1. The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to provide reasonable notice of any delays. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to obtain company approval before subcontracting work. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to relocation at the company's discretion with 30 days notice. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 This agreement shall be governed by the laws of the State of California. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to maintain professional liability insurance of at least $1,000,000. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to attend scheduled meetings and reviews. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall invoice the company monthly for services rendered. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The employee agrees to use company equipment for business purposes only. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to exclusive dealing and may not work with any other clients during the term.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall invoice the company monthly for services rendered. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to unlimited liability for any damages caused during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The party agrees to automatic renewal unless written notice is provided 60 days in advance. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 This agreement shall commence on the date first written above. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to binding arbitration for dispute resolution. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to provide reasonable notice of any delays.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to a penalty of 10% of contract value for late delivery.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. This agreement may be executed in counterparts, each of which shall be deemed an original. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall provide services as described in Exhibit A. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 This agreement shall be governed by the laws of the State of California. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to waive all statutory rights and protections under applicable law. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to a penalty of 10% of contract value for late delivery. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to pay attorney's fees and costs if the company prevails in any dispute. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The company shall provide the employee with necessary equipment and resources. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The company shall provide the employee with necessary equipment and resources. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall invoice the company monthly for services rendered. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to comply with company policies and procedures. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. This agreement shall be binding upon and inure to the benefit of the parties and their successors. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee shall receive a salary of $X per year, payable bi-weekly. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The employee agrees to assignment of inventions created during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The party agrees to binding arbitration for dispute resolution. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause for 1 year within a 50-mile radius.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The party agrees that the company may unilaterally modify any terms of this agreement without notice. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to binding arbitration for dispute resolution. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to exclusive dealing and may not work with any other clients during the term. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall maintain confidentiality of proprietary information during the term of the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to a 90-day notice period for resignation.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to pay attorney's fees and costs if the company prevails in any dispute. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to comply with company policies and procedures. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees that the company may unilaterally modify any terms of this agreement without notice.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to comply with company policies and procedures. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The parties agree that this document constitutes the entire agreement between them.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The parties acknowledge that they have read and understood this agreement. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Clause 3. This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. This agreement shall be binding upon and inure to the benefit of the parties and their successors. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "2.1 The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to participate in required training programs. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to unlimited liability for any damages caused during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to cooperate in good faith to resolve any disputes. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The parties agree to communicate primarily via email and phone. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to participate in required training programs. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 This agreement shall be binding upon and inure to the benefit of the parties and their successors. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to maintain professional liability insurance of at least $1,000,000. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to a 90-day notice period for resignation.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "1. The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause for 1 year within a 50-mile radius.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to provide monthly progress reports. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 This agreement shall commence on the date first written above. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to provide reasonable notice of any delays.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to deliver work product by the agreed-upon deadlines. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The party agrees that the company may unilaterally modify any terms of this agreement without notice. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The parties agree to communicate primarily via email and phone.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The party agrees to maintain accurate records of work performed. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to attend scheduled meetings and reviews. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to use reasonable efforts to perform the services described herein. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "This agreement may be amended only by written agreement signed by both parties.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. This agreement shall commence on the date first written above. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 This agreement shall be binding upon and inure to the benefit of the parties and their successors. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees that the company may unilaterally modify any terms of this agreement without notice.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall perform services in a professional and workmanlike manner. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The contractor shall provide services as described in Exhibit A. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The company shall provide the employee with necessary equipment and resources. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee waives all rights to overtime compensation regardless of hours worked.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The parties agree to maintain open and honest communication throughout the term.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement shall be governed by the laws of the State of California. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to attend scheduled meetings and reviews. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "1. The party agrees to communicate any conflicts of interest to the company. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to maintain professional liability insurance of at least $1,000,000. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to maintain accurate records of work performed. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. This agreement shall commence on the date first written above. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "This agreement shall be binding upon and inure to the benefit of the parties and their successors.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to pay liquidated damages of $1,000,000 for any breach, regardless of actual harm.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to a penalty of 10% of contract value for late delivery. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. This agreement shall be binding upon and inure to the benefit of the parties and their successors. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to use company equipment for business purposes only. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to automatic renewal unless written notice is provided 60 days in advance. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "1. The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 This agreement may be amended only by written agreement signed by both parties. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to mandatory arbitration with the company selecting the arbitrator. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to pay attorney's fees and costs if the company prevails in any dispute. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to unlimited personal guarantee for all company obligations. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The party agrees that the company may unilaterally modify any terms of this agreement without notice.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "This agreement shall be binding upon and inure to the benefit of the parties and their successors.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to communicate any conflicts of interest to the company. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The contractor agrees to provide monthly progress reports. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall maintain confidentiality of all company information for 5 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to unlimited personal guarantee for all company obligations. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to provide monthly progress reports. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall invoice the company monthly for services rendered. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The parties agree that this document constitutes the entire agreement between them. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. This agreement may be amended only by written agreement signed by both parties. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to a penalty of 10% of contract value for late delivery.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee shall receive a salary of $X per year, payable bi-weekly. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The party agrees to waive all statutory rights and protections under applicable law. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee waives all rights to overtime compensation regardless of hours worked.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall provide services as described in Exhibit A. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The party agrees to pay attorney's fees and costs if the company prevails in any dispute. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to comply with company policies and procedures.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The employee waives all rights to overtime compensation regardless of hours worked. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to mandatory arbitration with the company selecting the arbitrator. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "1. The employee shall be entitled to standard company benefits as described in the employee handbook. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to relocation at the company's discretion with 30 days notice. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Clause 3. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to obtain company approval before subcontracting work. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 The parties agree to communicate primarily via email and phone. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. This agreement shall commence on the date first written above. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to a penalty of 10% of contract value for late delivery.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to unlimited liability for any damages caused during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to maintain accurate records of work performed. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to maintain accurate records of work performed. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to mandatory arbitration with the company selecting the arbitrator. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement may be amended only by written agreement signed by both parties.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to maintain accurate records of work performed. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall maintain confidentiality of proprietary information during the term of the agreement. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement shall commence on the date first written above. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to use reasonable efforts to perform the services described herein. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The contractor agrees to a penalty of 10% of contract value for late delivery. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to assignment of inventions created during employment. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee shall be entitled to standard company benefits as described in the employee handbook. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to attend scheduled meetings and reviews. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "1. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to work any hours required by the company without additional compensation. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to provide reasonable notice of any delays. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The parties agree to maintain open and honest communication throughout the term. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The parties agree that this document constitutes the entire agreement between them. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The employee shall receive a salary of $X per year, payable bi-weekly. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. The contractor agrees to provide reasonable notice of any delays.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to a non-compete clause for 1 year within a 50-mile radius.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "2.1 The party agrees to automatic renewal with no option to cancel or terminate the agreement. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The contractor shall provide services as described in Exhibit A. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement may be executed in counterparts, each of which shall be deemed an original.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The party agrees to pay attorney's fees and costs if the company prevails in any dispute. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to obtain company approval before subcontracting work. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to use reasonable efforts to perform the services described herein.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The party agrees to maintain accurate records of work performed. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. This agreement may be executed in counterparts, each of which shall be deemed an original. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to return all company property within 7 days of termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to relocation at the company's discretion with 30 days notice. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to a 90-day notice period for resignation. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. This agreement shall be governed by the laws of the State of California. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to work any hours required by the company without additional compensation. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "1. This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The parties agree that this document constitutes the entire agreement between them. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "2.1 The party agrees to cooperate in good faith to resolve any disputes.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "2.1 The parties acknowledge that they have read and understood this agreement. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to provide monthly progress reports.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to cooperate in good faith to resolve any disputes. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to use company equipment for business purposes only. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The party agrees that the company may unilaterally modify any terms of this agreement without notice. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to cooperate in good faith to resolve any disputes.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to unlimited personal guarantee for all company obligations. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to assignment of inventions created during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to comply with all applicable laws and regulations. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall perform services in a professional and workmanlike manner. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The company shall provide the employee with necessary equipment and resources. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to comply with company policies and procedures. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of proprietary information during the term of the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Article 2. The company shall provide the employee with necessary equipment and resources. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to automatic renewal unless written notice is provided 60 days in advance. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The employee agrees to return all company property within 7 days of termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The contractor agrees to deliver work product by the agreed-upon deadlines. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The parties acknowledge that they have read and understood this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The party agrees to unlimited personal guarantee for all company obligations.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee waives all rights to overtime compensation regardless of hours worked. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to work any hours required by the company without additional compensation. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "This agreement may be amended only by written agreement signed by both parties. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to provide 2 weeks notice before resignation. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Section 1. The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to maintain professional liability insurance of at least $1,000,000.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to unlimited liability for any damages caused during employment. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The contractor shall perform services in a professional and workmanlike manner. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to pay liquidated damages of $1,000,000 for any breach, regardless of actual harm. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to obtain company approval before subcontracting work. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to automatic renewal unless written notice is provided 60 days in advance. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall invoice the company monthly for services rendered. The parties acknowledge the importance of this provision.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "2.1 The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to provide 2 weeks notice before resignation.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The parties agree that this document constitutes the entire agreement between them.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The party agrees to comply with all applicable laws and regulations. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to pay attorney's fees and costs if the company prevails in any dispute.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to maintain professional liability insurance of at least $1,000,000.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to unlimited liability for any damages caused during employment.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The contractor agrees to a penalty of 10% of contract value for late delivery. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor shall provide services as described in Exhibit A.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor shall perform services in a professional and workmanlike manner.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Section 1. The employee shall receive a salary of $X per year, payable bi-weekly. This clause is material to the agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to transfer all intellectual property rights, including pre-existing works, to the company.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to a 90-day notice period for resignation. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 This agreement shall commence on the date first written above.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to waive all statutory rights and protections under applicable law.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to provide monthly progress reports. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor agrees to exclusive dealing and may not work with any other clients during the term.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to a right of first refusal for future projects.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to use company equipment for business purposes only.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "employment",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "1. The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to use company equipment for business purposes only. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The company shall provide the employee with necessary equipment and resources.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The contractor shall maintain confidentiality of proprietary information during the term of the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to unlimited liability for any damages caused during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Paragraph 4. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Clause 3. The contractor agrees to indemnify the company for third-party claims arising from the contractor's work. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal unless written notice is provided 60 days in advance.",
+    "risk_label": "medium_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to unlimited liability for any damages caused during employment. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to binding arbitration for dispute resolution.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to unlimited liability for any damages caused during employment. This provision shall survive termination of this agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "1. The contractor shall invoice the company monthly for services rendered. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to cooperate in good faith to resolve any disputes.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "This agreement shall be binding upon and inure to the benefit of the parties and their successors. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The party agrees to comply with all applicable laws and regulations.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "2.1 The employee agrees to relocation at the company's discretion with 30 days notice.",
+    "risk_label": "medium_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "lease",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The parties agree that this document constitutes the entire agreement between them. This provision shall survive termination of this agreement.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to participate in required training programs. This clause is material to the agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to waive all statutory rights and protections under applicable law. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "1. The employee agrees to relocation at the company's discretion with 30 days notice. The parties acknowledge the importance of this provision.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The employee agrees to provide 2 weeks notice before resignation. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to maintain accurate records of work performed.",
+    "risk_label": "low_risk",
+    "contract_type": "employment",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Section 1. The contractor agrees to deliver work product by the agreed-upon deadlines. This provision shall survive termination of this agreement.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee agrees to assignment of inventions created during employment.",
+    "risk_label": "medium_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "2.1 The contractor agrees to a penalty of 10% of contract value for late delivery.",
+    "risk_label": "medium_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The parties agree that this document constitutes the entire agreement between them.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "Paragraph 4. The parties agree to maintain open and honest communication throughout the term.",
+    "risk_label": "no_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The party agrees to automatic renewal with no option to cancel or terminate the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. The employee agrees to work any hours required by the company without additional compensation.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Paragraph 4. The employee waives all rights to overtime compensation regardless of hours worked. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The contractor agrees to deliver work product by the agreed-upon deadlines. The parties acknowledge the importance of this provision.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "The contractor agrees to obtain company approval before subcontracting work.",
+    "risk_label": "low_risk",
+    "contract_type": "license",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "2.1 The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "license",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The employee waives all rights to overtime compensation regardless of hours worked.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The employee agrees to return all company property within 7 days of termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor agrees to deliver work product by the agreed-upon deadlines.",
+    "risk_label": "low_risk",
+    "contract_type": "nda",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "1. The employee agrees to attend scheduled meetings and reviews.",
+    "risk_label": "low_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "Paragraph 4. The party agrees to jurisdiction in the company's home state for all disputes.",
+    "risk_label": "medium_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to unlimited liability for any damages caused during employment. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to indemnify and hold harmless the company from any and all claims, including those arising from the company's own negligence.",
+    "risk_label": "high_risk",
+    "contract_type": "service_agreement",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "The contractor waives all rights to dispute resolution and agrees to binding arbitration without appeal. This clause is material to the agreement.",
+    "risk_label": "high_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee shall receive a salary of $X per year, payable bi-weekly.",
+    "risk_label": "no_risk",
+    "contract_type": "lease",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "1. The employee agrees to mandatory arbitration with the company selecting the arbitrator. The parties acknowledge the importance of this provision.",
+    "risk_label": "high_risk",
+    "contract_type": "lease",
+    "jurisdiction": "Texas"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to participate in required training programs.",
+    "risk_label": "low_risk",
+    "contract_type": "consulting",
+    "jurisdiction": "New York"
+  },
+  {
+    "clause_text": "Clause 3. The employee agrees to a non-compete clause preventing work in the same industry for 10 years after termination.",
+    "risk_label": "high_risk",
+    "contract_type": "nda",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to relocation at the company's discretion with 30 days notice. This clause is material to the agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "India"
+  },
+  {
+    "clause_text": "The contractor shall maintain confidentiality of all company information for 5 years after termination.",
+    "risk_label": "medium_risk",
+    "contract_type": "lease",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The employee agrees to mandatory arbitration with the company selecting the arbitrator.",
+    "risk_label": "high_risk",
+    "contract_type": "employment",
+    "jurisdiction": "California"
+  },
+  {
+    "clause_text": "The contractor shall invoice the company monthly for services rendered.",
+    "risk_label": "no_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "The party agrees to cooperate in good faith to resolve any disputes.",
+    "risk_label": "low_risk",
+    "contract_type": "partnership",
+    "jurisdiction": "Canada"
+  },
+  {
+    "clause_text": "Section 1. The employee agrees to a 90-day notice period for resignation. This provision shall survive termination of this agreement.",
+    "risk_label": "medium_risk",
+    "contract_type": "nda",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Article 2. This agreement shall be governed by the laws of the State of California.",
+    "risk_label": "no_risk",
+    "contract_type": "purchase_agreement",
+    "jurisdiction": "UK"
+  },
+  {
+    "clause_text": "Paragraph 4. The parties agree that this document constitutes the entire agreement between them.",
+    "risk_label": "no_risk",
+    "contract_type": "nda",
+    "jurisdiction": "California"
+  }
+]
