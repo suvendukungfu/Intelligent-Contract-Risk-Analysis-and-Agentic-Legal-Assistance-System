@@ -15,7 +15,7 @@ from retrieval.knowledge_base import LEGAL_KNOWLEDGE_BASE
 try:
     from rank_bm25 import BM25Okapi
     # Initialize BM25 Sparse Index on load
-    _corpus = [entry["text"] for entry in LEGAL_KNOWLEDGE_BASE]
+    _corpus = [entry["content"] for entry in LEGAL_KNOWLEDGE_BASE]
     _tokenized_corpus = [doc.lower().split(" ") for doc in _corpus]
     _bm25 = BM25Okapi(_tokenized_corpus)
     USE_HYBRID = True

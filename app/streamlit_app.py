@@ -171,7 +171,7 @@ def render_onboarding():
     with c1:
         st.markdown("""
         <div class='saas-card' style='text-align:center; height:100%;'>
-            <h3 style='margin-bottom:12px;'>🚨</h3>
+            <h3 style='margin-bottom:12px;'></h3>
             <h4 style='color:#f4f4f5;'>Risk Detection</h4>
             <p style='color:#71717a; font-size:0.9rem;'>Using Machine Learning to instantly identify toxic liability traps and unbalanced clauses.</p>
         </div>
@@ -179,7 +179,7 @@ def render_onboarding():
     with c2:
         st.markdown("""
         <div class='saas-card' style='text-align:center; height:100%;'>
-            <h3 style='margin-bottom:12px;'>🧠</h3>
+            <h3 style='margin-bottom:12px;'></h3>
             <h4 style='color:#f4f4f5;'>AI Legal Reasoning</h4>
             <p style='color:#71717a; font-size:0.9rem;'>Generative AI fused with RAG provides clear, human-readable explanations and mitigation strategy.</p>
         </div>
@@ -187,7 +187,7 @@ def render_onboarding():
     with c3:
         st.markdown("""
         <div class='saas-card' style='text-align:center; height:100%;'>
-            <h3 style='margin-bottom:12px;'>📑</h3>
+            <h3 style='margin-bottom:12px;'></h3>
             <h4 style='color:#f4f4f5;'>Executive Reports</h4>
             <p style='color:#71717a; font-size:0.9rem;'>Export presentation-ready PDF analysis directly to your compliance officers and C-Suite.</p>
         </div>
@@ -197,12 +197,12 @@ def render_onboarding():
     
     c1, c2, c3 = st.columns([1,2,1])
     with c2:
-        with st.expander("📖 How This Works", expanded=True):
+        with st.expander("How This Works", expanded=True):
             st.write("This AI assistant analyzes your contract using machine learning and legal reasoning to detect risks and suggest improvements.")
             st.write("1. Upload a file on the left\n2. The system executes semantic segmentation\n3. The AI highlights any dangerous clauses for you.")
             
         st.markdown("<div style='text-align:center; margin-top:24px;'>", unsafe_allow_html=True)
-        if st.button("🚀 Try Demo Contract", use_container_width=True, type="primary"):
+        if st.button("Try Demo Contract", use_container_width=True, type="primary"):
             st.session_state["demo_to_load"] = "NDA"
             st.session_state["trigger_execution"] = True
             st.rerun()
@@ -214,7 +214,7 @@ def render_onboarding():
 # ══════════════════════════════════════════════════════════════════
 def render_executive_summary(stats, risks):
     score = float(stats.get('risk_index', 0))
-    status = "🔴 High Risk" if score >= 7 else ("🟡 Medium Risk" if score >= 4 else "🟢 Low Risk")
+    status = "High Risk" if score >= 7 else ("Medium Risk" if score >= 4 else "Low Risk")
     
     st.markdown(f"""
     <div class="saas-card" style="border-top: 4px solid {'#f87171' if score>=7 else '#fbbf24' if score>=4 else '#34d399'};">
@@ -286,10 +286,10 @@ def tab_risk_analysis():
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("🧠 Explain Risk", key=f"btn_{idx}", help="Generate deep reasoning context"):
+        if st.button("Explain Risk", key=f"btn_{idx}", help="Generate deep reasoning context"):
             st.session_state["selected_clause_idx"] = idx
             st.session_state["current_step"] = 3
-            st.toast("Opening Explanations...", icon="🤖")
+            st.toast("Opening Explanations...", icon="None")
 
 def tab_ai_assistant():
     if st.session_state["current_step"] < 3:
@@ -301,7 +301,7 @@ def tab_ai_assistant():
     idx = st.session_state.get("selected_clause_idx")
     
     if idx is None or idx >= len(risks):
-        st.info("👈 Please select 'Explain Risk' in the Risk Analysis tab.")
+        st.info("Please select 'Explain Risk' in the Risk Analysis tab.")
         return
 
     item = risks[idx]
@@ -398,7 +398,7 @@ def tab_export():
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("""<div class="saas-card" style="text-align:center;">
-            <h1>📄</h1>
+            <h1></h1>
             <h4 style="color:#f4f4f5; margin-bottom:16px;">Executive Summary Report</h4>
             <p style="color:#71717a; font-size:0.9rem;">Presentation-ready PDF with risk scores and mitigations.</p>
         </div>""", unsafe_allow_html=True)
@@ -407,7 +407,7 @@ def tab_export():
         
     with c2:
         st.markdown("""<div class="saas-card" style="text-align:center;">
-            <h1>🗂️</h1>
+            <h1></h1>
             <h4 style="color:#f4f4f5; margin-bottom:16px;">Raw JSON Data</h4>
             <p style="color:#71717a; font-size:0.9rem;">Raw machine-learning extraction output for developers.</p>
         </div>""", unsafe_allow_html=True)
@@ -424,7 +424,7 @@ def main():
     with st.sidebar:
         st.markdown("""
         <div style="text-align:center; padding-bottom: 24px;">
-            <div style="font-size:3rem; line-height:1;">🏛️</div>
+            <div style="font-size:3rem; line-height:1;"></div>
             <div style="font-size:1.5rem; font-weight:700; color:#f4f4f5;">LexIQ</div>
             <div style="font-size:0.8rem; color:#818cf8; letter-spacing:1px; margin-top:4px;">LEGAL INTELLIGENCE</div>
         </div>
@@ -435,7 +435,7 @@ def main():
         file_b = st.file_uploader("Upload Contract B (Optional Comparison)", type=["pdf", "txt"], key="upload_b")
         
         st.markdown("<br/>", unsafe_allow_html=True)
-        execute = st.button("🚀 Start Risk Analysis", use_container_width=True, type="primary")
+        execute = st.button("Start Risk Analysis", use_container_width=True, type="primary")
         if execute: st.session_state["trigger_execution"] = True
 
     # Handle Pending Executions
@@ -462,7 +462,7 @@ def main():
         render_onboarding()
     else:
         # Full App Nav
-        t1, t2, t3, t4, t5 = st.tabs(["📄 Risk Analysis", "🧠 AI Assistant", "📊 Insights", "📑 Compare", "📥 Export"])
+        t1, t2, t3, t4, t5 = st.tabs(["Risk Analysis", "AI Assistant", "Insights", "Compare", "Export"])
         
         with t1: tab_risk_analysis()
         with t2: tab_ai_assistant()
