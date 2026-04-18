@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import precision_recall_fscore_support, confusion_matrix
 from nlp.preprocessing import preprocess_text, batch_preprocess_texts
 from nlp.feature_engineering import create_tfidf_features
