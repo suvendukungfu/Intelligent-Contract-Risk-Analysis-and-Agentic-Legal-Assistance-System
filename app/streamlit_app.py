@@ -263,9 +263,57 @@ def tab_export():
     st.session_state["current_step"] = 5
     render_stepper()
     state = st.session_state["agent_state_a"]
-    st.markdown("### 📄 Enterprise Report Export")
-    st.json(state.get("final_report", {}))
-    st.button("Download PDF Audit (Enterprise Only)")
+    report = state.get("final_report", {})
+    
+    if not report:
+        st.warning("No report generated. Please analyze a document first.")
+        return
+
+    st.markdown("### 📄 Professional Legal AI Audit")
+    st.markdown("---")
+
+    # 1. Executive Summary
+    exec_sum = report.get("executive_summary", {})
+    st.markdown("#### 1. Executive Summary")
+    c1, c2, c3 = st.columns(3)
+    with c1: st.metric("Overall Risk Score", exec_sum.get("overall_risk_score", "N/A"))
+    with c2: st.metric("Contract Status", exec_sum.get("contract_status", "N/A"))
+    with c3: st.metric("Total Clauses", len(state.get("risks", [])))
+    st.write(exec_sum.get("summary_statement", ""))
+
+    # 3. Key Risk Insights
+    st.markdown("#### 2. Key Risk Insights (Top Critical Findings)")
+    for insight in report.get("key_risk_insights", []):
+        with st.expander(f"📍 {insight['topic']}"):
+            st.write(f"**Primary Concern:** {insight['primary_concern']}")
+            st.markdown(f"*Clause Snippet:* \"{insight['clause_snippet']}\"")
+
+    # 4. Recommendations
+    st.markdown("#### 3. Actionable Recommendations")
+    for rec in report.get("recommendations", []):
+        st.markdown(f"- **{rec['category']}:** {rec['action']}")
+
+    # 5. Explainability
+    st.markdown("#### 4. Agentic Explainability (Deep Dive)")
+    st.write("Cross-referencing ML trigger weights with Agentic RAG grounding.")
+    expl_data = report.get("explainability", [])
+    if expl_data:
+        st.dataframe(pd.DataFrame(expl_data), hide_index=True)
+    else:
+        st.info("No high-risk clauses required deep-dive explanation.")
+
+    st.markdown("---")
+    # 6. Disclaimer
+    st.caption(report.get("disclaimer", ""))
+
+    st.markdown("<br/>", unsafe_allow_html=True)
+    st.download_button(
+        "Download Full Digital Audit (JSON)", 
+        json.dumps(report, indent=2), 
+        file_name="LexIQ_Legal_Audit.json",
+        use_container_width=True
+    )
+
 
 # ══════════════════════════════════════════════════════════════════
 # MAIN APP ENTRY

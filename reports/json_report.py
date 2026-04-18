@@ -1,69 +1,107 @@
 """
 reports/json_report.py
 -----------------------
-Enforces the mandatory JSON schema for the LexIQ Agentic AI pipeline.
+Generates a structured, professional Legal AI Risk Report.
+Aligned with Agentic Pipeline Milestone 4.
 """
 
 import json
 import logging
+from datetime import datetime
 from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
 def build_report(state: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Builds the mandatory structured legal risk report.
+    Builds a professional 6-section legal risk report.
     """
     risks_state   = state.get("risks", [])
-    explanations = state.get("explanations", [])
-    file_name    = state.get("file_name", "Unknown Document")
+    explanations  = state.get("explanations", [])
+    file_name     = state.get("file_name", "Unknown Document")
     
-    # Map explanations for easy lookup
     exp_map = {e["clause_idx"]: e for e in explanations}
     
-    # 1. Mandatory RISKS list
-    structured_risks = []
-    high_labels = []
+    # 1. Executive Summary Logic
+    total_clauses = len(risks_state)
+    high_risks = [r for r in risks_state if r["risk_level"] == "High Risk"]
+    high_count = len(high_risks)
+    
+    risk_score = min(10.0, round((high_count / total_clauses * 15) if total_clauses > 0 else 0, 1))
+    status = "HIGH RISK" if risk_score >= 7.0 else ("MEDIUM RISK" if risk_score >= 4.0 else "LOW RISK")
+    
+    executive_summary = {
+        "document_name": file_name,
+        "analysis_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "overall_risk_score": f"{risk_score}/10",
+        "contract_status": status,
+        "summary_statement": f"Automated analysis identified {high_count} high-risk provisions across {total_clauses} clauses. "
+                             f"The document shows { 'elevated' if high_count > 2 else 'standard' } liability exposure."
+    }
+
+    # 2. Risk Breakdown & 5. Explainability (Integrated)
+    risk_breakdown = []
+    explainability = []
     
     for r in risks_state:
+        idx = r["clause_idx"]
+        exp = exp_map.get(idx, {})
+        
+        entry = {
+            "clause_number": idx + 1,
+            "severity": "CRITICAL" if r.get("is_anomaly") else r["risk_level"].upper(),
+            "clause_text": r["clause"][:300] + "...",
+            "detected_triggers": r.get("triggers", [])
+        }
+        risk_breakdown.append(entry)
+        
         if r["risk_level"] == "High Risk":
-            idx = r["clause_idx"]
-            exp = exp_map.get(idx, {})
-            
-            structured_risks.append({
-                "clause": r["clause"],
-                "severity": "Critical" if r.get("is_anomaly") else "High",
-                "reason": exp.get("explanation", "Potential liability trap detected via ML triggers."),
-                "fix": exp.get("mitigation", "Consult legal counsel for specific phrasing adjustments.")
+            explainability.append({
+                "clause_number": idx + 1,
+                "ml_confidence": f"{r['confidence']*100:.1f}%",
+                "reasoning": exp.get("explanation", "Potential hidden liability detected via semantic triggers."),
+                "mitigation_strategy": exp.get("mitigation", "Seek express clarification on the scope of internal obligations.")
             })
-            
-            # Collect topics for recommendations
-            ref = exp.get("legal_reference", "")
-            if ref and ref != "N/A": high_labels.append(ref.split("—")[0].strip())
 
-    # 2. Summary
-    high_count = len(structured_risks)
-    summary = (
-        f"LexIQ Agentic Analysis of '{file_name}'. "
-        f"The pipeline identified {high_count} critical risks requiring immediate attention. "
-        f"Overall risk posture: {'UNSAFE' if high_count > 3 else 'MODERATE'}."
-    )
+    # 3. Key Risk Insights (Top 5 Dangerous)
+    # Sort high risks by confidence * anomaly_weight
+    scored_highs = []
+    for r in high_risks:
+        score = r["confidence"] * (2.0 if r.get("is_anomaly") else 1.0)
+        scored_highs.append((score, r))
+    
+    scored_highs.sort(key=lambda x: x[0], reverse=True)
+    top_5 = [s[1] for s in scored_highs[:5]]
+    
+    key_insights = []
+    for r in top_5:
+        idx = r["clause_idx"]
+        exp = exp_map.get(idx, {})
+        key_insights.append({
+            "topic": exp.get("legal_reference", "General Liability") if exp.get("legal_reference") != "N/A" else "Contractual Obligation",
+            "clause_snippet": r["clause"][:150] + "...",
+            "primary_concern": exp.get("explanation", "Atypical legal formulation detected.")
+        })
 
-    # 3. Recommendations
+    # 4. Recommendations
     recommendations = []
-    if high_count > 0:
-        recommendations.append("Prioritize renegotiation of 'Critical' severity clauses.")
-        if high_labels:
-            recommendations.append(f"Focus on {', '.join(list(set(high_labels))[:3])} protections.")
-    else:
-        recommendations.append("No critical high-risk clauses detected. Proceed with standard review.")
+    unique_topics = list(set([k["topic"] for k in key_insights]))
+    for topic in unique_topics:
+        recommendations.append({
+            "category": topic,
+            "action": f"Renegotiate {topic} boundaries to include a fixed liability cap and mutual indemnification."
+        })
+    if not recommendations:
+        recommendations.append({"category": "General", "action": "Proceed with standard legal review cycle."})
 
-    # MANDATORY SCHEMA ENFORCEMENT
+    # 6. Final Report Assembly
     report = {
-        "summary": summary,
-        "risks": structured_risks,
+        "executive_summary": executive_summary,
+        "risk_breakdown": risk_breakdown,
+        "key_risk_insights": key_insights,
         "recommendations": recommendations,
-        "disclaimer": "AI-Generated Report. LexIQ analysis is not a substitute for professional legal advice."
+        "explainability": explainability,
+        "disclaimer": "⚠️ AI-Generated Report — Not Legal Advice. LexIQ analysis is for informational purposes only."
     }
 
     return report
