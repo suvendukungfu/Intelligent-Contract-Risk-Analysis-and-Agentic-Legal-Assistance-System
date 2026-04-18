@@ -61,6 +61,9 @@ def build_report(state: Dict[str, Any]) -> Dict[str, Any]:
             "risk_level": result["risk_level"],
             "confidence": f"{result['confidence']*100:.1f}%",
             "linguistic_triggers": result.get("triggers", []),
+            "is_anomaly": result.get("is_anomaly", False),
+            "anomaly_score": result.get("anomaly_score", 0.0),
+            "xai_weights": result.get("xai_weights", {}),
             "explanation": explanation_data.get(
                 "explanation",
                 "Standard clause. No significant risk identified."

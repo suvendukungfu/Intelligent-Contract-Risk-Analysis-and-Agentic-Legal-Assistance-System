@@ -50,36 +50,56 @@ def node_parse_contract(state: ContractState) -> ContractState:
 
 def node_detect_risks(state: ContractState) -> ContractState:
     """
-    Runs each clause through the existing Logistic Regression classifier.
-    Produces risk level, confidence score, and linguistic triggers for each clause.
+    Runs each clause through the existing Logistic Regression classifier,
+    checks for Semantic Anomalies, and extracts XAI Mathematical Weights.
     """
-    state["current_step"] = "STATE_2: ML Risk Detection"
+    state["current_step"] = "STATE_2: ML Risk Detection & Clustering"
     logger.info(f"[Agent] {state['current_step']}")
+
+    try:
+        from models.anomaly_detection import detect_semantic_anomalies
+        anomalies = detect_semantic_anomalies(state["clauses"])
+    except Exception as e:
+        logger.error(f"[Agent] Anomaly inference failed: {e}")
+        anomalies = [{"is_anomaly": False, "anomaly_score": 0.0} for _ in state["clauses"]]
+
+    from models.explainability import generate_xai_importance
 
     ml_results = []
     for idx, clause in enumerate(state["clauses"]):
         try:
             risk_level, confidence, triggers = risk_engine.analyze_clause(clause)
+            
+            # If the unsupervised model flags it as an anomaly, force risk level investigation
+            is_anom = anomalies[idx]["is_anomaly"]
+            if is_anom and risk_level == "Low Risk":
+                risk_level = "High Risk"  # Override safe rating if mathematically anomalous
+                triggers.append("SEMANTIC_ANOMALY")
+                
+            xai_weights = {}
+            if risk_level == "High Risk":
+                xai_weights = generate_xai_importance(clause, (risk_engine.model, risk_engine.vectorizer))
+
             ml_results.append({
                 "clause_idx": idx,
                 "clause": clause,
                 "risk_level": risk_level,
                 "confidence": round(confidence, 4),
-                "triggers": triggers
+                "triggers": triggers,
+                "is_anomaly": is_anom,
+                "anomaly_score": anomalies[idx]["anomaly_score"],
+                "xai_weights": xai_weights
             })
         except Exception as e:
             state["errors"].append(f"STATE_2 Error on clause {idx}: {str(e)}")
             ml_results.append({
-                "clause_idx": idx,
-                "clause": clause,
-                "risk_level": "Unknown",
-                "confidence": 0.0,
-                "triggers": []
+                "clause_idx": idx, "clause": clause, "risk_level": "Unknown",
+                "confidence": 0.0, "triggers": [], "is_anomaly": False, "anomaly_score": 0.0, "xai_weights": {}
             })
 
     state["ml_results"] = ml_results
     high = sum(1 for r in ml_results if r["risk_level"] == "High Risk")
-    logger.info(f"[Agent] {high}/{len(ml_results)} clauses flagged as High Risk.")
+    logger.info(f"[Agent] {high}/{len(ml_results)} flagged as High Risk (Post-Anomaly Check).")
     return state
 
 

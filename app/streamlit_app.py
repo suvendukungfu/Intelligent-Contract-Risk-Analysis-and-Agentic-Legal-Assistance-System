@@ -247,13 +247,32 @@ def tab_risk_analysis():
         if idx is not None and idx < len(risks):
             item = risks[idx]
             
-            conf_float = float(item["confidence"].replace("%", ""))
+            conf_float = float(item.get("confidence", "0").replace("%", ""))
             warning_html = ""
             if conf_float < 75.0:
                 warning_html = "<div style='color:#f59e0b; background:rgba(245,158,11,0.1); padding:8px; border-radius:6px; font-size:0.8rem; margin-bottom:12px;'>⚠️ <b>Low Confidence Warning:</b> The AI is uncertain. Human review strongly advised.</div>"
 
             chips = "".join([f"<span class='kw-chip'>{t}</span>" for t in item.get("linguistic_triggers", [])])
-            
+            if item.get("is_anomaly"):
+                chips += f" <span class='kw-chip' style='background:rgba(217,70,239,0.1);color:#d946ef;border-color:#d946ef'>🧬 SEMANTIC ANOMALY (Score: {item.get('anomaly_score')})</span>"
+
+            # Render Mathematical XAI Weights (Feature Importance)
+            xai_html = ""
+            if item.get("xai_weights"):
+                xai_html = "<h6 style='color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem; margin-top:16px;'>XAI Feature Importance (Logistic Weights)</h6>"
+                for word, weight in item.get("xai_weights").items():
+                    w_pct = min(weight * 100, 100)
+                    xai_html += f"""
+                    <div style="display:flex; align-items:center; margin-bottom:4px;">
+                        <div style="width:100px; color:#94a3b8; font-size:0.8rem; overflow:hidden; text-overflow:ellipsis;">{word}</div>
+                        <div style="flex-grow:1; background:#1f2937; height:8px; border-radius:4px; margin:0 10px;">
+                            <div style="width:{w_pct}%; background:#ef4444; height:100%; border-radius:4px;"></div>
+                        </div>
+                        <div style="font-size:0.75rem; color:#f87171;">+{weight:.2f}</div>
+                    </div>
+                    """
+                xai_html += "<div style='margin-bottom:24px;'></div>"
+
             st.markdown(f"""
             <div class="saas-card" style="margin-bottom:0;">
                 {warning_html}
@@ -265,6 +284,8 @@ def tab_risk_analysis():
                     "{item['clause']}"
                 </div>
                 
+                {xai_html}
+                
                 <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Deep Reasoning</h6>
                 <p style="font-size:0.95rem; color:#cbd5e1; line-height:1.6; margin-bottom:24px;">
                     {item.get('explanation', '')}
@@ -275,7 +296,7 @@ def tab_risk_analysis():
                     {item.get('mitigation', '')}
                 </p>
                 
-                <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">RAG Legal Reference</h6>
+                <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">RAG (BM25+Dense) Reference</h6>
                 <p style="font-size:0.9rem; color:#38bdf8; line-height:1.6; margin-bottom:0;">
                     {item.get('legal_reference', '')}
                 </p>
