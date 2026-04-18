@@ -3,6 +3,7 @@ app/streamlit_app.py
 --------------------
 Enterprise SaaS UI for LexIQ Legal AI.
 Guided workflow: [1 Upload] -> [2 Analyze] -> [3 Risks] -> [4 Monitoring] -> [5 Report]
+Cache-Bust: 12345
 """
 
 import streamlit as st
@@ -14,13 +15,17 @@ import json
 # ── Ensure project root is in path ───────────────────────────────────────────
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
-    sys.path.append(project_root)
+    sys.path.insert(0, project_root)
 
 from agents.workflow import run_agent_pipeline
 from analytics.dashboard import (
-    create_confusion_matrix_heatmap, create_metrics_bar_chart,
-    create_drift_distribution_plot, create_confidence_line_chart,
-    create_risk_pie_chart, create_feature_importance_bar,
+    create_confusion_matrix_heatmap,
+    create_metrics_bar_chart,
+    create_threshold_tuning_chart,
+    create_drift_distribution_plot,
+    create_confidence_line_chart,
+    create_risk_pie_chart,
+    create_feature_importance_bar,
     create_system_health_radar
 )
 
@@ -236,8 +241,12 @@ def tab_risk_analysis():
         if st.checkbox(f"Show Reasoning Analysis", key=f"chk_{idx}"):
             exp_map = {e["clause_idx"]: e for e in state.get("explanations", [])}
             exp = exp_map.get(idx, {})
-            st.info(exp.get("explanation", "No reasoning available for this clause."))
-            st.warning(f"Mitigation: {exp.get('mitigation', 'N/A')}")
+            
+            st.markdown(f"**Summary:** {exp.get('summary', 'N/A')}")
+            st.info(f"**Why Risky:** {exp.get('explanation', 'No justification available.')}")
+            st.warning(f"**Legal Meaning:** {exp.get('legal_implications', 'N/A')}")
+            st.success(f"**Suggested Fix:** {exp.get('mitigation', 'N/A')}")
+
 
 
 def tab_comparison():
@@ -256,11 +265,10 @@ def tab_comparison():
     
     # Run Comparison Engine
     results = compare_contracts(
-        state_a["file_name"], state_a["clauses"], state_a["risks"], float(state_a["final_report"]["executive_summary"]["overall_risk_score"].split("/")[0]),
-        state_b["file_name"], state_b["clauses"], state_b["risks"], float(state_b["final_report"]["executive_summary"]["overall_risk_score"].split("/")[0])
+        state_a["file_name"], state_a["clauses"], state_a["risks"],
+        state_b["file_name"], state_b["clauses"], state_b["risks"]
     )
 
-    
     # ══════════════════════════════════════════════════════════════════
     # VERDICT CARD
     # ══════════════════════════════════════════════════════════════════
@@ -273,9 +281,53 @@ def tab_comparison():
     """, unsafe_allow_html=True)
     
     # ══════════════════════════════════════════════════════════════════
-    # SIDE BY SIDE MATRIX
+    # SIDE BY SIDE SUMMARY
     # ══════════════════════════════════════════════════════════════════
-    st.markdown("#### Clause-Level Delta Matrix")
+    col_a, col_b = st.columns(2)
+    s_a = results["stats_a"]
+    s_b = results["stats_b"]
+    
+    comp_css = "background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; text-align: center; height: 100%;"
+    
+    with col_a:
+        st.markdown(f"""
+        <div style="{comp_css}">
+            <h4 style="color:#818cf8; margin-top:0;">{results['metadata']['name_a']}</h4>
+            <h1 style="font-family:'JetBrains Mono'; margin:10px 0;">{s_a['risk_score']} / 10</h1>
+            <p style="color:#a1a1aa; font-size:0.9rem; text-transform:uppercase;">Overall Risk Score</p>
+            <hr style="border-color:rgba(255,255,255,0.05);">
+            <div style="display:flex; justify-content:space-around;">
+                <div><strong style="font-size:1.2rem;">{s_a['total_clauses']}</strong><br><span style="font-size:0.8rem;color:#71717a">Total Clauses</span></div>
+                <div><strong style="font-size:1.2rem;color:#f87171;">{s_a['high_risk']}</strong><br><span style="font-size:0.8rem;color:#71717a">High Risk</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_b:
+        st.markdown(f"""
+        <div style="{comp_css}">
+            <h4 style="color:#818cf8; margin-top:0;">{results['metadata']['name_b']}</h4>
+            <h1 style="font-family:'JetBrains Mono'; margin:10px 0;">{s_b['risk_score']} / 10</h1>
+            <p style="color:#a1a1aa; font-size:0.9rem; text-transform:uppercase;">Overall Risk Score</p>
+            <hr style="border-color:rgba(255,255,255,0.05);">
+            <div style="display:flex; justify-content:space-around;">
+                <div><strong style="font-size:1.2rem;">{s_b['total_clauses']}</strong><br><span style="font-size:0.8rem;color:#71717a">Total Clauses</span></div>
+                <div><strong style="font-size:1.2rem;color:#f87171;">{s_b['high_risk']}</strong><br><span style="font-size:0.8rem;color:#71717a">High Risk</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # ══════════════════════════════════════════════════════════════════
+    # COMPARISON LOGIC
+    # ══════════════════════════════════════════════════════════════════
+    if results.get("comparison_summary"):
+        st.markdown("#### ⚖️ Actionable Risk Differences")
+        for logic in results["comparison_summary"]:
+            st.info(logic)
+
+    st.markdown("#### 🧩 Clause-Level Delta Matrix")
     
     categories = list(results["coverage_a"].keys())
     for cat in categories:
@@ -285,14 +337,14 @@ def tab_comparison():
         with st.expander(f"📌 {cat}"):
             c1, c2 = st.columns(2)
             with c1:
-                st.markdown(f"**{results['metadata']['a']}**")
+                st.markdown(f"**{results['metadata']['name_a']}**")
                 if ca:
                     st.markdown(f"<span class='badge {'badge-high' if ca['risk']=='High Risk' else 'badge-low'}'>{ca['risk']}</span>", unsafe_allow_html=True)
                     st.caption(ca["text"])
                 else:
                     st.error("Missing Protection")
             with c2:
-                st.markdown(f"**{results['metadata']['b']}**")
+                st.markdown(f"**{results['metadata']['name_b']}**")
                 if cb:
                     st.markdown(f"<span class='badge {'badge-high' if cb['risk']=='High Risk' else 'badge-low'}'>{cb['risk']}</span>", unsafe_allow_html=True)
                     st.caption(cb["text"])
@@ -330,10 +382,7 @@ def tab_analytics():
     else:
         st.success("🟢 **SYSTEM HEALTH**: All agents operating within nominal parameters.")
 
-    # Visuals
-    m1, m2 = st.columns([1, 1.5])
-    with m1: st.plotly_chart(create_metrics_bar_chart(), use_container_width=True)
-    with m2: st.plotly_chart(create_confusion_matrix_heatmap(), use_container_width=True)
+    # Visuals focus strictly on Observability and Systems Health
 
     d1, d2 = st.columns(2)
     with d1: st.plotly_chart(create_drift_distribution_plot(risks), use_container_width=True)
@@ -343,6 +392,57 @@ def tab_analytics():
     with r1: st.plotly_chart(create_risk_pie_chart(risks), use_container_width=True)
     with r2: st.plotly_chart(create_feature_importance_bar(risks), use_container_width=True)
     with r3: st.plotly_chart(create_system_health_radar(explanations, retrieval), use_container_width=True)
+
+def tab_evaluation():
+    """Model Evaluation Dashboard"""
+    st.session_state["current_step"] = 5
+    render_stepper()
+
+    st.markdown("### 📊 ML Model Evaluation")
+    st.markdown("Real-time validation metrics from the test set utilizing proper k-fold cross-validation and threshold optimization.")
+    
+    m1, m2 = st.columns([1, 1.5])
+    with m1: st.plotly_chart(create_metrics_bar_chart(), use_container_width=True)
+    with m2: st.plotly_chart(create_confusion_matrix_heatmap(), use_container_width=True)
+    
+    st.plotly_chart(create_threshold_tuning_chart(), use_container_width=True)
+
+    # --- Error Analysis UI ---
+    st.markdown("### 🔍 Error Analysis")
+    st.markdown("Investigating top anomalies (False Positives and False Negatives) to improve future model calibration.")
+    
+    eval_path = "artifacts/eval_report.json"
+    if os.path.exists(eval_path):
+        with open(eval_path, "r") as f:
+            data = json.load(f)
+            error_analysis = data.get("error_analysis", {})
+            
+            fp = error_analysis.get("false_positives", [])
+            fn = error_analysis.get("false_negatives", [])
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("<div style='background:rgba(245,158,11,0.1); padding:15px; border-left:4px solid #f59e0b; border-radius:8px;'><b>Top False Positives (Model Overly Cautious)</b></div>", unsafe_allow_html=True)
+                if fp:
+                    for item in fp[:3]:
+                        st.markdown(f"**Confidence:** `{item['confidence'] * 100:.1f}%`")
+                        st.caption(f"\"{item['text']}\"")
+                        st.error(f"**Why model failed here:** {item['reason']}")
+                        st.markdown("---")
+                else:
+                    st.success("No significant False Positives detected.")
+            
+            with col2:
+                st.markdown("<div style='background:rgba(239,68,68,0.1); padding:15px; border-left:4px solid #ef4444; border-radius:8px;'><b>Top False Negatives (Critical Misses)</b></div>", unsafe_allow_html=True)
+                if fn:
+                    for item in fn[:3]:
+                        st.markdown(f"**Confidence:** `{item['confidence'] * 100:.1f}%`")
+                        st.caption(f"\"{item['text']}\"")
+                        st.error(f"**Why model failed here:** {item['reason']}")
+                        st.markdown("---")
+                else:
+                    st.success("No significant False Negatives detected.")
 
 def tab_export():
     st.session_state["current_step"] = 5
@@ -364,26 +464,26 @@ def tab_export():
     with c1: st.metric("Overall Risk Score", exec_sum.get("overall_risk_score", "N/A"))
     with c2: st.metric("Contract Status", exec_sum.get("contract_status", "N/A"))
     with c3: st.metric("Total Clauses", len(state.get("risks", [])))
-    st.write(exec_sum.get("summary_statement", ""))
+    st.write(exec_sum.get("summary", ""))
 
-    # 3. Key Risk Insights
-    st.markdown("#### 2. Key Risk Insights (Top Critical Findings)")
-    for insight in report.get("key_risk_insights", []):
-        with st.expander(f"📍 {insight['topic']}"):
-            st.write(f"**Primary Concern:** {insight['primary_concern']}")
-            st.markdown(f"*Clause Snippet:* \"{insight['clause_snippet']}\"")
+    # 2. Risk Breakdown
+    st.markdown("#### 2. Risk Breakdown")
+    breakdown = report.get("risk_breakdown", [])
+    if breakdown:
+        st.dataframe(pd.DataFrame(breakdown), hide_index=True)
+    else:
+        st.success("No distinct risk segments detected.")
 
-    # 4. Recommendations
-    st.markdown("#### 3. Actionable Recommendations")
-    for rec in report.get("recommendations", []):
-        st.markdown(f"- **{rec['category']}:** {rec['action']}")
-
-    # 5. Explainability
-    st.markdown("#### 4. Agentic Explainability (Deep Dive)")
-    st.write("Cross-referencing ML trigger weights with Agentic RAG grounding.")
+    # 3. Explainability
+    st.markdown("#### 3. Agentic Explainability (Deep Dive)")
+    st.write("Cross-referencing ML trigger weights with Agentic RAG grounded extraction.")
     expl_data = report.get("explainability", [])
     if expl_data:
-        st.dataframe(pd.DataFrame(expl_data), hide_index=True)
+        for exp in expl_data:
+            with st.expander(f"📍 Clause {exp['idx']} ({exp['confidence']} Confidence) — {exp['summary']}"):
+                st.error(f"**Why Risky:** {exp['reason']}")
+                st.warning(f"**Legal Meaning:** {exp['meaning']}")
+                st.success(f"**Recommended Fix:** {exp['fix']}")
     else:
         st.info("No high-risk clauses required deep-dive explanation.")
 
@@ -411,7 +511,7 @@ def main():
         # Landing Page
         tab_upload()
     else:
-        tab_list = ["Analyze", "Monitor", "Report"]
+        tab_list = ["Analyze", "Monitor", "Evaluation", "Report"]
         if st.session_state.get("comparison_active"):
             tab_list.insert(1, "Comparison")
             
@@ -422,11 +522,14 @@ def main():
         if st.session_state.get("comparison_active"):
             with tabs[1]: tab_comparison()
             with tabs[2]: tab_analytics()
-            with tabs[3]: tab_export()
+            with tabs[3]: tab_evaluation()
+            with tabs[4]: tab_export()
         else:
             with tabs[1]: tab_analytics()
-            with tabs[2]: tab_export()
+            with tabs[2]: tab_evaluation()
+            with tabs[3]: tab_export()
 
 
 if __name__ == "__main__":
     main()
+

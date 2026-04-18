@@ -14,11 +14,12 @@ def create_tfidf_features(corpus, save=True):
     
     Note: corpus is expected to already be preprocessed (lowercased, lemmatized, etc.)
     """
-    # ngram_range=(1,2) means we look at single words ("risk") 
-    # AND pairs of words ("high risk").
+    # Improved TF-IDF Parameters for maximal high-risk signal capture
     vectorizer = TfidfVectorizer(
-        ngram_range=(1, 2),
-        max_features=5000  # We only take the top 5000 most 'meaningful' words.
+        ngram_range=(1, 3), # Capture unigrams, bigrams, and trigrams (e.g., "hold harmless against")
+        max_features=10000, # Expanded vocabulary
+        min_df=2,           # Filter rare noise words
+        max_df=0.9          # Filter overly common boilerplate
     )
     
     # The 'fit' part creates the dictionary of words.

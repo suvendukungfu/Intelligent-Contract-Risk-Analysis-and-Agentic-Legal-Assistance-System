@@ -60,8 +60,8 @@ _Developed as a high-tier academic submission for intelligent legal-tech researc
 ### Model Specification
 
 - **Vectorization**: TF-IDF (Term Frequency-Inverse Document Frequency)
-  - _N-gram Range_: (1, 2)
-  - _Max Features_: 5,000
+  - _N-gram Range_: (1, 3)
+  - _Max Features_: 10,000
 - **Classifier**: Logistic Regression (Primary) with balanced class weights.
 - **Performance Metrics**:
   - **Precision**: Minimized false positives for risk identification.

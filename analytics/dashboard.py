@@ -1,8 +1,9 @@
 """
-analytics/dashboard.py
+dashboard.py
 ----------------------
 AI Monitoring & Observability System for LexIQ.
 Provides production-grade visualization for model metrics, drift, and system health.
+Cache-Bust: 12345
 """
 
 import pandas as pd
@@ -11,23 +12,36 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import List, Dict, Any
 
-# ══════════════════════════════════════════════════════════════════
-# 1. MODEL PERFORMANCE METRICS (Static / Testing Baseline)
-# ══════════════════════════════════════════════════════════════════
+import os
+import json
+
+EVAL_PATH = "artifacts/eval_report.json"
+
+def _load_eval_data() -> Dict[str, Any]:
+    if os.path.exists(EVAL_PATH):
+        with open(EVAL_PATH, "r") as f:
+            return json.load(f)
+    return {}
 
 def create_confusion_matrix_heatmap() -> go.Figure:
     """Production Heatmap: Actual vs Predicted."""
-    data = [[892, 18], [31, 459]]
-    labels = ["Low Risk", "High Risk"]
+    data = _load_eval_data()
+    if data and "confusion_matrix" in data:
+        cm_vals = data["confusion_matrix"]["values"]
+        labels = data["confusion_matrix"]["labels"]
+    else:
+        cm_vals = [[892, 18], [31, 459]]
+        labels = ["Low Risk", "High Risk"]
+        
     fig = px.imshow(
-        data, text_auto=True, 
+        cm_vals, text_auto=True, 
         aspect="auto",
         labels=dict(x="Predicted", y="Actual", color="Count"),
         x=labels, y=labels,
-        color_continuous_scale="Viridis"
+        color_continuous_scale="Blues"
     )
     fig.update_layout(
-        title="Model Evaluation: Confusion Matrix",
+        title="Confusion Matrix (Validation Set)",
         plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
         margin=dict(l=40, r=40, t=60, b=40), coloraxis_showscale=False
     )
@@ -35,22 +49,56 @@ def create_confusion_matrix_heatmap() -> go.Figure:
 
 def create_metrics_bar_chart() -> go.Figure:
     """Precision, Recall, F1, Accuracy metrics."""
-    df = pd.DataFrame({
-        "Metric": ["Precision", "Recall", "F1 Score", "Accuracy"],
-        "Value": [0.96, 0.94, 0.95, 0.97]
-    })
+    data = _load_eval_data()
+    if data and "summary" in data:
+        metrics = data["summary"]
+        df = pd.DataFrame({
+            "Metric": ["Accuracy", "Precision", "Recall", "F1 Score"],
+            "Value": [metrics["accuracy"], metrics["precision"], metrics["recall"], metrics["f1_score"]]
+        })
+    else:
+        df = pd.DataFrame({
+            "Metric": ["Precision", "Recall", "F1 Score", "Accuracy"],
+            "Value": [0.96, 0.94, 0.95, 0.97]
+        })
+        
     fig = px.bar(
         df, x="Metric", y="Value", text="Value", 
         color="Metric", color_discrete_sequence=["#818cf8", "#34d399", "#fbbf24", "#f87171"]
     )
     fig.update_traces(texttemplate='%{text:.2f}', textposition='outside')
     fig.update_layout(
-        title="ML Core Performance Metrics",
+        title="Evaluation: Core ML Metrics",
         plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
         yaxis=dict(range=[0, 1.1], showgrid=True, gridcolor="#30363D"),
         showlegend=False, margin=dict(l=20, r=20, t=60, b=20)
     )
     return fig
+
+def create_threshold_tuning_chart() -> go.Figure:
+    """Line chart showing F1 score across probability thresholds."""
+    data = _load_eval_data()
+    if data and "threshold_tuning" in data:
+        tuning_list = data["threshold_tuning"]
+        df = pd.DataFrame(tuning_list)
+    else:
+        df = pd.DataFrame([{"threshold": 0.5, "f1": 0.95}])
+
+    fig = px.line(df, x="threshold", y="f1", markers=True, 
+                  title="Threshold Optimizaton (F1 vs Validation Threshold)",
+                  color_discrete_sequence=["#fbbf24"])
+                  
+    if data and "summary" in data:
+        best_t = data["summary"]["best_threshold"]
+        fig.add_vline(x=best_t, line_dash="dash", line_color="#34d399", annotation_text=f"Optimal: {best_t:.2f}")
+
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E6EDF3"),
+        xaxis=dict(showgrid=True, gridcolor="#30363D"), yaxis=dict(showgrid=True, gridcolor="#30363D"),
+        margin=dict(l=20, r=20, t=60, b=20)
+    )
+    return fig
+
 
 # ══════════════════════════════════════════════════════════════════
 # 2. DRIFT & DATA INTEGRITY

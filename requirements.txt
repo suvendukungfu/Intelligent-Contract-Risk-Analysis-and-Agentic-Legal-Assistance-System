@@ -2,7 +2,8 @@
 streamlit==1.42.0
 pandas==2.2.0
 numpy==1.26.4
-scikit-learn==1.4.1
+scikit-learn>=1.6.1
+tf-keras
 plotly==5.19.0
 langgraph==0.0.30
 langchain==0.1.0
