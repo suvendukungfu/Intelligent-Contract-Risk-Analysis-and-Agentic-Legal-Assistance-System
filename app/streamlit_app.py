@@ -1,7 +1,7 @@
 """
-app/streamlit_app.py  —  Milestone 5: Professional UI/UX SaaS Platform
+app/streamlit_app.py  —  Milestone 6: B2B Enterprise UI Override
 ======================================================================
-Enterprise-grade Legal AI Platform.
+Minimalist, high-end, zero-emoji SaaS Legal AI Platform.
 """
 
 import os
@@ -31,39 +31,45 @@ logger = logging.getLogger(__name__)
 # PAGE SETTINGS & GLOBAL CSS
 # ══════════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="LexIQ Enterprise AI", page_icon="⚖️", layout="wide", initial_sidebar_state="expanded"
+    page_title="LEXIQ | ENTERPRISE", layout="wide", initial_sidebar_state="expanded"
 )
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+    
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     
-    .stApp { background-color: #0b0f19; color: #e2e8f0; }
-    [data-testid="stSidebar"] { background-color: #111827; border-right: 1px solid #1f2937; }
+    /* OLED Slate Theme */
+    .stApp { background-color: #09090b; color: #a1a1aa; }
+    [data-testid="stSidebar"] { background-color: #000000; border-right: 1px solid #18181b; }
     
-    .stTabs [data-baseweb="tab-list"] { background: #111827; border-radius: 12px; padding: 6px; box-shadow: inset 0px 2px 4px rgba(0,0,0,0.2); }
-    .stTabs [data-baseweb="tab"] { border-radius: 8px; color: #94a3b8; font-weight: 600; }
-    .stTabs [aria-selected="true"] { background: #1e293b !important; color: #38bdf8 !important; border-bottom: 2px solid #38bdf8 !important; }
+    /* Strict Tab Styling */
+    .stTabs [data-baseweb="tab-list"] { background: transparent; border-bottom: 1px solid #27272a; padding: 0; gap: 32px; }
+    .stTabs [data-baseweb="tab"] { color: #52525b; font-weight: 500; padding: 12px 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; border: none !important; background: transparent !important; }
+    .stTabs [aria-selected="true"] { color: #f4f4f5 !important; border-bottom: 2px solid #f4f4f5 !important; }
     
+    /* Hard-edged Cards */
     .saas-card {
-        background: #1e293b; border-radius: 16px; padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3);
-        border: 1px solid #334155; margin-bottom: 24px; transition: transform 0.2s;
+        background: #09090b; border-radius: 0px; padding: 24px;
+        border: 1px solid #27272a; margin-bottom: 24px;
     }
     
-    .metric-title { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
-    .metric-value { font-size: 2.5rem; color: #f8fafc; font-weight: 700; line-height: 1; }
-    .metric-value.critical { color: #ef4444; }
-    .metric-value.warning { color: #f59e0b; }
-    .metric-value.safe { color: #10b981; }
+    /* Metrics */
+    .metric-title { font-size: 0.75rem; color: #71717a; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+    .metric-value { font-size: 2.25rem; color: #f4f4f5; font-weight: 400; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -1px; }
+    .metric-value.critical { color: #f87171; }
+    .metric-value.warning { color: #fbbf24; }
+    .metric-value.safe { color: #34d399; }
     
-    .badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
-    .badge-high { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-    .badge-low { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
-    .kw-chip { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; margin: 2px; display: inline-block; }
+    /* Badges (Outline Only) */
+    .badge { padding: 4px 10px; border-radius: 2px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; font-family: 'JetBrains Mono', monospace; }
+    .badge-high { color: #f87171; border: 1px solid #f87171; }
+    .badge-low { color: #34d399; border: 1px solid #34d399; }
+    .kw-chip { color: #a1a1aa; border: 1px solid #3f3f46; padding: 3px 8px; border-radius: 0px; font-size: 0.65rem; margin: 2px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
     
-    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background: #0b0f19; color: #64748b; font-size: 0.8rem; border-top: 1px solid #1e293b; z-index: 1000;}
+    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 12px; background: #000000; color: #52525b; font-size: 0.75rem; letter-spacing: 0.5px; border-top: 1px solid #18181b; z-index: 1000;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -87,27 +93,27 @@ def get_text_from_file(file) -> str:
             import pdfplumber
             with pdfplumber.open(file) as pdf:
                 text = "\n".join([p.extract_text() for p in pdf.pages if p.extract_text()])
-                if not text: raise ValueError("PDF contains no readable text.")
+                if not text: raise ValueError("PDF payload empty.")
                 return text
         except Exception as e:
-            st.error(f"Please upload a valid PDF or TXT contract. (Error: {e})")
+            st.error(f"[ERR_FILE_PARSE] Critical failure reading PDF. Exception: {e}")
             return ""
     elif file.name.endswith(".txt"):
         return file.getvalue().decode("utf-8", errors="ignore")
     else:
-        st.error("Invalid file format. Please upload a valid PDF or TXT contract.")
+        st.error("[ERR_TYPE_MISMATCH] Strict validation: Only PDF/TXT permitted.")
         return ""
 
 def load_demo_contract(variant="NDA"):
     path = os.path.join(ROOT, "sample_docs", f"sample_{variant.lower()}.txt")
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
-            return f.read(), f"LexIQ_Demo_{variant}.txt"
+            return f.read(), f"LEXIQ_BENCHMARK_{variant}.txt"
     return "", ""
 
 def process_document(raw_text: str, filename: str, doc_key: str):
     if not raw_text.strip(): return
-    with st.spinner(f"Analyzing {filename}... Parse → Identify → RAG → LLM Reasoning"):
+    with st.spinner(f"PROCESSING // {filename} // NLP MAP → INFERENCE → RAG"):
         state = run_agent_pipeline(raw_text, file_name=filename)
         st.session_state[f"agent_state_{doc_key}"] = state
         st.session_state[f"file_name_{doc_key}"] = filename
@@ -117,26 +123,44 @@ def process_document(raw_text: str, filename: str, doc_key: str):
 # ONBOARDING / EMPTY STATE
 # ══════════════════════════════════════════════════════════════════
 def render_onboarding():
-    st.markdown("<h1 style='text-align:center; margin-bottom: 24px;'>Welcome to your AI Legal Assistant</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center; color:#f4f4f5; font-weight:300; letter-spacing: -1px; margin-bottom: 8px;'>LEXIQ AI ASSISTANT</h1>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align:center; color:#71717a; font-weight:400; margin-bottom:48px; letter-spacing: 0.5px;'>CONTRACT RISK ANALYSIS PLATFORM</h4>", unsafe_allow_html=True)
     
-    with st.expander("📖 How to Use This AI Legal Assistant", expanded=True):
-        st.markdown("""
-        **Welcome to the fastest way to review legal documents.**
-        1. 📤 **Upload** a contract (PDF or TXT) in the sidebar.
-        2. 🚨 **View** clause-level risk analysis identifying predatory traps.
-        3. 🧠 **Click** "Explain This Clause" for detailed AI reasoning and mitigation strategies.
-        4. 📊 **Review** executive-level dashboard analytics.
-        5. 📥 **Download** the generated PDF report.
-        """)
+    with st.expander("[ INSTRUCTION PROTOCOL ]", expanded=True):
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("""
+            **SYSTEM CAPABILITIES:**
+            * [x] Detect adversarial provisions
+            * [x] Synthesize legal context
+            * [x] Formulate strategic mitigation
+            * [x] Generate compliance artifacts
+            
+            **EXECUTION WORKFLOW:**
+            1. Mount document payload (Sidebar)
+            2. Review Risk Analysis matrix
+            3. Execute 'EXPLAIN' for high-confidence anomalies
+            4. Review AI mitigation heuristics
+            5. Export final artifact
+            """)
+        with colB:
+            st.markdown("""
+            **TECHNICAL ARCHITECTURE:**
+            * **NLP Core:** spaCy Structural Parser
+            * **Inference:** TF-IDF + Logistic Regressor
+            * **Orchestration:** LangGraph Agents
+            * **RAG Engine:** ChromaDB Vector Store
+            * **LLM Engine:** Generative Synthesizer
+            """)
         
     st.markdown("<br/>", unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns([1,2,1])
+    c1, c2, c3 = st.columns([1.5,2,1.5])
     with c2:
         st.markdown("<div class='saas-card' style='text-align:center;'>", unsafe_allow_html=True)
-        st.markdown("### First time here?")
-        st.markdown("Experience the full power of agentic legal review instantly.")
-        if st.button("🚀 Try Demo Contract (NDA)", use_container_width=True, help="Loads a pre-configured sample contract to demonstrate capabilities."):
+        st.markdown("<h3 style='color:#f4f4f5; font-weight:400; margin-bottom:8px;'>SYSTEM INITIALIZATION</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='color:#71717a; font-size:0.9rem; margin-bottom:24px;'>Awaiting payload or select benchmark benchmark below.</p>", unsafe_allow_html=True)
+        if st.button("► EXECUTE BENCHMARK (NDA)", use_container_width=True, help="Load pre-configured test dataset"):
             st.session_state["demo_to_load"] = "NDA"
             st.session_state["trigger_execution"] = True
             st.rerun()
@@ -149,43 +173,43 @@ def render_onboarding():
 def render_kpi_bar(stats):
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        st.markdown(f"""<div class="saas-card" style="padding:16px;" title="Indicates overall contract risk level out of 10">
-            <div class="metric-title">Risk Score</div>
+        st.markdown(f"""<div class="saas-card" title="Calculated system-wide severity coefficient">
+            <div class="metric-title">RISK QUOTIENT</div>
             <div class="metric-value { 'critical' if stats.get('risk_index',0) >= 7 else 'safe'}">{stats.get('risk_index', '0.0')}</div>
         </div>""", unsafe_allow_html=True)
     with c2:
-        st.markdown(f"""<div class="saas-card" style="padding:16px;" title="Total number of critical clauses needing human review">
-            <div class="metric-title">High Risk Count</div>
+        st.markdown(f"""<div class="saas-card" title="Count of provisions exceeding safety thresholds">
+            <div class="metric-title">CRITICAL FLAGS</div>
             <div class="metric-value critical">{stats.get('high_risk_clauses', 0)}</div>
         </div>""", unsafe_allow_html=True)
     with c3:
-        st.markdown(f"""<div class="saas-card" style="padding:16px;" title="Total number of discrete provisions segmented">
-            <div class="metric-title">Total Clauses</div>
+        st.markdown(f"""<div class="saas-card" title="Total segmented elements analyzed">
+            <div class="metric-title">CLAUSES PARSED</div>
             <div class="metric-value">{stats.get('total_clauses', 0)}</div>
         </div>""", unsafe_allow_html=True)
     with c4:
-        st.markdown(f"""<div class="saas-card" style="padding:16px;" title="Model certainty level">
-            <div class="metric-title">Avg Confidence</div>
-            <div class="metric-value" style="color:#38bdf8;">{stats.get('avg_confidence', '0%')}</div>
+        st.markdown(f"""<div class="saas-card" title="Algorithm predictive certainty avg">
+            <div class="metric-title">MODEL CERTAINTY</div>
+            <div class="metric-value" style="color:#71717a;">{stats.get('avg_confidence', '0%')}</div>
         </div>""", unsafe_allow_html=True)
 
 
 def render_xai_block(item):
     xai_html = ""
     if item.get("xai_weights"):
-        xai_html = "<h6 style='color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem; margin-top:16px;'>Mathematical Feature Importance</h6>"
+        xai_html = "<h6 style='color:#a1a1aa; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem; margin-top:24px; margin-bottom:12px;'>[ XAI FEATURE IMPORTANCE ]</h6>"
         for word, weight in item.get("xai_weights").items():
             w_pct = min(weight * 100, 100)
             xai_html += f"""
-            <div style="display:flex; align-items:center; margin-bottom:4px;" title="The presence of '{word}' drove risk probability up by {weight:.2f}">
-                <div style="width:100px; color:#94a3b8; font-size:0.8rem; overflow:hidden; text-overflow:ellipsis;">{word}</div>
-                <div style="flex-grow:1; background:#1f2937; height:8px; border-radius:4px; margin:0 10px;">
-                    <div style="width:{w_pct}%; background:#ef4444; height:100%; border-radius:4px;"></div>
+            <div style="display:flex; align-items:center; margin-bottom:8px;" title="Token '{word}' regression coefficient: +{weight:.2f}">
+                <div style="width:120px; color:#71717a; font-size:0.75rem; font-family:'JetBrains Mono', monospace;">[ {word.upper()} ]</div>
+                <div style="flex-grow:1; background:#18181b; height:2px; margin:0 12px; position:relative;">
+                    <div style="width:{w_pct}%; background:#f87171; height:100%; position:absolute; left:0;"></div>
                 </div>
-                <div style="font-size:0.75rem; color:#f87171;">+{weight:.2f}</div>
+                <div style="font-size:0.75rem; color:#f87171; font-family:'JetBrains Mono', monospace;">+{weight:.2f}</div>
             </div>
             """
-        xai_html += "<div style='margin-bottom:24px;'></div>"
+        xai_html += "<div style='margin-bottom:32px;'></div>"
     return xai_html
 
 
@@ -194,45 +218,44 @@ def tab_risk_analysis():
     stats = state["final_report"]["statistics"]
     risks = state["final_report"]["identified_risks"]
 
-    st.markdown("### 📄 Clause-Level Risk Analysis")
+    st.markdown("<h3 style='font-weight:400; color:#f4f4f5; letter-spacing:-0.5px;'>RISK ANALYSIS MATRIX</h3>", unsafe_allow_html=True)
     render_kpi_bar(stats)
 
     if not risks:
-        st.success("No high-risk clauses found. This contract appears mathematically safe based on the trained model parameters.")
+        st.markdown("<div style='border-left:2px solid #34d399; padding-left:16px; color:#34d399; font-family:monospace;'>[SYS_OK] Zero high-risk provisions detected. Document conforms to safety baseline.</div>", unsafe_allow_html=True)
         return
 
-    st.markdown("Select a clause below to view detailed breakdown.")
+    st.markdown("<div style='font-size:0.8rem; color:#71717a; text-transform:uppercase; margin-bottom:16px;'>PROVISION BREAKDOWN:</div>", unsafe_allow_html=True)
     for idx, item in enumerate(risks):
         r_level = item.get("risk_level")
         chips = "".join([f"<span class='kw-chip'>{t}</span>" for t in item.get("linguistic_triggers", [])])
         if item.get("is_anomaly"):
-            chips += f" <span class='kw-chip' style='background:rgba(217,70,239,0.1);color:#d946ef;border-color:#d946ef'>🧬 ANOMALY</span>"
+            chips += f" <span class='kw-chip' style='color:#c084fc; border-color:#c084fc;'>[ ANOMALY SCORE: {item.get('anomaly_score')} ]</span>"
             
         st.markdown(f"""
-        <div style="background:#1e293b; padding:16px; border-radius:8px; border-left:4px solid {'#ef4444' if r_level=='High Risk' else '#10b981'}; margin-bottom:8px;">
-            <div style="margin-bottom:8px;">
+        <div style="background:#000000; padding:20px; border:1px solid #27272a; margin-bottom:12px;">
+            <div style="margin-bottom:12px; display:flex; align-items:center;">
                 <span class="badge {'badge-high' if r_level == 'High Risk' else 'badge-low'}">{r_level}</span>
-                <span style="font-size:0.8rem; color:#94a3b8; margin-left:8px;">Confidence: {item['confidence']}</span>
-                {chips}
+                <span style="font-size:0.75rem; color:#52525b; margin-left:16px; font-family:monospace;">CONFIDENCE: {item['confidence']}</span>
+                <div style="margin-left:auto;">{chips}</div>
             </div>
-            <div style="font-style:italic; font-size:0.9rem; color:#cbd5e1; margin-bottom: 12px;">"{item['clause'][:150]}..."</div>
+            <div style="font-size:0.85rem; color:#a1a1aa; line-height:1.6;">{item['clause'][:200]}...</div>
         </div>
         """, unsafe_allow_html=True)
         
-        # UI Button to jump to specific clause explanation
-        if st.button("🧠 Explain This Clause", key=f"btn_{idx}", help="Get Deep AI reasoning and mitigation for this specific clause"):
+        if st.button("► EXPLAIN PROVISION", key=f"btn_{idx}", help="Extract deep AI reasoning logic"):
             st.session_state["selected_clause_idx"] = idx
-            st.toast("To view the deep explanation, switch to the '🧠 AI Legal Assistant' tab.")
+            st.toast("Accessing reasoning engine -> See AI ASSISTANT tab.", icon="●")
 
 def tab_ai_assistant():
     state = st.session_state["agent_state_a"]
     risks = state["final_report"]["identified_risks"]
     idx = st.session_state.get("selected_clause_idx")
 
-    st.markdown("### 🧠 AI Legal Reasoning Engine")
+    st.markdown("<h3 style='font-weight:400; color:#f4f4f5; letter-spacing:-0.5px;'>AI REASONING ENGINE</h3>", unsafe_allow_html=True)
     
     if idx is None or idx >= len(risks):
-        st.info("👈 Please select 'Explain This Clause' from the Risk Analysis tab to view the breakdown here.")
+        st.info("[AWAITING INPUT] Select '► EXPLAIN PROVISION' in Risk Analysis to mount data.")
         return
 
     item = risks[idx]
@@ -240,32 +263,32 @@ def tab_ai_assistant():
     
     warning_html = ""
     if conf_float < 75.0:
-        warning_html = "<div style='color:#f59e0b; background:rgba(245,158,11,0.1); padding:12px; border-radius:6px; font-size:0.85rem; margin-bottom:16px;'>⚠️ <b>Low Confidence Warning:</b> The AI is uncertain. Human review strongly advised.</div>"
+        warning_html = "<div style='color:#fbbf24; border-left:2px solid #fbbf24; padding-left:12px; font-size:0.8rem; margin-bottom:24px; font-family:monospace;'>[WARNING] Low prediction confidence mapped. Review mandatory.</div>"
 
     xai_html = render_xai_block(item)
 
     st.markdown(f"""
     <div class="saas-card" style="margin-bottom:0;">
         {warning_html}
-        <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Full Target Clause</h6>
-        <div style="background:#0b0f19; padding:16px; border-radius:8px; font-style:italic; font-size:0.9rem; color:#94a3b8; margin-bottom: 24px; max-height:200px; overflow-y:auto;">
-            "{item['clause']}"
+        <h6 style="color:#71717a; font-family:'JetBrains Mono', monospace; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.7rem; margin-bottom:8px;">[ TARGET PAYLOAD ]</h6>
+        <div style="background:#000000; padding:16px; border:1px solid #18181b; font-size:0.85rem; color:#a1a1aa; margin-bottom: 32px; max-height:200px; overflow-y:auto;">
+            {item['clause']}
         </div>
         
         {xai_html}
         
-        <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Deep Reasoning</h6>
-        <p style="font-size:0.95rem; color:#cbd5e1; line-height:1.6; margin-bottom:24px; background:#1e293b; padding:16px; border-radius:8px;">
+        <h6 style="color:#71717a; font-family:'JetBrains Mono', monospace; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.7rem; margin-bottom:8px;">[ REASONING VECTOR ]</h6>
+        <p style="font-size:0.9rem; color:#e4e4e7; line-height:1.6; margin-bottom:32px; border-left:1px solid #3f3f46; padding-left:16px;">
             {item.get('explanation', '')}
         </p>
         
-        <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">Strategic Mitigation</h6>
-        <p style="font-size:0.95rem; color:#10b981; line-height:1.6; background:rgba(16,185,129,0.05); padding:16px; border-radius:8px; margin-bottom:24px;">
+        <h6 style="color:#71717a; font-family:'JetBrains Mono', monospace; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.7rem; margin-bottom:8px;">[ STRATEGIC MITIGATION ]</h6>
+        <p style="font-size:0.9rem; color:#34d399; line-height:1.6; border-left:1px solid #34d399; padding-left:16px; margin-bottom:32px;">
             {item.get('mitigation', '')}
         </p>
         
-        <h6 style="color:#e2e8f0; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.75rem;">RAG Reference Case Law / Knowledge</h6>
-        <p style="font-size:0.9rem; color:#38bdf8; line-height:1.6; background:rgba(56,189,248,0.05); padding:16px; border-radius:8px; margin-bottom:0;">
+        <h6 style="color:#71717a; font-family:'JetBrains Mono', monospace; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.7rem; margin-bottom:8px;">[ RAG SOURCE KNOWLEDGE ]</h6>
+        <p style="font-size:0.85rem; color:#38bdf8; line-height:1.6; border-left:1px solid #38bdf8; padding-left:16px; margin-bottom:0;">
             {item.get('legal_reference', '')}
         </p>
     </div>
@@ -274,8 +297,7 @@ def tab_ai_assistant():
 
 def tab_analytics():
     state = st.session_state["agent_state_a"]
-    st.markdown("### 📊 Enterprise Analytics")
-    st.markdown("Monitor risk trends and model confidence distributions across the parsed document.")
+    st.markdown("<h3 style='font-weight:400; color:#f4f4f5; letter-spacing:-0.5px;'>TELEMETRY DASHBOARD</h3>", unsafe_allow_html=True)
     
     results = state.get("ml_results", [])
     if not results: return
@@ -287,14 +309,13 @@ def tab_analytics():
 
 
 def tab_compare():
-    st.markdown("### 📑 Multi-Contract Compare")
-    st.markdown("Compute the semantic delta between the primary document and a benchmark template.")
+    st.markdown("<h3 style='font-weight:400; color:#f4f4f5; letter-spacing:-0.5px;'>DELTA SEQUENCE: COMPARISON</h3>", unsafe_allow_html=True)
     
     state_a = st.session_state.get("agent_state_a")
     state_b = st.session_state.get("agent_state_b")
 
     if not state_a or not state_b:
-        st.info("Upload and execute Document A and Document B in the sidebar to activate.")
+        st.info("[AWAITING CONTEXT] Establish Doc A and Doc B payload to run comparison.")
         return
 
     try:
@@ -306,52 +327,55 @@ def tab_compare():
         )
         
         col1, col2, col3 = st.columns(3)
-        col1.metric("Doc A Risk Score", score_a, help="Risk Index for the primary document")
-        col2.metric("Doc B Risk Score", score_b, help="Risk Index for the baseline document")
-        col3.metric("Semantic Alignment", comp["semantic_alignment"], help="Structural and semantic similarity percentage")
+        col1.metric("NODE A RISK", score_a)
+        col2.metric("NODE B RISK", score_b)
+        col3.metric("STRUCTURAL ALIGNMENT", comp["semantic_alignment"])
 
         st.markdown(f"""
-        <div class="saas-card" style="margin-top:24px;">
-            <h5 style="color:#e2e8f0; margin-bottom:16px;">Executive Delta Summary</h5>
-            <p style="font-size:1.05rem; line-height:1.6; color:#94a3b8;">{comp['summary']}</p>
+        <div class="saas-card" style="margin-top:32px;">
+            <h6 style="color:#71717a; font-family:'JetBrains Mono', monospace; font-weight:600; text-transform:uppercase; margin-bottom:16px;">[ ALIGNMENT SUMMARY ]</h6>
+            <p style="font-size:0.95rem; line-height:1.6; color:#a1a1aa;">{comp['summary']}</p>
         </div>
         """, unsafe_allow_html=True)
 
         colA, colB = st.columns(2)
         with colA:
-            st.markdown("##### Missing Protections in Doc A")
+            st.markdown("<h6 style='color:#71717a; font-family:monospace; margin-bottom:16px;'>[ MISSING IN DOC A ]</h6>", unsafe_allow_html=True)
             if comp["missing_in_a"]:
-                for m in comp["missing_in_a"]: st.error(f"❌ {m}")
-            else: st.success("No discrepancies detected.")
+                for m in comp["missing_in_a"]: st.error(f"● {m}")
+            else: st.success("● Null discrepancies.")
         with colB:
-            st.markdown("##### Missing Protections in Doc B")
+            st.markdown("<h6 style='color:#71717a; font-family:monospace; margin-bottom:16px;'>[ MISSING IN DOC B ]</h6>", unsafe_allow_html=True)
             if comp["missing_in_b"]:
-                for m in comp["missing_in_b"]: st.error(f"❌ {m}")
-            else: st.success("No discrepancies detected.")
+                for m in comp["missing_in_b"]: st.error(f"● {m}")
+            else: st.success("● Null discrepancies.")
 
     except Exception as e:
-        st.error(f"Comparison computation failed: {e}")
+        st.error(f"[ERR_COMPARISON] Fault: {e}")
 
 
 def tab_export():
     state = st.session_state["agent_state_a"]
-    st.markdown("### 📥 Download Reports")
-    st.markdown("Generate presentation-ready security audits and programmatic artifacts.")
+    st.markdown("<h3 style='font-weight:400; color:#f4f4f5; letter-spacing:-0.5px;'>ARTIFACT EXTRACTION</h3>", unsafe_allow_html=True)
     
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("""<div class="saas-card" style="text-align:center;">
-            <h1>📄</h1><h3>C-Suite PDF Report</h3>
+            <div style="font-family:'JetBrains Mono', monospace; font-size:1.5rem; margin-bottom:16px; color:#f4f4f5;">[ PDF ]</div>
+            <h4 style="color:#a1a1aa; font-weight:400; margin-bottom:24px;">EXEC_SUMMARY.PDF</h4>
+            <div style="border-top:1px solid #27272a; padding-top:16px; margin-bottom:16px; font-size:0.8rem; color:#71717a;">High-fidelity vector graphic report tailored for executive review.</div>
         </div>""", unsafe_allow_html=True)
         pdf_bytes = generate_pdf_report(state.get("final_report", {}))
-        st.download_button("📥 Download PDF", pdf_bytes, file_name="LexIQ_Premium_Report.pdf", use_container_width=True, help="Download securely formatted PDF report for executives")
+        st.download_button("[ DOWNLOAD INSTANCE ]", pdf_bytes, file_name="LexIQ_Audit.pdf", use_container_width=True, help="Extract PDF block")
         
     with c2:
         st.markdown("""<div class="saas-card" style="text-align:center;">
-            <h1>🗂️</h1><h3>JSON Data Artifact</h3>
+            <div style="font-family:'JetBrains Mono', monospace; font-size:1.5rem; margin-bottom:16px; color:#f4f4f5;">[ JSON ]</div>
+            <h4 style="color:#a1a1aa; font-weight:400; margin-bottom:24px;">PAYLOAD.JSON</h4>
+            <div style="border-top:1px solid #27272a; padding-top:16px; margin-bottom:16px; font-size:0.8rem; color:#71717a;">Raw, structured machine learning data arrays for API or internal DB ingress.</div>
         </div>""", unsafe_allow_html=True)
         json_b = report_to_json_string(state.get("final_report", {})).encode("utf-8")
-        st.download_button("📥 Download JSON", json_b, file_name="LexIQ_Report.json", use_container_width=True, help="Raw AI structured output for API integration via JSON")
+        st.download_button("[ DOWNLOAD INSTANCE ]", json_b, file_name="LexIQ_Data.json", use_container_width=True, help="Extract JSON block")
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -362,26 +386,27 @@ def main():
     
     with st.sidebar:
         st.markdown("""
-        <div style="text-align:center; padding-bottom: 12px;">
-            <div style="font-size:2.5rem; line-height:1;">⚖️</div>
-            <div style="font-size:1.5rem; font-weight:800; color:#f8fafc;">LexIQ SaaS</div>
+        <div style="padding-bottom: 32px; border-bottom: 1px solid #18181b; margin-bottom:24px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size:1.2rem; font-weight:500; color:#f4f4f5; letter-spacing: 2px;">LEXIQ.SYS</div>
+            <div style="font-size:0.6rem; color:#71717a; letter-spacing: 1px;">ENTERPRISE COMPLIANCE V4.0</div>
         </div>
         """, unsafe_allow_html=True)
         
-        file_a = st.file_uploader("Primary Contract", type=["pdf", "txt"], key="upload_a", help="Upload your contract here (TXT or PDF max 5MB).")
-        file_b = st.file_uploader("Baseline Reference (Optional)", type=["pdf", "txt"], key="upload_b", help="Upload a separate document to run semantic variance delta comparison.")
+        file_a = st.file_uploader("TARGET PAYLOAD (DOC A)", type=["pdf", "txt"], key="upload_a", help="Upload core file (TXT/PDF)")
+        file_b = st.file_uploader("BASELINE PAYLOAD (DOC B)", type=["pdf", "txt"], key="upload_b", help="Upload baseline standard")
         
         c1, c2 = st.columns(2)
-        btn_d1 = c1.button("Demo NDA", help="Preload a sample NDA")
-        btn_d2 = c2.button("Demo MSA", help="Preload a sample MSA")
+        btn_d1 = c1.button("► MOUNT NDA", help="Preload benchmark")
+        btn_d2 = c2.button("► MOUNT MSA", help="Preload benchmark")
         
         if btn_d1: st.session_state["demo_to_load"] = "NDA"
         if btn_d2: st.session_state["demo_to_load"] = "MSA"
         
-        execute = st.button("🚀 Analyze Contract", use_container_width=True, type="primary", help="Trigger the Machine Learning analysis pipeline.")
+        st.markdown("<br/>", unsafe_allow_html=True)
+        execute = st.button("[ INITIALIZE ANALYSIS ]", use_container_width=True, type="primary", help="Trigger Neural Network Inference")
         if execute: st.session_state["trigger_execution"] = True
 
-    # Handle Pending Executions (From Sidebar OR Onboarding Quick-Action)
+    # Handle Pending Executions
     if st.session_state["trigger_execution"]:
         st.session_state["trigger_execution"] = False
         
@@ -394,18 +419,18 @@ def main():
                 t = get_text_from_file(file_a)
                 if t: process_document(t, file_a.name, "a")
             else: 
-                st.toast("Please upload a contract or select a Demo file.", icon="⚠️")
+                st.toast("Please upload a contract or select a Demo file.", icon="●")
             
             if file_b:
                 tb = get_text_from_file(file_b)
                 if tb: process_document(tb, file_b.name, "b")
 
-    # Render Content
+    # Render Base Content
     if not st.session_state["agent_state_a"]:
         render_onboarding()
     else:
-        # Full App with 5 Tabs
-        t1, t2, t3, t4, t5 = st.tabs(["📄 Risk Analysis", "🧠 AI Legal Assistant", "📊 Analytics", "📑 Compare Contracts", "📥 Export Report"])
+        # Full App Nav
+        t1, t2, t3, t4, t5 = st.tabs(["RISK ANALYSIS", "AI ASSISTANT", "ANALYTICS", "COMPARE", "EXPORT"])
         
         with t1: tab_risk_analysis()
         with t2: tab_ai_assistant()
@@ -413,8 +438,8 @@ def main():
         with t4: tab_compare()
         with t5: tab_export()
 
-    # Sticky Professional Footer
-    st.markdown('<div class="footer">LexIQ Intelligent Platform • AI-generated analysis. Not a substitute for professional legal advice.</div>', unsafe_allow_html=True)
+    # Footer
+    st.markdown('<div class="footer">LEXIQ.SYS | AI-GENERATED DIAGNOSTIC DATA. NOT LEGAL COUNSEL. DO NOT DISTRIBUTE WITHOUT HUMAN REVIEW.</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
