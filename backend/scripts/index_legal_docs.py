@@ -1,8 +1,3 @@
-"""
-Script to index legal documents into the RAG system's vector store.
-Run this script to populate ChromaDB with legal guidelines.
-"""
-
 import sys
 import logging
 from pathlib import Path
@@ -20,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 def load_legal_documents(docs_dir: Path) -> list:
-    """Load all legal documents from the specified directory."""
     documents = []
     
     for file_path in docs_dir.glob("*.txt"):
@@ -39,7 +33,6 @@ def load_legal_documents(docs_dir: Path) -> list:
 
 
 def main():
-    """Index legal documents into RAG system."""
     settings = get_settings()
     
     logger.info("Initializing RAG system")

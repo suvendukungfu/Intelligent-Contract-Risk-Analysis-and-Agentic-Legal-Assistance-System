@@ -1,7 +1,3 @@
-"""
-Quick test script for Milestone 2 endpoint.
-"""
-
 import sys
 import logging
 from pathlib import Path
@@ -25,7 +21,6 @@ logger = logging.getLogger(__name__)
 
 
 def test_milestone2():
-    """Test Milestone 2 analysis pipeline."""
     settings = get_settings()
     
     logger.info("Testing Milestone 2 analysis pipeline")
@@ -38,7 +33,7 @@ def test_milestone2():
     logger.info(f"Using test file: {test_file}")
     
     with open(test_file, 'rb') as f:
-        from io import BytesIO
+        from io.BytesIO
         from fastapi import UploadFile
         
         content = f.read()
