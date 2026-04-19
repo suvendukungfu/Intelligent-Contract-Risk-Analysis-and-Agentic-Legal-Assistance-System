@@ -7,10 +7,18 @@ Guided workflow: [1 Upload] -> [2 Analyze] -> [3 Compare] -> [4 Monitor] -> [5 R
 Production-grade: Zero-error, deploy-ready build.
 """
 
-import streamlit as st
-import pandas as pd
 import os
 import sys
+
+# ── Streamlit Cloud ChromaDB Fix (SQLite Override) ────
+try:
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+import streamlit as st
+import pandas as pd
 import json
 
 # ── Ensure project root is FIRST in path to prevent module shadowing ─────────
