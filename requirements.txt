@@ -1,24 +1,28 @@
 # LexIQ Production Dependencies (Streamlit Cloud Optimized)
 # ─────────────────────────────────────────────────────────
-# Heavy packages (torch, transformers, sentence-transformers, shap)
-# are EXCLUDED because Streamlit Cloud free tier has 1GB RAM limit.
-# The app gracefully falls back to keyword-based search and
-# rule-based analysis when these are absent.
 
-streamlit==1.42.0
-pandas==2.2.0
-numpy==1.26.4
-scikit-learn==1.4.2
-plotly==5.19.0
-langgraph==0.0.30
-langchain==0.1.0
-langchain-core==0.1.33
-pdfplumber==0.11.0
-rank-bm25==0.2.2
-requests==2.31.0
-python-dotenv==1.0.1
-spacy==3.7.4
+# Core Framework
+streamlit>=1.31.0
+pandas>=2.1.0
+numpy>=1.24.0
+scikit-learn>=1.4.0
+plotly>=5.18.0
+
+# Intelligence Layers
+langgraph>=0.0.30
+langchain>=0.1.0
+langchain-core>=0.1.33
+rank-bm25>=0.2.2
+spacy>=3.7.0
+
+# Document Processing & Utils
+pdfplumber>=0.10.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+fpdf2>=2.7.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Cloud Compatibility Fixes
+pysqlite3-binary>=0.5.2
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
-fpdf2==2.7.7
-matplotlib==3.8.3
-seaborn==0.13.2

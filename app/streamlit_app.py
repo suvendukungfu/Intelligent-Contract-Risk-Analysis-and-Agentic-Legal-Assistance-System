@@ -9,6 +9,22 @@ Production-grade: Zero-error, deploy-ready build.
 
 import os
 import sys
+import subprocess
+
+# ── Streamlit Cloud Compatibility Patch ──────────────────────────────
+try:
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+# ── Spacy Model Check ────────────────────────────────────────────────
+try:
+    import spacy
+    if not spacy.util.is_package("en_core_web_sm"):
+        subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+except Exception:
+    pass
 
 import streamlit as st
 import pandas as pd
