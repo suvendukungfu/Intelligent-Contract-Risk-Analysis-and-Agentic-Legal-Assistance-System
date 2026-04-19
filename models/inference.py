@@ -22,18 +22,21 @@ class ContractRiskAI:
     Upgraded for resilience against scikit-learn version mismatches.
     """
     def __init__(self):
-        logger.info(f"Initializing Inference Engine (scikit-learn v{sklearn.__version__})")
-        self.load_model()
+        self.model = None
+        self.vectorizer = None
+        self._initialized = False
 
     def load_model(self):
         """
         Safely loads the model and vectorizer with version compatibility patching.
         """
+        if self._initialized:
+            return
+            
+        logger.info(f"Initializing Inference Engine (scikit-learn v{sklearn.__version__})")
         try:
             if not os.path.exists(MODEL_PATH):
                 logger.warning(f"Model artifact missing at {MODEL_PATH}")
-                self.model = None
-                self.vectorizer = None
                 return
 
             self.model = joblib.load(MODEL_PATH)
@@ -51,6 +54,7 @@ class ContractRiskAI:
                         self.vectorizer.idf_ = np.ones(len(self.vectorizer.vocabulary_))
                 
             logger.info("Model and Vectorizer loaded and patched successfully.")
+            self._initialized = True
             
         except Exception as e:
             logger.error(f"Critical failure during model ingestion: {str(e)}")
@@ -65,10 +69,11 @@ class ContractRiskAI:
             if not isinstance(text, str):
                 return "Analysis Error", 0.0, []
 
-            if self.model is None or self.vectorizer is None:
+            if not self._initialized:
                 self.load_model()
-                if self.model is None:
-                    return "System Offline", 0.0, []
+                if not self._initialized:
+                    # Fallback to heuristics immediately if load failed
+                    return self._heuristic_fallback(text)
                 
             clean = preprocess_text(text)
             
@@ -95,7 +100,7 @@ class ContractRiskAI:
         High-accuracy keyword heuristic fallback for when ML vectors are broken.
         """
         high_risk_keywords = ["indemnif", "liabil", "terminat", "arbitrat", "govern", "jurisdiction", "limitation"]
-        found_triggers = [kw for kw in high_risk_keywords if kw in clean_text.lower()]
+        found_triggers = [kw for kw in high_risk_keywords if kw in str(clean_text).lower()]
         
         if found_triggers:
             return "High Risk", 0.85, found_triggers
@@ -113,7 +118,7 @@ class ContractRiskAI:
                 feature_indices = features.indices
             else:
                 feature_indices = np.nonzero(features)[1]
-
+ 
             reasons = []
             for idx in feature_indices:
                 if idx < len(weights):
@@ -124,4 +129,11 @@ class ContractRiskAI:
         except Exception:
             return []
 
-risk_engine = ContractRiskAI()
+# Lazy instantiation with thread safety
+_risk_engine = None
+
+def get_risk_engine():
+    global _risk_engine
+    if _risk_engine is None:
+        _risk_engine = ContractRiskAI()
+    return _risk_engine

@@ -13,7 +13,7 @@ from typing import Dict, Any
 
 from agents.states import ContractState
 from nlp.clause_segmenter import segment_clauses
-from models.inference import risk_engine
+from models.inference import get_risk_engine
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +51,7 @@ def risk_detection_agent(state: ContractState) -> ContractState:
 
     risks = []
     for idx, clause in enumerate(state["clauses"]):
-        level, conf, triggers = risk_engine.analyze_clause(clause)
+        level, conf, triggers = get_risk_engine().analyze_clause(clause)
         
         # Cross-reference with anomalies
         is_anom = state["anomalies"][idx]["is_anomaly"] if idx < len(state["anomalies"]) else False
