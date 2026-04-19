@@ -156,8 +156,27 @@ def tab_upload():
     <div style="text-align: center; padding: 40px 0;">
         <h1 style="font-size: 2.5rem; font-weight: 700;">LexIQ Intelligence Platform</h1>
         <p style="color: #a1a1aa; font-size: 1.1rem;">Enterprise-grade contract risk detection and agentic reasoning.</p>
+        <p style="color: #818cf8; font-weight: 500;">This AI analyzes contracts, detects risks, and explains them.</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    with st.expander("ℹ️ How to Use"):
+        st.markdown("""
+        1. **Upload contract** (PDF/TXT) using the uploader below.
+        2. Click to begin or **Analyze** the document.
+        3. View **Risk labels** and confidence scores sequentially.
+        4. Click **"Show Reasoning Analysis"** to explain clauses.
+        5. Generate the finalized **Report** on the Export tab.
+        """)
+        
+    if st.button("🚀 Try Demo Contract (Auto-Run)"):
+        with st.spinner("Loading demo contract and initializing Agentic pipeline..."):
+            demo_text = "This agreement limits our liability to $100 and requires arbitration. You agree to indemnify us for any third-party claims."
+            st.session_state["agent_state_a"] = run_agent_pipeline(demo_text, "Demo_Contract.txt")
+            st.session_state["current_step"] = 2
+            st.rerun()
+
+    st.markdown("---")
     
     comp_mode = st.checkbox("Enable Comparison Mode (Dual Contract Analysis)", key="comp_toggle")
     
@@ -226,6 +245,8 @@ def tab_risk_analysis():
     }
 
     render_executive_summary(stats, risks)
+    
+    st.info("💡 **Next Step:** Review the extracted risk clauses below, then click **'Show Reasoning Analysis'** to understand the agentic context.")
 
     for idx, item in enumerate(risks):
         r_level = item.get("risk_level")
