@@ -217,7 +217,14 @@ streamlit run app/streamlit_app.py
 
 ## 17. DEMO
 
-*(Insert screenshots of the Dashboard, Risk Analysis panel, and Exported Report here)*
+### 🛡️ LexIQ Output Representation
+
+| **Clause ID** | **Risk Level** | **Confidence** | **Detected Text Snippet** | **Trigger Words** | **LLM Reasoning & Mitigation** |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **01** | 🔴 **High Risk** | `98.2%` | *"The Provider shall not be liable for any indirect, special, incidental, or consequential damages..."* | `liable`, `consequential damages` | **Reason:** Sweeping liability waiver.<br>**Fix:** Establish mutual liability caps. |
+| **02** | 🟢 **Safe** | `85.4%` | *"This Agreement shall be governed by the laws of the State of Delaware."* | *None* | Standard jurisdiction clause. |
+| **03** | 🟡 **Medium Risk** | `68.9%` | *"Client grants an irrevocable, perpetual license to use the data..."* | `irrevocable`, `perpetual` | **Reason:** Loss of data ownership rights.<br>**Fix:** Limit license scope to service delivery. |
 
 **Live Demo:** [LexIQ on Hugging Face Spaces](https://huggingface.co/spaces/suvendukungfu/lexiq-legal-ai)
+
 
