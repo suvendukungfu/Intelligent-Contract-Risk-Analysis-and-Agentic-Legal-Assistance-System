@@ -1,4 +1,10 @@
-# LexIQ Production Dependencies (Cloud Optimized)
+# LexIQ Production Dependencies (Streamlit Cloud Optimized)
+# ─────────────────────────────────────────────────────────
+# Heavy packages (torch, transformers, sentence-transformers, shap)
+# are EXCLUDED because Streamlit Cloud free tier has 1GB RAM limit.
+# The app gracefully falls back to keyword-based search and
+# rule-based analysis when these are absent.
+
 streamlit==1.42.0
 pandas==2.2.0
 numpy==1.26.4
@@ -7,8 +13,6 @@ plotly==5.19.0
 langgraph==0.0.30
 langchain==0.1.0
 langchain-core==0.1.33
-sentence-transformers==2.5.1
-chromadb==0.4.24
 pdfplumber==0.11.0
 rank-bm25==0.2.2
 requests==2.31.0
@@ -18,7 +22,3 @@ en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_
 fpdf2==2.7.7
 matplotlib==3.8.3
 seaborn==0.13.2
-shap==0.44.0
-pysqlite3-binary==0.5.3.post1
-torch==2.2.1
-transformers==4.38.2

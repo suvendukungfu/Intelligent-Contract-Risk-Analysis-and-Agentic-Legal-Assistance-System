@@ -10,13 +10,6 @@ Production-grade: Zero-error, deploy-ready build.
 import os
 import sys
 
-# ── Streamlit Cloud ChromaDB Fix (SQLite Override) ────
-try:
-    __import__('pysqlite3')
-    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-except ImportError:
-    pass
-
 import streamlit as st
 import pandas as pd
 import json
