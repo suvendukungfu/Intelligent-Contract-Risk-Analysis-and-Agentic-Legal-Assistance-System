@@ -103,6 +103,18 @@ D --> E[Report Agent]
 
 To ground the LLM's reasoning, LexIQ employs a Hybrid Retrieval-Augmented Generation (RAG) system.
 
+```mermaid
+flowchart TD
+    Q[Input: High-Risk Clause] --> Dense[Dense Search<br>ChromaDB + Sentence Transformers]
+    Q --> Sparse[Sparse Search<br>BM25 Exact Keyword Match]
+    
+    Dense --> RRF{Reciprocal Rank Fusion<br>Aggregates & Ranks Weights}
+    Sparse --> RRF
+    
+    RRF --> Context[Top Ranked Legal Context]
+    Context --> Agent[LangGraph Reasoning Agent<br>Synthesizes Mitigation]
+```
+
 *   **Vector Search (ChromaDB):** Uses `sentence-transformers` to embed legal queries into a dense vector space, retrieving context based on semantic meaning (e.g., matching "force majeure" with "act of God").
 *   **Keyword Search (BM25):** Executes sparse retrieval, ensuring exact matches for highly specific legal jargon or statute references.
 *   **Fusion Strategy:** Results from both engines are combined using Reciprocal Rank Fusion (RRF), calculating a combined score to surface the most contextually and contextually accurate legal playbooks.
