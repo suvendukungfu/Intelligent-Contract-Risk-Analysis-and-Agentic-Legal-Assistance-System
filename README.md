@@ -1,5 +1,7 @@
 # 🚀 LexIQ — Intelligent Contract Risk Analysis and Agentic Legal Intelligence Platform
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Hugging%20Face%20Spaces-blue?style=for-the-badge)](https://huggingface.co/spaces/suvendukungfu/lexiq-legal-ai)
+
 ## 1. EXECUTIVE SUMMARY
 
 LexIQ is an enterprise-grade AI system designed to automate the initial review and risk assessment of legal contracts. By fusing traditional Machine Learning (ML) classifiers with a modern Agentic AI workflow (LangGraph) and Large Language Models (LLMs), LexIQ acts as a tireless first-pass paralegal. It ingests complex legal documents, flags high-risk clauses, retrieves relevant legal context, and synthesizes structured, actionable audit reports.
@@ -217,4 +219,5 @@ streamlit run app/streamlit_app.py
 
 *(Insert screenshots of the Dashboard, Risk Analysis panel, and Exported Report here)*
 
-**Live Demo:** `[Link to Streamlit Cloud / Render Deployment]`
+**Live Demo:** [LexIQ on Hugging Face Spaces](https://huggingface.co/spaces/suvendukungfu/lexiq-legal-ai)
+
