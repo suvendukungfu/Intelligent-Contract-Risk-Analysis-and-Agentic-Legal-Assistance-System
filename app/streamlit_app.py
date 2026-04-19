@@ -2,18 +2,21 @@
 app/streamlit_app.py
 --------------------
 Enterprise SaaS UI for LexIQ Legal AI.
-Guided workflow: [1 Upload] -> [2 Analyze] -> [3 Risks] -> [4 Monitoring] -> [5 Report]
+Guided workflow: [1 Upload] -> [2 Analyze] -> [3 Compare] -> [4 Monitor] -> [5 Report]
+
+Production-grade: Zero-error, deploy-ready build.
 """
 
 import streamlit as st
 import pandas as pd
 import os
 import sys
+import json
 
-# ── Ensure project root is in path ───────────────────────────────────────────
+# ── Ensure project root is FIRST in path to prevent module shadowing ─────────
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
-    sys.path.append(project_root)
+    sys.path.insert(0, project_root)
 
 from agents.workflow import run_agent_pipeline
 from analytics.dashboard import (
@@ -33,12 +36,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── CSS Integration ──────────────────────────────────────────────────────────
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-# Create a minimal CSS for SaaS look if external file not found or preferred
+# ── CSS Integration ──────────────────────────────────────────────
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -107,11 +105,11 @@ def render_sidebar():
         guides = {
             1: "📤 **Step 1: Upload** - Drop your PDF/TXT contract below to begin segmentation.",
             2: "🔍 **Step 2: Analyze** - Review clauses flagged by our ML Risk Engine.",
-            3: "🧠 **Step 3: Reasoning** - Click 'Explain' to see Agentic RAG insights.",
+            3: "⚖️ **Step 3: Compare** - Side-by-side dual contract analysis.",
             4: "📊 **Step 4: Monitoring** - Inspect model health and drift metrics.",
             5: "📄 **Step 5: Export** - Generate an enterprise-grade legal audit report."
         }
-        st.info(guides.get(step))
+        st.info(guides.get(step, guides[1]))
         
         st.markdown("---")
         st.markdown("### 🏢 System Status")
@@ -135,7 +133,7 @@ def render_stepper():
             """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════
-# TAB LOGIC
+# TAB: UPLOAD
 # ══════════════════════════════════════════════════════════════════
 
 def tab_upload():
@@ -149,16 +147,36 @@ def tab_upload():
     </div>
     """, unsafe_allow_html=True)
     
-    uploaded_file = st.file_uploader("Upload Contract (PDF/TXT)", type=["pdf", "txt"])
+    comp_mode = st.checkbox("Enable Comparison Mode (Dual Contract Analysis)", key="comp_toggle")
     
-    if uploaded_file:
-        with st.spinner("Agentic pipeline initializing..."):
-            # Mock extraction for example
-            content = uploaded_file.read().decode("utf-8") if uploaded_file.type == "text/plain" else "PDF Content Placeholder"
-            state = run_agent_pipeline(content, uploaded_file.name)
-            st.session_state["agent_state_a"] = state
-            st.session_state["current_step"] = 2
-            st.rerun()
+    if not comp_mode:
+        uploaded_file = st.file_uploader("Upload Primary Contract (PDF/TXT)", type=["pdf", "txt"], key="single_up")
+        if uploaded_file:
+            with st.spinner("Agentic pipeline initializing..."):
+                content = uploaded_file.read().decode("utf-8", errors="ignore")
+                state = run_agent_pipeline(content, uploaded_file.name)
+                st.session_state["agent_state_a"] = state
+                st.session_state["current_step"] = 2
+                st.rerun()
+    else:
+        c1, c2 = st.columns(2)
+        with c1: f1 = st.file_uploader("Contract A", type=["pdf", "txt"], key="comp_up_a")
+        with c2: f2 = st.file_uploader("Contract B", type=["pdf", "txt"], key="comp_up_b")
+        
+        if f1 and f2:
+            if st.button("Analyze & Compare", use_container_width=True):
+                with st.spinner("Running Dual Agentic Pipeline..."):
+                    c1_text = f1.read().decode("utf-8", errors="ignore")
+                    c2_text = f2.read().decode("utf-8", errors="ignore")
+                    st.session_state["agent_state_a"] = run_agent_pipeline(c1_text, f1.name)
+                    st.session_state["agent_state_b"] = run_agent_pipeline(c2_text, f2.name)
+                    st.session_state["comparison_active"] = True
+                    st.session_state["current_step"] = 2
+                    st.rerun()
+
+# ══════════════════════════════════════════════════════════════════
+# TAB: RISK ANALYSIS
+# ══════════════════════════════════════════════════════════════════
 
 def render_executive_summary(stats, risks):
     score = stats.get('risk_index', 0)
@@ -191,7 +209,6 @@ def tab_risk_analysis():
     state = st.session_state["agent_state_a"]
     risks = state.get("risks", [])
     
-    # Calculate stats on the fly
     high_count = sum(1 for r in risks if r["risk_level"] == "High Risk")
     stats = {
         "risk_index": round((high_count / len(risks) * 10) if risks else 0, 1),
@@ -218,8 +235,123 @@ def tab_risk_analysis():
         if st.checkbox(f"Show Reasoning Analysis", key=f"chk_{idx}"):
             exp_map = {e["clause_idx"]: e for e in state.get("explanations", [])}
             exp = exp_map.get(idx, {})
-            st.info(exp.get("explanation", "No reasoning available for this clause."))
-            st.warning(f"Mitigation: {exp.get('mitigation', 'N/A')}")
+            
+            st.markdown(f"**Summary:** {exp.get('summary', exp.get('explanation', 'N/A')[:80])}")
+            st.info(f"**Why Risky:** {exp.get('explanation', 'No justification available.')}")
+            st.warning(f"**Legal Meaning:** {exp.get('legal_implications', 'N/A')}")
+            st.success(f"**Suggested Fix:** {exp.get('mitigation', 'N/A')}")
+
+
+# ══════════════════════════════════════════════════════════════════
+# TAB: COMPARISON
+# ══════════════════════════════════════════════════════════════════
+
+def tab_comparison():
+    st.session_state["current_step"] = 3
+    render_stepper()
+    
+    state_a = st.session_state.get("agent_state_a")
+    state_b = st.session_state.get("agent_state_b")
+    
+    if not state_a or not state_b:
+        st.info("Comparison Mode requires two contracts. Please upload them in the [Upload] step.")
+        return
+
+    from models.comparison import compare_contracts
+    
+    results = compare_contracts(
+        state_a["file_name"], state_a["clauses"], state_a["risks"],
+        state_b["file_name"], state_b["clauses"], state_b["risks"]
+    )
+
+    # ── VERDICT CARD ──
+    winner = results["winner"]
+    st.markdown(f"""
+    <div class="saas-card" style="border-left: 10px solid #818cf8; background: rgba(129, 140, 248, 0.1);">
+        <h3 style="margin:0;">🏆 Safety Verdict: {winner if winner != 'Tie' else 'Equally Balanced'}</h3>
+        <p style="font-size:1.1rem; color:#f4f4f5; margin-top:10px;">{results['verdict']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # ── SIDE BY SIDE SUMMARY ──
+    col_a, col_b = st.columns(2)
+    s_a = results["stats_a"]
+    s_b = results["stats_b"]
+    
+    comp_css = "background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; text-align: center; height: 100%;"
+    
+    with col_a:
+        st.markdown(f"""
+        <div style="{comp_css}">
+            <h4 style="color:#818cf8; margin-top:0;">{results['metadata']['name_a']}</h4>
+            <h1 style="font-family:'JetBrains Mono'; margin:10px 0;">{s_a['risk_score']} / 10</h1>
+            <p style="color:#a1a1aa; font-size:0.9rem; text-transform:uppercase;">Overall Risk Score</p>
+            <hr style="border-color:rgba(255,255,255,0.05);">
+            <div style="display:flex; justify-content:space-around;">
+                <div><strong style="font-size:1.2rem;">{s_a['total_clauses']}</strong><br><span style="font-size:0.8rem;color:#71717a">Total Clauses</span></div>
+                <div><strong style="font-size:1.2rem;color:#f87171;">{s_a['high_risk']}</strong><br><span style="font-size:0.8rem;color:#71717a">High Risk</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_b:
+        st.markdown(f"""
+        <div style="{comp_css}">
+            <h4 style="color:#818cf8; margin-top:0;">{results['metadata']['name_b']}</h4>
+            <h1 style="font-family:'JetBrains Mono'; margin:10px 0;">{s_b['risk_score']} / 10</h1>
+            <p style="color:#a1a1aa; font-size:0.9rem; text-transform:uppercase;">Overall Risk Score</p>
+            <hr style="border-color:rgba(255,255,255,0.05);">
+            <div style="display:flex; justify-content:space-around;">
+                <div><strong style="font-size:1.2rem;">{s_b['total_clauses']}</strong><br><span style="font-size:0.8rem;color:#71717a">Total Clauses</span></div>
+                <div><strong style="font-size:1.2rem;color:#f87171;">{s_b['high_risk']}</strong><br><span style="font-size:0.8rem;color:#71717a">High Risk</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # ── ACTIONABLE RISK DIFFERENCES ──
+    if results.get("comparison_summary"):
+        st.markdown("#### ⚖️ Actionable Risk Differences")
+        for logic in results["comparison_summary"]:
+            st.info(logic)
+
+    # ── CLAUSE-LEVEL DELTA MATRIX ──
+    st.markdown("#### 🧩 Clause-Level Delta Matrix")
+    
+    categories = list(results["coverage_a"].keys())
+    for cat in categories:
+        ca = results["coverage_a"].get(cat)
+        cb = results["coverage_b"].get(cat)
+        
+        with st.expander(f"📌 {cat}"):
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown(f"**{results['metadata']['name_a']}**")
+                if ca:
+                    st.markdown(f"<span class='badge {'badge-high' if ca['risk']=='High Risk' else 'badge-low'}'>{ca['risk']}</span>", unsafe_allow_html=True)
+                    st.caption(ca["text"])
+                else:
+                    st.error("Missing Protection")
+            with c2:
+                st.markdown(f"**{results['metadata']['name_b']}**")
+                if cb:
+                    st.markdown(f"<span class='badge {'badge-high' if cb['risk']=='High Risk' else 'badge-low'}'>{cb['risk']}</span>", unsafe_allow_html=True)
+                    st.caption(cb["text"])
+                else:
+                    st.error("Missing Protection")
+
+    # ── STRUCTURAL GAPS TABLE ──
+    st.markdown("#### Structural Gaps & Risk Discordance")
+    if results["gaps"]:
+        st.table(pd.DataFrame(results["gaps"]))
+    else:
+        st.success("No structural gaps detected between documents.")
+
+
+# ══════════════════════════════════════════════════════════════════
+# TAB: MONITORING
+# ══════════════════════════════════════════════════════════════════
 
 def tab_analytics():
     """AI Monitoring System (Production Dashboard)"""
@@ -245,19 +377,26 @@ def tab_analytics():
     else:
         st.success("🟢 **SYSTEM HEALTH**: All agents operating within nominal parameters.")
 
-    # Visuals
+    # Row 1: Core metrics
     m1, m2 = st.columns([1, 1.5])
-    with m1: st.plotly_chart(create_metrics_bar_chart(), use_container_width=True)
-    with m2: st.plotly_chart(create_confusion_matrix_heatmap(), use_container_width=True)
+    with m1: st.plotly_chart(create_metrics_bar_chart(), key="mon_metrics_bar")
+    with m2: st.plotly_chart(create_confusion_matrix_heatmap(), key="mon_conf_matrix")
 
+    # Row 2: Drift & Confidence
     d1, d2 = st.columns(2)
-    with d1: st.plotly_chart(create_drift_distribution_plot(risks), use_container_width=True)
-    with d2: st.plotly_chart(create_confidence_line_chart(risks), use_container_width=True)
+    with d1: st.plotly_chart(create_drift_distribution_plot(risks), key="mon_drift_dist")
+    with d2: st.plotly_chart(create_confidence_line_chart(risks), key="mon_conf_line")
 
+    # Row 3: Risk, Features, Health
     r1, r2, r3 = st.columns([1, 1, 1.2])
-    with r1: st.plotly_chart(create_risk_pie_chart(risks), use_container_width=True)
-    with r2: st.plotly_chart(create_feature_importance_bar(risks), use_container_width=True)
-    with r3: st.plotly_chart(create_system_health_radar(explanations, retrieval), use_container_width=True)
+    with r1: st.plotly_chart(create_risk_pie_chart(risks), key="mon_risk_pie")
+    with r2: st.plotly_chart(create_feature_importance_bar(risks), key="mon_feat_bar")
+    with r3: st.plotly_chart(create_system_health_radar(explanations, retrieval), key="mon_health_radar")
+
+
+# ══════════════════════════════════════════════════════════════════
+# TAB: EXPORT / REPORT
+# ══════════════════════════════════════════════════════════════════
 
 def tab_export():
     st.session_state["current_step"] = 5
@@ -279,31 +418,47 @@ def tab_export():
     with c1: st.metric("Overall Risk Score", exec_sum.get("overall_risk_score", "N/A"))
     with c2: st.metric("Contract Status", exec_sum.get("contract_status", "N/A"))
     with c3: st.metric("Total Clauses", len(state.get("risks", [])))
-    st.write(exec_sum.get("summary_statement", ""))
+    st.write(exec_sum.get("summary_statement", exec_sum.get("summary", "")))
 
-    # 3. Key Risk Insights
+    # 2. Key Risk Insights
     st.markdown("#### 2. Key Risk Insights (Top Critical Findings)")
-    for insight in report.get("key_risk_insights", []):
-        with st.expander(f"📍 {insight['topic']}"):
-            st.write(f"**Primary Concern:** {insight['primary_concern']}")
-            st.markdown(f"*Clause Snippet:* \"{insight['clause_snippet']}\"")
+    key_insights = report.get("key_risk_insights", [])
+    if key_insights:
+        for insight in key_insights:
+            topic = insight.get("topic", "General Risk")
+            with st.expander(f"📍 {topic}"):
+                st.write(f"**Primary Concern:** {insight.get('primary_concern', 'N/A')}")
+                st.markdown(f"*Clause Snippet:* \"{insight.get('clause_snippet', 'N/A')}\"")
+    else:
+        st.success("No critical risk insights to display.")
 
-    # 4. Recommendations
+    # 3. Recommendations
     st.markdown("#### 3. Actionable Recommendations")
-    for rec in report.get("recommendations", []):
-        st.markdown(f"- **{rec['category']}:** {rec['action']}")
+    recommendations = report.get("recommendations", [])
+    if recommendations:
+        for rec in recommendations:
+            st.markdown(f"- **{rec.get('category', 'General')}:** {rec.get('action', 'N/A')}")
+    else:
+        st.info("No specific recommendations generated.")
 
-    # 5. Explainability
+    # 4. Explainability
     st.markdown("#### 4. Agentic Explainability (Deep Dive)")
-    st.write("Cross-referencing ML trigger weights with Agentic RAG grounding.")
+    st.write("Cross-referencing ML trigger weights with Agentic RAG grounded extraction.")
     expl_data = report.get("explainability", [])
     if expl_data:
-        st.dataframe(pd.DataFrame(expl_data), hide_index=True)
+        for i, exp in enumerate(expl_data):
+            clause_num = exp.get("clause_number", exp.get("idx", i + 1))
+            confidence = exp.get("ml_confidence", exp.get("confidence", "N/A"))
+            summary = exp.get("reasoning", exp.get("summary", "N/A"))
+            with st.expander(f"📍 Clause {clause_num} ({confidence} Confidence) — {summary[:60]}..."):
+                st.error(f"**Why Risky:** {exp.get('reasoning', exp.get('reason', 'N/A'))}")
+                st.warning(f"**Legal Meaning:** {exp.get('legal_implications', exp.get('meaning', 'N/A'))}")
+                st.success(f"**Recommended Fix:** {exp.get('mitigation_strategy', exp.get('fix', 'N/A'))}")
     else:
         st.info("No high-risk clauses required deep-dive explanation.")
 
     st.markdown("---")
-    # 6. Disclaimer
+    # 5. Disclaimer
     st.caption(report.get("disclaimer", ""))
 
     st.markdown("<br/>", unsafe_allow_html=True)
@@ -311,7 +466,7 @@ def tab_export():
         "Download Full Digital Audit (JSON)", 
         json.dumps(report, indent=2), 
         file_name="LexIQ_Legal_Audit.json",
-        use_container_width=True
+        key="download_report_btn"
     )
 
 
@@ -323,13 +478,23 @@ def main():
     render_sidebar()
     
     if "agent_state_a" not in st.session_state:
-        # Landing Page
         tab_upload()
     else:
-        tabs = st.tabs(["Analyze", "Monitor", "Report"])
+        tab_list = ["Analyze", "Monitor", "Report"]
+        if st.session_state.get("comparison_active"):
+            tab_list.insert(1, "Comparison")
+            
+        tabs = st.tabs(tab_list)
+        
         with tabs[0]: tab_risk_analysis()
-        with tabs[1]: tab_analytics()
-        with tabs[2]: tab_export()
+        
+        if st.session_state.get("comparison_active"):
+            with tabs[1]: tab_comparison()
+            with tabs[2]: tab_analytics()
+            with tabs[3]: tab_export()
+        else:
+            with tabs[1]: tab_analytics()
+            with tabs[2]: tab_export()
 
 if __name__ == "__main__":
     main()

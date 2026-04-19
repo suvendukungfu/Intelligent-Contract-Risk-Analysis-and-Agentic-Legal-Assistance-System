@@ -59,7 +59,6 @@ RECOMMENDED MITIGATION:
 LEGAL REFERENCE:
 [The exact segment from context used]
 """
-"""
     return prompt
 
 
