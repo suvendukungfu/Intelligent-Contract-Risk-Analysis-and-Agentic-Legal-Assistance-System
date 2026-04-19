@@ -7,6 +7,10 @@ Guided workflow: [1 Upload] -> [2 Analyze] -> [3 Compare] -> [4 Monitor] -> [5 R
 Production-grade: Zero-error, deploy-ready build.
 """
 
+# ── CORE LIBS (Loaded Instantly) ─────────────────────────────────────
+import streamlit as st
+import pandas as pd
+import json
 import os
 import sys
 import subprocess
@@ -14,7 +18,6 @@ import subprocess
 # ── Streamlit Cloud Compatibility Patch ──────────────────────────────
 try:
     import pysqlite3
-    import sys
     sys.modules['sqlite3'] = pysqlite3
 except ImportError:
     pass
@@ -27,25 +30,13 @@ try:
 except Exception:
     pass
 
-import streamlit as st
-import pandas as pd
-import json
-
-# ── Ensure project root is FIRST in path to prevent module shadowing ─────────
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-from agents.workflow import run_agent_pipeline
-from analytics.dashboard import (
-    create_confusion_matrix_heatmap, create_metrics_bar_chart,
-    create_drift_distribution_plot, create_confidence_line_chart,
-    create_risk_pie_chart, create_feature_importance_bar,
-    create_system_health_radar
-)
+# Add project root to path
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 
 # ══════════════════════════════════════════════════════════════════
-# PAGE CONFIG
+# PAGE CONFIG (Must be first Streamlit command)
 # ══════════════════════════════════════════════════════════════════
 st.set_page_config(
     page_title="LexIQ | AI Contract Intelligence",
@@ -166,6 +157,7 @@ def extract_text(uploaded_file):
     return uploaded_file.read().decode("utf-8", errors="ignore")
 
 def tab_upload():
+    from agents.workflow import run_agent_pipeline
     st.session_state["current_step"] = 1
     render_stepper()
     
@@ -295,6 +287,7 @@ def tab_risk_analysis():
 # ══════════════════════════════════════════════════════════════════
 
 def tab_comparison():
+    from models.comparison import compare_contracts
     st.session_state["current_step"] = 3
     render_stepper()
     
@@ -403,6 +396,12 @@ def tab_comparison():
 
 def tab_analytics():
     """AI Monitoring System (Production Dashboard)"""
+    from analytics.dashboard import (
+        create_confusion_matrix_heatmap, create_metrics_bar_chart,
+        create_drift_distribution_plot, create_confidence_line_chart,
+        create_risk_pie_chart, create_feature_importance_bar,
+        create_system_health_radar
+    )
     st.session_state["current_step"] = 4
     render_stepper()
     
