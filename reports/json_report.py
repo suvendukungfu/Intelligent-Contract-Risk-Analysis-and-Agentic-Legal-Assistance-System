@@ -101,7 +101,7 @@ def build_report(state: Dict[str, Any]) -> Dict[str, Any]:
         "key_risk_insights": key_insights,
         "recommendations": recommendations,
         "explainability": explainability,
-        "disclaimer": "⚠️ AI-Generated Report — Not Legal Advice. LexIQ analysis is for informational purposes only."
+        "disclaimer": "Report — Not Legal Advice. LexIQ analysis is for informational purposes only."
     }
 
     return report

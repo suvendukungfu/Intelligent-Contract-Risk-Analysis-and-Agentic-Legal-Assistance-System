@@ -31,7 +31,6 @@ from analytics.dashboard import (
 # ══════════════════════════════════════════════════════════════════
 st.set_page_config(
     page_title="LexIQ | AI Contract Intelligence",
-    page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -99,23 +98,23 @@ def render_sidebar():
         st.title("LexIQ Enterprise")
         st.markdown("---")
         
-        st.markdown("### 🚦 Workflow Guide")
+        st.markdown("### Workflow Guide")
         step = st.session_state.get("current_step", 1)
         
         guides = {
-            1: "📤 **Step 1: Upload** - Drop your PDF/TXT contract below to begin segmentation.",
-            2: "🔍 **Step 2: Analyze** - Review clauses flagged by our ML Risk Engine.",
-            3: "⚖️ **Step 3: Compare** - Side-by-side dual contract analysis.",
-            4: "📊 **Step 4: Monitoring** - Inspect model health and drift metrics.",
-            5: "📄 **Step 5: Export** - Generate an enterprise-grade legal audit report."
+            1: "**Step 1: Upload** - Drop your PDF/TXT contract below to begin.",
+            2: "**Step 2: Analyze** - Review clauses flagged by the system.",
+            3: "**Step 3: Compare** - Side-by-side contract comparison.",
+            4: "**Step 4: Monitoring** - Inspect system health metrics.",
+            5: "**Step 5: Export** - Generate a legal audit report."
         }
         st.info(guides.get(step, guides[1]))
         
         st.markdown("---")
-        st.markdown("### 🏢 System Status")
-        st.success("ML Engine: Online")
-        st.success("RAG Context: 10,242 nodes")
-        st.info("Version: 2.1 Agentic")
+        st.markdown("### System Status")
+        st.success("Analysis Engine: Online")
+        st.success("Knowledge Base: Connected")
+        st.info("Version: 2.1")
 
 def render_stepper():
     current = st.session_state.get("current_step", 1)
@@ -154,23 +153,23 @@ def tab_upload():
     
     st.markdown("""
     <div style="text-align: center; padding: 40px 0;">
-        <h1 style="font-size: 2.5rem; font-weight: 700;">LexIQ Intelligence Platform</h1>
-        <p style="color: #a1a1aa; font-size: 1.1rem;">Enterprise-grade contract risk detection and agentic reasoning.</p>
+        <h1 style="font-size: 2.5rem; font-weight: 700;">AI Contract Risk Analyzer</h1>
+        <p style="color: #a1a1aa; font-size: 1.1rem;">Clear contract risk detection and explanation.</p>
         <p style="color: #818cf8; font-weight: 500;">This AI analyzes contracts, detects risks, and explains them.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    with st.expander("ℹ️ How to Use"):
+    with st.expander("How to Use"):
         st.markdown("""
-        1. **Upload contract** (PDF/TXT) using the uploader below.
-        2. Click to begin or **Analyze** the document.
-        3. View **Risk labels** and confidence scores sequentially.
-        4. Click **"Show Reasoning Analysis"** to explain clauses.
-        5. Generate the finalized **Report** on the Export tab.
+        1. Upload contract
+        2. Run analysis
+        3. Check risks
+        4. Explain clauses
+        5. Download report
         """)
         
-    if st.button("🚀 Try Demo Contract (Auto-Run)"):
-        with st.spinner("Loading demo contract and initializing Agentic pipeline..."):
+    if st.button("Try Demo"):
+        with st.spinner("Loading demo contract and initializing analysis..."):
             demo_text = "This agreement limits our liability to $100 and requires arbitration. You agree to indemnify us for any third-party claims."
             st.session_state["agent_state_a"] = run_agent_pipeline(demo_text, "Demo_Contract.txt")
             st.session_state["current_step"] = 2
@@ -246,7 +245,7 @@ def tab_risk_analysis():
 
     render_executive_summary(stats, risks)
     
-    st.info("💡 **Next Step:** Review the extracted risk clauses below, then click **'Show Reasoning Analysis'** to understand the agentic context.")
+    st.info("**Next Step:** Review the extracted risk clauses below, then click **'Show Reasoning Analysis'** to understand the context.")
 
     for idx, item in enumerate(risks):
         r_level = item.get("risk_level")
@@ -299,7 +298,7 @@ def tab_comparison():
     winner = results["winner"]
     st.markdown(f"""
     <div class="saas-card" style="border-left: 10px solid #818cf8; background: rgba(129, 140, 248, 0.1);">
-        <h3 style="margin:0;">🏆 Safety Verdict: {winner if winner != 'Tie' else 'Equally Balanced'}</h3>
+        <h3 style="margin:0;">Safety Verdict: {winner if winner != 'Tie' else 'Equally Balanced'}</h3>
         <p style="font-size:1.1rem; color:#f4f4f5; margin-top:10px;">{results['verdict']}</p>
     </div>
     """, unsafe_allow_html=True)
@@ -343,19 +342,19 @@ def tab_comparison():
     
     # ── ACTIONABLE RISK DIFFERENCES ──
     if results.get("comparison_summary"):
-        st.markdown("#### ⚖️ Actionable Risk Differences")
+        st.markdown("#### Actionable Risk Differences")
         for logic in results["comparison_summary"]:
             st.info(logic)
 
     # ── CLAUSE-LEVEL DELTA MATRIX ──
-    st.markdown("#### 🧩 Clause-Level Delta Matrix")
+    st.markdown("#### Clause-Level Delta Matrix")
     
     categories = list(results["coverage_a"].keys())
     for cat in categories:
         ca = results["coverage_a"].get(cat)
         cb = results["coverage_b"].get(cat)
         
-        with st.expander(f"📌 {cat}"):
+        with st.expander(f"{cat}"):
             c1, c2 = st.columns(2)
             with c1:
                 st.markdown(f"**{results['metadata']['name_a']}**")
@@ -398,15 +397,15 @@ def tab_analytics():
         st.info("Insufficient data for monitoring. Please analyze a document first.")
         return
 
-    st.markdown("### 🛠 AI Monitoring System (Production)")
+    st.markdown("### System Monitoring")
     
     # Drift Check
     curr_avg_len = sum(len(r["clause"].split()) for r in risks) / len(risks)
     has_drift = abs(28 - curr_avg_len) > 15
     if has_drift:
-        st.error("🚨 **DATA DRIFT DETECTED**: Current document structure significantly deviates from training baseline.")
+        st.error("**Data Variance Detected**: Current document structure deviates from standard baselines.")
     else:
-        st.success("🟢 **SYSTEM HEALTH**: All agents operating within nominal parameters.")
+        st.success("**System Health**: All processes operating smoothly.")
 
     # Row 1: Core metrics
     m1, m2 = st.columns([1, 1.5])
@@ -439,7 +438,7 @@ def tab_export():
         st.warning("No report generated. Please analyze a document first.")
         return
 
-    st.markdown("### 📄 Professional Legal AI Audit")
+    st.markdown("### Legal Analysis Audit")
     st.markdown("---")
 
     # 1. Executive Summary
@@ -457,7 +456,7 @@ def tab_export():
     if key_insights:
         for insight in key_insights:
             topic = insight.get("topic", "General Risk")
-            with st.expander(f"📍 {topic}"):
+            with st.expander(f"{topic}"):
                 st.write(f"**Primary Concern:** {insight.get('primary_concern', 'N/A')}")
                 st.markdown(f"*Clause Snippet:* \"{insight.get('clause_snippet', 'N/A')}\"")
     else:
@@ -473,15 +472,15 @@ def tab_export():
         st.info("No specific recommendations generated.")
 
     # 4. Explainability
-    st.markdown("#### 4. Agentic Explainability (Deep Dive)")
-    st.write("Cross-referencing ML trigger weights with Agentic RAG grounded extraction.")
+    st.markdown("#### 4. Contextual Explanations")
+    st.write("Detailed reasoning for flagged clauses.")
     expl_data = report.get("explainability", [])
     if expl_data:
         for i, exp in enumerate(expl_data):
             clause_num = exp.get("clause_number", exp.get("idx", i + 1))
             confidence = exp.get("ml_confidence", exp.get("confidence", "N/A"))
             summary = exp.get("reasoning", exp.get("summary", "N/A"))
-            with st.expander(f"📍 Clause {clause_num} ({confidence} Confidence) — {summary[:60]}..."):
+            with st.expander(f"Clause {clause_num} ({confidence} Confidence) — {summary[:60]}..."):
                 st.error(f"**Why Risky:** {exp.get('reasoning', exp.get('reason', 'N/A'))}")
                 st.warning(f"**Legal Meaning:** {exp.get('legal_implications', exp.get('meaning', 'N/A'))}")
                 st.success(f"**Recommended Fix:** {exp.get('mitigation_strategy', exp.get('fix', 'N/A'))}")
