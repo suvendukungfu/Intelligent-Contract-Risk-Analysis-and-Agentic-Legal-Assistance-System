@@ -136,6 +136,18 @@ def render_stepper():
 # TAB: UPLOAD
 # ══════════════════════════════════════════════════════════════════
 
+def extract_text(uploaded_file):
+    if uploaded_file.name.lower().endswith('.pdf'):
+        import pdfplumber
+        text = []
+        with pdfplumber.open(uploaded_file) as pdf:
+            for page in pdf.pages:
+                extracted = page.extract_text()
+                if extracted:
+                    text.append(extracted)
+        return "\\n".join(text) if text else "PDF Extraction Failed or Empty"
+    return uploaded_file.read().decode("utf-8", errors="ignore")
+
 def tab_upload():
     st.session_state["current_step"] = 1
     render_stepper()
@@ -153,7 +165,7 @@ def tab_upload():
         uploaded_file = st.file_uploader("Upload Primary Contract (PDF/TXT)", type=["pdf", "txt"], key="single_up")
         if uploaded_file:
             with st.spinner("Agentic pipeline initializing..."):
-                content = uploaded_file.read().decode("utf-8", errors="ignore")
+                content = extract_text(uploaded_file)
                 state = run_agent_pipeline(content, uploaded_file.name)
                 st.session_state["agent_state_a"] = state
                 st.session_state["current_step"] = 2
@@ -164,12 +176,10 @@ def tab_upload():
         with c2: f2 = st.file_uploader("Contract B", type=["pdf", "txt"], key="comp_up_b")
         
         if f1 and f2:
-            if st.button("Analyze & Compare", use_container_width=True):
+            if st.button("Analyze & Compare", type="primary", use_container_width=True):
                 with st.spinner("Running Dual Agentic Pipeline..."):
-                    c1_text = f1.read().decode("utf-8", errors="ignore")
-                    c2_text = f2.read().decode("utf-8", errors="ignore")
-                    st.session_state["agent_state_a"] = run_agent_pipeline(c1_text, f1.name)
-                    st.session_state["agent_state_b"] = run_agent_pipeline(c2_text, f2.name)
+                    st.session_state["agent_state_a"] = run_agent_pipeline(extract_text(f1), f1.name)
+                    st.session_state["agent_state_b"] = run_agent_pipeline(extract_text(f2), f2.name)
                     st.session_state["comparison_active"] = True
                     st.session_state["current_step"] = 2
                     st.rerun()
